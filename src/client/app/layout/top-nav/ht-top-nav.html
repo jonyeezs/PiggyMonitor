@@ -1,0 +1,15 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand">
+            <span class="brand-title">{{vm.navline.title}}</span></a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <div class="pull-left">
+            <ul class="nav navbar-nav pull-left">
+                <li class="nlightblue fade-selection-animation" ng-repeat="r in vm.navRoutes" ng-class="vm.isCurrent(r)">
+                    <a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
