@@ -2,22 +2,24 @@
     'use strict';
 
     angular
-        .module('app.layout')
+        .module('app.sidebar')
         .controller('SidebarController', SidebarController);
 
-    SidebarController.$inject = ['$state', 'routerHelper', 'logger'];
+    SidebarController.$inject = ['$scope', 'sidebarservice', 'logger'];
     /* @ngInject */
-    function SidebarController($state, routerHelper, logger) {
+    function SidebarController($scope, sidebarservice, logger) {
         var vm = this;
-        var states = routerHelper.getStates();
         vm.changeScreen = changeScreen;
         vm.sidebarReady = sidebarReady;
         activate();
 
-        function activate() { getPageOptions(); }
+        function activate() {
+            $scope.$on('sidebarOptionsUpdated', getPageOptions);
+            getPageOptions();
+         }
 
         function getPageOptions() {
-            vm.navOptions = sideBarSetup($state.current);
+            vm.navOptions = sideBarSetup();
         }
 
         function changeScreen(option){
@@ -26,17 +28,8 @@
         function sidebarReady(){
             return false;
         }
-        function sideBarSetup(current){
-            return [
-                    {
-                        name: 'all',
-                        content: '<i class="fa fa-dashboard"></i> all'
-                    },
-                    {
-                        name: 'income',
-                        content: '<i class="fa fa-dashboard"></i> income'
-                    }
-                ];
+        function sideBarSetup(){
+            return sidebarservice.get();
         }
     }
 })();
