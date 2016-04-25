@@ -4,8 +4,9 @@
     angular.module('app.budget', [
         'ui.bootstrap',
         'app.core',
-        'app.widgets',
-        'app.summary'
+        'blocks.article',
+        'app.summary',
+        'app.sidebar'
       ]);
 
 })();

@@ -770,6 +770,10 @@ form {
     margin-right: @right_pane_width !important;
 }
 
+.budget .option-row {
+    margin-bottom: 10px;
+}
+
 /* Pagination*/
 
 .pagination {
@@ -1018,10 +1022,6 @@ form {
 
 .toggle-button span {
     font-size: 13px !important;
-}
-
-.btn .caret {
-    margin-left: 9px;
 }
 
 /* Gallery */
@@ -1288,9 +1288,15 @@ form {
 /*#region Override background color theme */
 
 /* override bootstrap */
+.btn .year-caret {
+    margin-left: 9px !important;
+}
 .dropdown-menu > li.header {
     font-weight: bold;
     text-align: center;
+}
+ul.dropdown-menu.year-menu {
+    margin: 2px 9px 0 !important;
 }
 
 /*For Bootstrap 3*/

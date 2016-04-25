@@ -1,0 +1,28 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th class="col-md-7">
+                Item
+            </th>
+            <th class="col-md-3 text-center">
+                Frequency
+            </th>
+            <th class="col-md-2 text-right">
+                Amount
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in items">
+            <td>
+                {{item.description}}
+            </td>
+            <td class="text-center">
+                {{item.occurance.occurance}}
+            </td>
+            <td class="text-right">
+                {{item.amount | removeNegativeSym | currency}}
+            </td>
+        </tr>
+    </tbody>
+</table>
