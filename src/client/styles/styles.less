@@ -588,11 +588,11 @@ form {
 
 .sidebar {
     width: @left_pane_width;
-    float: left;
+    left: 0px;
     display: block;
     background: #111;
     color: #eee;
-    position: relative;
+    position: fixed;
 }
 
     .sidebar hr {
@@ -753,7 +753,7 @@ form {
 
 .mainbar {
     position: relative;
-    margin-left: @left_pane_width;
+    margin-left: 0;
     margin-right: 0;
     width: auto;
     background: #fff;
@@ -766,6 +766,7 @@ form {
 
 /* Budget Specific */
 .budget {
+    margin-left: @left_pane_width !important;
     margin-right: @right_pane_width !important;
 }
 

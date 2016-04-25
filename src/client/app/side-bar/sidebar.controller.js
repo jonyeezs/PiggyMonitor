@@ -24,7 +24,7 @@
             logger.info('Activated Admin View');
         }
         function sidebarReady(){
-            return true;
+            return false;
         }
         function sideBarSetup(current){
             return [
