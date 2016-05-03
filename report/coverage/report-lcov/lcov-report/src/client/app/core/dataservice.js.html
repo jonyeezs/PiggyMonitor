@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for ./src/client/app/core/dataservice.js</title>
+    <title>Code coverage report for ./src/client/app/core/dataService.js</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../../../prettify.css">
     <link rel="stylesheet" href="../../../../base.css">
@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="header medium">
-    <h1>Code coverage report for <span class="entity">./src/client/app/core/dataservice.js</span></h1>
+    <h1>Code coverage report for <span class="entity">./src/client/app/core/dataService.js</span></h1>
     <h2>
         Statements: <span class="metric">57.14% <small>(8 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -21,7 +21,7 @@
         Lines: <span class="metric">61.54% <small>(8 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
-    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">./src/client/app/core/</a> &#187; dataservice.js</div>
+    <div class="path"><a href="../../../../index.html">All files</a> &#187; <a href="index.html">./src/client/app/core/</a> &#187; dataService.js</div>
 </div>
 <div class="body">
 <pre><table class="coverage">
@@ -98,11 +98,11 @@
 &nbsp;
     angular
         .module('app.core')
-        .factory('dataservice', dataservice);
+        .factory('dataService', dataService);
 &nbsp;
-    dataservice.$inject = ['$http', '$q', 'exception', 'logger'];
+    dataService.$inject = ['$http', '$q', 'exception', 'logger'];
     /* @ngInject */
-<span class="fstat-no" title="function not covered" >    function dataservice($http, $q, exception, logger) {</span>
+<span class="fstat-no" title="function not covered" >    function dataService($http, $q, exception, logger) {</span>
 <span class="cstat-no" title="statement not covered" >        var service = {</span>
             getPeople: getPeople,
             getMessageCount: getMessageCount

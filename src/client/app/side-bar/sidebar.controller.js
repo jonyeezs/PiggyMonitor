@@ -14,7 +14,7 @@
         activate();
 
         function activate() {
-            $scope.$on('sidebarOptionsUpdated', getPageOptions);
+            $scope.$on('sidebarUpdated', getPageOptions);
             getPageOptions();
          }
 

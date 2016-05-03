@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('budgetService', budgetService);
 
-    budgetService.$inject = ['_', 'sidebarservice','dataservice', '$q', 'exception', 'logger'];
+    budgetService.$inject = ['dataService'];
     /* @ngInject */
-    function budgetService(_, sidebarservice, dataservice, $q, exception, logger) {
+    function budgetService(dataService) {
 
         var service = {
             getYears: getYears,
@@ -17,26 +17,15 @@
         return service;
 
         function getYears() {
-            return dataservice.get('years').then(function(result){
+            return dataService.get('years').then(function(result){
                 return result.years;
             });
         }
 
         function getAll(year) {
-            return dataservice.get('years/' + year).then(function(result){
-                sidebarservice.setView(sidebarservice.views.Budget);
-                publishCategories(result.budget.items);
+            return dataService.get('years/' + year).then(function(result){
                 return result.budget.items;
             });
-        }
-
-        function publishCategories(items){
-            var categories = getCategories(items);
-            sidebarservice.update(categories);
-        }
-
-        function getCategories(items){
-            return _(items).map('category').uniq().value();
         }
     }
 })();

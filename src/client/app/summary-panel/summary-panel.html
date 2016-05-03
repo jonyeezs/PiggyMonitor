@@ -1,8 +1,28 @@
-
 <div ng-controller="SummaryPanelController as vm" class="summary-panel">
-    <div>
-        Some occurance options here
+    <div class="expense" ng-show="vm.showGraph">
+        <div class="heading">Expense Breakdown (percentage)</div>
+        <canvas id="pie" class="chart chart-pie" chart-data="vm.data" chart-labels="vm.labels" chart-legend="true">
+        </canvas>
     </div>
-    <div>Some graphic wheel comes here</div>
-    <div>Some summary down here</div>
+    <div class="difference" ng-show="vm.showGraph">
+        <div class="heading">Income vs Expense</div>
+        <div class="table-container">
+            <table class="table">
+                <tr>
+                    <th class="col-md-3 text-left">Income</th>
+                    <td class="col-md-9 text-right">{{vm.positiveflow | currency}}</td>
+                </tr>
+                <tr>
+                    <th class="col-md-3 text-left">Expense</th>
+                    <td class="col-md-9 text-right">{{vm.negativeflow | currency}}</td>
+                </tr>
+                <tr class="total">
+                    <th class="col-md-3"></th>
+                    <td class="col-md-9 text-right">
+                        <span ng-if="vm.deficit">(</span>{{vm.difference | currency}}<span ng-if="vm.deficit">)</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

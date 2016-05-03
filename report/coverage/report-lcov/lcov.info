@@ -447,9 +447,9 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:./src/client/app/core/dataservice.js
+SF:./src/client/app/core/dataService.js
 FN:1,(anonymous_1)
-FN:10,dataservice
+FN:10,dataService
 FN:18,getMessageCount
 FN:20,getPeople
 FN:25,success
@@ -457,7 +457,7 @@ FN:29,fail
 FNF:6
 FNH:1
 FNDA:1,(anonymous_1)
-FNDA:0,dataservice
+FNDA:0,dataService
 FNDA:0,getMessageCount
 FNDA:0,getPeople
 FNDA:0,success

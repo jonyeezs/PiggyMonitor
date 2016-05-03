@@ -8,7 +8,8 @@
         'app.budget',
         'app.dashboard',
         'app.summary',
-        'app.layout'
+        'app.layout',
+        'chart.js'
     ]);
 
 })();

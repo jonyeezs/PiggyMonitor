@@ -31,7 +31,7 @@
  - Run the unit tests using `gulp test` (via karma, mocha, sinon).
 
 ### Running in dev mode
- - Run the project with `gulp serve-dev`
+     - Run the project with `gulp serve-dev`
 
  - opens it in a browser and updates the browser with any files changes.
 

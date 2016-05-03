@@ -5,9 +5,9 @@
         .module('app.budget')
         .controller('BudgetController', BudgetController);
 
-    BudgetController.$inject = ['_', 'sidebarservice', 'budgetService', 'logger'];
+    BudgetController.$inject = ['_', 'budgetService', 'sidebarservice', 'summaryservice', 'logger'];
     /* @ngInject */
-    function BudgetController(_, sidebarservice, budgetService, logger) {
+    function BudgetController(_, budgetService, sidebarservice, summaryservice, logger) {
         var vm = this;
         vm.title = 'Budget';
         vm.yearSelectionMsg = 'Select Budget Year';
@@ -51,6 +51,8 @@
         function updateItems(year){
             budgetService.getAll(year).then(function(result){
                 buildIncomeAndExpenseTables(result);
+                sidebarservice.publish(result);
+                summaryservice.publish(result);
             });
         }
 

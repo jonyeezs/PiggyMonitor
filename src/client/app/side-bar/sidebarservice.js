@@ -5,9 +5,9 @@
         .module('app.sidebar')
         .factory('sidebarservice', sidebarservice);
 
-    sidebarservice.$inject = ['_', '$rootScope', 'exception'];
+    sidebarservice.$inject = ['_', '$rootScope', 'exception', 'categoryFactory'];
     /* @ngInject */
-    function sidebarservice(_, $rootScope, exception) {
+    function sidebarservice(_, $rootScope, exception, categoryFactory) {
 
         // property and value are case sensitive
         var views = {
@@ -15,11 +15,11 @@
         };
 
         var currentView = '';
-        var optionList = [];
+        var categoryOptions = [];
 
         var service = {
             setView: setView,
-            update: update,
+            publish: publish,     // Takes in single string value array.
             get: get,
             views: views
         };
@@ -36,19 +36,19 @@
             }
         }
 
-        function update(list, view) {
+        function publish(list, view) {
             if(view){
                 setView(view);
             }
-            optionList = list;
-            $rootScope.$broadcast('sidebarOptionsUpdated');
+            categoryOptions = categoryFactory.createLabels(list);
+            $rootScope.$broadcast('sidebarUpdated');
         }
 
         function get(){
             var list = [];
             switch(currentView){
                 case views.Budget:
-                    list = _.map(optionList, mapIt);
+                    list = _.map(categoryOptions, mapIt);
                     list.unshift({
                         name: 'all',
                         content: '<i class="fa fa-dashboard"></i>all'}

@@ -118,9 +118,9 @@
         .module('app.dashboard')
         .controller('DashboardController', DashboardController);
 &nbsp;
-    DashboardController.$inject = ['$q', 'dataservice', 'logger'];
+    DashboardController.$inject = ['$q', 'dataService', 'logger'];
     /* @ngInject */
-<span class="fstat-no" title="function not covered" >    function DashboardController($q, dataservice, logger) {</span>
+<span class="fstat-no" title="function not covered" >    function DashboardController($q, dataService, logger) {</span>
 <span class="cstat-no" title="statement not covered" >        var vm = this;</span>
 <span class="cstat-no" title="statement not covered" >        vm.news = {</span>
             title: 'piggyMonitor',
@@ -140,14 +140,14 @@
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function getMessageCount() {</span>
-<span class="cstat-no" title="statement not covered" >            return dataservice.getMessageCount().then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return dataService.getMessageCount().then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
 <span class="cstat-no" title="statement not covered" >                vm.messageCount = data;</span>
 <span class="cstat-no" title="statement not covered" >                return vm.messageCount;</span>
             });
         }
 &nbsp;
 <span class="fstat-no" title="function not covered" >        function getPeople() {</span>
-<span class="cstat-no" title="statement not covered" >            return dataservice.getPeople().then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return dataService.getPeople().then(<span class="fstat-no" title="function not covered" >function (data) {</span></span>
 <span class="cstat-no" title="statement not covered" >                vm.people = data;</span>
 <span class="cstat-no" title="statement not covered" >                return vm.people;</span>
             });
