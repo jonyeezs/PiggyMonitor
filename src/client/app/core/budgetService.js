@@ -24,7 +24,7 @@
 
         function getAll(year) {
             return dataService.get('years/' + year).then(function(result){
-                return result.budget.items;
+                return result.items;
             });
         }
     }

@@ -9,27 +9,18 @@
     /* @ngInject */
     function SidebarController($scope, sidebarservice, logger) {
         var vm = this;
-        vm.changeScreen = changeScreen;
-        vm.sidebarReady = sidebarReady;
         activate();
 
         function activate() {
-            $scope.$on('sidebarUpdated', getPageOptions);
-            getPageOptions();
+            vm.navOptions = setupOptions();
          }
 
-        function getPageOptions() {
-            vm.navOptions = sideBarSetup();
-        }
-
-        function changeScreen(option){
-            logger.info('Activated Admin View');
-        }
-        function sidebarReady(){
-            return false;
-        }
-        function sideBarSetup(){
-            return sidebarservice.get();
+        function setupOptions(){
+            if (vm.items && vm.items.length > 0)
+            {
+                return sidebarservice.renderOptions(vm.items, sidebarservice.views.Budget);
+            }
+            return [];
         }
     }
 })();

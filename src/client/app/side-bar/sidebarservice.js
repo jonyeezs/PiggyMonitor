@@ -14,44 +14,25 @@
                 Budget: 'Budget'
         };
 
-        var currentView = '';
         var categoryOptions = [];
 
         var service = {
-            setView: setView,
-            publish: publish,     // Takes in single string value array.
-            get: get,
+            renderOptions: renderOptions,
             views: views
         };
 
         return service;
 
-        function setView(view){
-            if (_.has(views, view)){
-                currentView = view;
-            }
-            else
-            {
-                return exception.catcher('View: ' + view + 'does not exist');
-            }
-        }
-
-        function publish(list, view) {
-            if(view){
-                setView(view);
-            }
-            categoryOptions = categoryFactory.createLabels(list);
-            $rootScope.$broadcast('sidebarUpdated');
-        }
-
-        function get(){
+        function renderOptions(items, viewType){
             var list = [];
-            switch(currentView){
+            switch(viewType){
                 case views.Budget:
-                    list = _.map(categoryOptions, mapIt);
+                    categoryOptions = categoryFactory.createLabels(items);
+                    list = _.map(categoryOptions, createBudgetOption);
                     list.unshift({
                         name: 'all',
-                        content: '<i class="fa fa-dashboard"></i>all'}
+                        icon: 'all all-side',
+                        content: 'all'}
                     );
                     break;
                 default:
@@ -60,17 +41,11 @@
             return list;
         }
 
-        function mapIt(option){
-            switch(currentView){
-                case views.Budget:
-                    return createBudgetOption(option);
-            }
-        }
-
         function createBudgetOption(optionName){
             return {
                 name: optionName,
-                content: '<i class="fa fa-dashboard"></i>' + optionName
+                icon: optionName+ ' ' + optionName + '-side',
+                content: optionName
             };
         }
     }

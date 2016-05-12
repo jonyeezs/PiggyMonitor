@@ -13,7 +13,7 @@
         vm.yearSelectionMsg = 'Select Budget Year';
         vm.selectedYear = vm.yearSelectionMsg;
         vm.selectYear = selectYear;
-
+        vm.isBudgetUpdated = isBudgetUpdated;
         /* table Status */
         vm.incomeTable = {
             items: [],
@@ -27,12 +27,15 @@
                 open: false
             }
         };
+        vm.allItems = [];
+
+        var itemsUpdated;
 
         activate();
 
         function activate() {
             logger.info('Activated Budget View');
-            sidebarservice.setView(sidebarservice.views.Budget);
+            itemsUpdated = false;
             updateYears();
         }
 
@@ -49,11 +52,17 @@
         }
 
         function updateItems(year){
+            itemsUpdated = false;
             budgetService.getAll(year).then(function(result){
+                vm.allItems = result;
                 buildIncomeAndExpenseTables(result);
-                sidebarservice.publish(result);
+                itemsUpdated = true;
                 summaryservice.publish(result);
             });
+        }
+
+        function isBudgetUpdated(){
+            return itemsUpdated;
         }
 
         function buildIncomeAndExpenseTables(items){

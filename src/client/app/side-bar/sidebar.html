@@ -1,15 +1,11 @@
-﻿<div ng-controller="SidebarController as vm">
-    <ht-sidebar when-done-animating="vm.sidebarReady()">
-        <div class="sidebar-filler"></div>
-        <div class="sidebar-dropdown"><a href="#">Menu</a></div>
-        <div class="sidebar-inner">
-            <ul class="navi">
-                <li class="fade-selection-animation"
-                    ng-repeat="r in vm.navOptions">
-                    <a ng-click="changeScreen(r.name)"
-                       ng-bind-html="r.content"></a>
-                </li>
-            </ul>
-        </div>
-    </ht-sidebar>
+<div class="sidebar">
+    <div class="sidebar-filler"></div>
+    <div class="sidebar-inner">
+        <ul class="navi">
+            <li class="fade-selection-animation" ng-repeat="r in vm.navOptions">
+                <a ng-click="changeScreen(r.name)">
+                    <i ng-class="r.icon">{{r.content}}</i> </a>
+            </li>
+        </ul>
+    </div>
 </div>

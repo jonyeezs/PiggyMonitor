@@ -1,5 +1,5 @@
 <section class="mainbar budget">
-    <div ng-include="'app/side-bar/sidebar.html'"></div>
+    <div side-bar items="vm.allItems" ng-if="vm.isBudgetUpdated()"></div>
     <section class="matter">
         <div class="container">
             <div class="row option-row">
