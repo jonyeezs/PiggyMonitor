@@ -5,13 +5,13 @@
         .module('app.budget')
         .controller('BudgetController', BudgetController);
 
-    BudgetController.$inject = ['_', 'budgetService', 'sidebarservice', 'summaryservice', 'logger'];
+    BudgetController.$inject = ['_', 'budgetService', 'logger'];
     /* @ngInject */
-    function BudgetController(_, budgetService, sidebarservice, summaryservice, logger) {
+    function BudgetController(_, budgetService, logger) {
         var vm = this;
         vm.title = 'Budget';
         vm.yearSelectionMsg = 'Select Budget Year';
-        vm.selectedYear = vm.yearSelectionMsg;
+        vm.selectedYear = '';
         vm.selectYear = selectYear;
         vm.isBudgetUpdated = isBudgetUpdated;
         /* table Status */

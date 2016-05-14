@@ -5,7 +5,7 @@
             <div class="row option-row">
                 <div class="col-md-12 btn-group pull-left" uib-dropdown>
                     <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
-                        {{vm.selectedYear}}<span class="caret year-caret"></span>
+                        {{!vm.selectedYear ? vm.yearSelectionMsg : vm.selectedYear}}<span class="caret year-caret"></span>
                     </button>
                     <ul class="dropdown-menu year-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                         <li ng-show="vm.selectedYear != vm.yearSelectionMsg" class="header">
