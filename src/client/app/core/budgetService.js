@@ -11,7 +11,8 @@
 
         var service = {
             getYears: getYears,
-            getYear: getYear
+            getYear: getYear,
+            getYearWithOccurance: getYearWithOccurance
         };
 
         return service;
@@ -24,6 +25,12 @@
 
         function getYear(year) {
             return dataService.get('years/' + year).then(function(result){
+                return result.items;
+            });
+        }
+
+        function getYearWithOccurance(year, occuranceType) {
+            return dataService.get('years/' + year, {occurance: occuranceType}).then(function(result){
                 return result.items;
             });
         }
