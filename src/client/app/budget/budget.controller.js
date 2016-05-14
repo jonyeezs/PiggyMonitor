@@ -53,7 +53,7 @@
 
         function updateItems(year){
             itemsUpdated = false;
-            budgetService.getAll(year).then(function(result){
+            budgetService.getYear(year).then(function(result){
                 vm.allItems = result;
                 buildIncomeAndExpenseTables(result);
                 itemsUpdated = true;

@@ -11,7 +11,7 @@
 
         var service = {
             getYears: getYears,
-            getAll: getAll
+            getYear: getYear
         };
 
         return service;
@@ -22,7 +22,7 @@
             });
         }
 
-        function getAll(year) {
+        function getYear(year) {
             return dataService.get('years/' + year).then(function(result){
                 return result.items;
             });
