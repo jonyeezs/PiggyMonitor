@@ -2,18 +2,18 @@
     'use strict';
 
     angular
-        .module('app.sidebar')
-        .directive('sideBar', sideBar);
+        .module('app.summary')
+        .directive('summaryPanel', summaryPanel);
     /* @ngInject */
-    function sideBar () {
+    function summaryPanel () {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'app/side-bar/sidebar.html',
+            templateUrl: 'app/summary-panel/summary-panel.html',
             scope: true,
             bindToController: {
-                items: '='
+                year: '='
             },
-            controller: 'SidebarController',
+            controller: 'SummaryPanelController',
             controllerAs: 'vm'
         };
         return directive;

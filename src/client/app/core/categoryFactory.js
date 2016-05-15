@@ -11,8 +11,8 @@
 
         var service = {
             createLabels: createLabels,
-            createExpense: createExpenses,
-            createIncome: createIncome
+            createForExpense: createForExpense,
+            createForIncome: createForIncome
         };
 
         return service;
@@ -21,32 +21,33 @@
             return _(items).map('category').uniq().value();
         }
 
-        function createExpenses(items) {
-            var categoryDetails = [];
-            var total = getTotal(items, filterByExpense);
-            var groupedCategories = categorizeItems(items, filterByExpense);
-
-            _.forOwn(groupedCategories, function(value, key){
-                var categoryTotal = Math.abs(_(value).map('amount').sum());
-                categoryDetails.push(mapLabelData(key, categoryTotal, calculatePercentage(categoryTotal, total)));
-            });
-            return categoryDetails;
+        function createForExpense(items) {
+            return categorizeItems(items, filterByExpense);
         }
 
-        function createIncome(items) {
-            var categoryDetails = [];
-            var total = getTotal(items, filterByIncome);
-            var groupedCategories = categorizeItems(items, filterByIncome);
-
-            _.forOwn(groupedCategories, function(value, key){
-                var categoryTotal = Math.abs(_(value).map('amount').sum());
-                categoryDetails.push(mapLabelData(key, categoryTotal, calculatePercentage(categoryTotal, total)));
-            });
-            return categoryDetails;
+        function createForIncome(items) {
+            return categorizeItems(items, filterByIncome);
         }
 
         function categorizeItems(items, byFilteryType){
-            return _(items).filter(byFilteryType).groupBy('category').value();
+            var categoryDetails = [];
+            var total = getTotal(items, byFilteryType);
+            //TODO you can refactor this better. Maybe use something like reduce;
+            var groupedCategories = _(items).filter(byFilteryType).groupBy('category').value();
+
+            _.forOwn(groupedCategories, function(value, key){
+                var categoryTotal = Math.abs(_(value).map('amount').sum());
+                categoryDetails.push(mapLabelData(key, categoryTotal, calculatePercentage(categoryTotal, total)));
+            });
+            return categoryDetails;
+        }
+
+        function mapLabelData(key, total, totalPercentage){
+            return {
+                label: key,
+                total: total,
+                percentage: totalPercentage
+            };
         }
 
         function getTotal(items, byFilteryType){
@@ -65,14 +66,6 @@
 
         function filterByIncome(item){
             return item.amount > 0;
-        }
-
-        function mapLabelData(key, total, totalPercentage){
-            return {
-                label: key,
-                total: total,
-                percentage: totalPercentage
-            };
         }
     }
 })();

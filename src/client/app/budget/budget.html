@@ -35,5 +35,5 @@
             </div>
         </div>
     </section>
-    <div ng-include="'app/summary-panel/summary-panel.html'"></div>
+    <div summary-panel year="vm.selectedYear" ng-if="vm.isBudgetUpdated()"></div>
 </section>

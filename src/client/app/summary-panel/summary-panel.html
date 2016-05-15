@@ -1,4 +1,14 @@
-<div ng-controller="SummaryPanelController as vm" class="summary-panel">
+<div class="summary-panel">
+    <div class="col-md-12 btn-group pull-left" uib-dropdown>
+        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Monthly<span class="caret year-caret"></span>
+        </button>
+        <ul class="dropdown-menu year-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+            <li role="menuitem">
+                yearly
+            </li>
+        </ul>
+    </div>
     <div class="expense" ng-show="vm.showGraph">
         <div class="heading">Expense Breakdown (percentage)</div>
         <canvas id="pie" class="chart chart-pie" chart-data="vm.data" chart-labels="vm.labels" chart-legend="true">

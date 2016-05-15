@@ -57,7 +57,6 @@
                 vm.allItems = result;
                 buildIncomeAndExpenseTables(result);
                 itemsUpdated = true;
-                summaryservice.publish(result);
             });
         }
 
