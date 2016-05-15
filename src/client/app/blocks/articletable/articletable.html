@@ -1,24 +1,46 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <th class="col-md-7">
-                Item
+            <th class="col-md-5 text-left">
+                <a href="#" ng-click="sortType = 'item'; sortReverse = !sortReverse">
+                    Item
+                </a>
+                <span ng-show="sortType == 'item' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'item' && sortReverse" class="fa fa-caret-up"></span>
             </th>
-            <th class="col-md-3 text-center">
-                Frequency
+            <th class="col-md-3 text-left">
+                <a href="#" ng-click="sortType = 'category'; sortReverse = !sortReverse">
+                    Category
+                </a>
+                <span ng-show="sortType == 'category' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'category' && sortReverse" class="fa fa-caret-up"></span>
+            </th>
+            <th class="col-md-2 text-center">
+                <a href="#" ng-click="sortType = 'occurance'; sortReverse = !sortReverse">
+                    Frequency
+                </a>
+                <span ng-show="sortType == 'occurance' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'occurance' && sortReverse" class="fa fa-caret-up"></span>
             </th>
             <th class="col-md-2 text-right">
-                Amount
+                <a href="#" ng-click="sortType = 'amount'; sortReverse = !sortReverse">
+                    Amount
+                </a>
+                <span ng-show="sortType == 'amount' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'amount' && sortReverse" class="fa fa-caret-up"></span>
             </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="item in items">
+        <tr ng-repeat="item in items | orderBy:sortType:sortReverse">
             <td>
                 {{item.description}}
             </td>
+            <td class="text-left">
+                {{item.category}}
+            </td>
             <td class="text-center">
-                {{item.occurance.occurance}}
+                {{item.occurance}}
             </td>
             <td class="text-right">
                 {{item.amount | removeNegativeSym | currency}}

@@ -11,6 +11,10 @@
             restrict: 'EA',
             scope: {
                 items: '='
+            },
+            link: function(scope){
+                 scope.sortType     = '';
+                 scope.sortReverse  = false;
             }
         };
         return directive;
