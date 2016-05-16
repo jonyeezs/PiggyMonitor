@@ -17,11 +17,10 @@
 
         return service;
 
-
         function get(resource, query) {
 
-            var getCommand = !query ? $http.get(url + '/' + resource)
-                                    : $http.get(url + '/' + resource, { params: query });
+            var getCommand = !query ? $http.get(url + '/' + resource) :
+                    $http.get(url + '/' + resource, {params: query});
             return getCommand
                 .then(success)
                 .catch(fail);

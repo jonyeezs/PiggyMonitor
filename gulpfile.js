@@ -84,6 +84,12 @@ gulp.task('fonts', ['clean-fonts'], function() {
         .pipe(gulp.dest(config.build + 'fonts'));
 });
 
+gulp.task('font-temp', ['clean-fonts'], function() {
+    return gulp
+        .src(config.fonts)
+        .pipe(gulp.dest(config.temp + 'fonts'));
+});
+
 /**
  * Compress images
  * @return {Stream}
@@ -265,6 +271,7 @@ gulp.task('clean', function(done) {
  * @param  {Function} done - callback when complete
  */
 gulp.task('clean-fonts', function(done) {
+    clean(config.temp + 'fonts/**/*.*', done);
     clean(config.build + 'fonts/**/*.*', done);
 });
 

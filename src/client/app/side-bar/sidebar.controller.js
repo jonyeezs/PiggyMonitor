@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -13,11 +13,10 @@
 
         function activate() {
             vm.navOptions = setupOptions();
-         }
+        }
 
-        function setupOptions(){
-            if (vm.items && vm.items.length > 0)
-            {
+        function setupOptions() {
+            if (vm.items && vm.items.length > 0) {
                 return sidebarservice.renderOptions(vm.items, sidebarservice.views.Budget);
             }
             return [];

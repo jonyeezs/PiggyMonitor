@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -11,16 +11,27 @@
     function SummaryPanelController(_, $scope, budgetService, categoryFactory) {
         var vm = this;
         vm.showGraph = false;
+        vm.occurances = ['monthly', 'semiannual', 'annually'];
+        vm.selectOccurance = selectOccurance;
+        vm.occurance = 'monthly';
+
         activate();
 
         function activate() {
             beginSummaryProcess(vm.year);
         }
 
-        function beginSummaryProcess(year){
+        function selectOccurance(occurance){
+            vm.occurance = occurance;
+            beginSummaryProcess(vm.year);
+        }
+
+        function beginSummaryProcess(year) {
             vm.showGraph = false;
-            if(!year) {return;}
-            budgetService.getYearWithOccurance(year, 'monthly').then(function(items){
+            if (!year) {
+                return;
+            }
+            budgetService.getYearWithOccurance(year, vm.occurance).then(function (items) {
                 populateExpensePieData(items);
                 populateIncomeVsExpense(items);
             });
@@ -33,11 +44,11 @@
             vm.showGraph = true;
         }
 
-        function populateIncomeVsExpense(items){
+        function populateIncomeVsExpense(items) {
             var income = categoryFactory.createForIncome(items);
-            vm.positiveflow = _.sum(_.map(income,'total'));
+            vm.positiveflow = _.sum(_.map(income, 'total'));
             var expense = categoryFactory.createForExpense(items);
-            vm.negativeflow = _.sum(_.map(expense,'total'));
+            vm.negativeflow = _.sum(_.map(expense, 'total'));
             var difference = vm.positiveflow - vm.negativeflow;
             vm.difference = difference < 0 ? Math.abs(difference) : difference;
             vm.deficit = difference < 0;

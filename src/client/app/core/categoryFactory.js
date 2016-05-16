@@ -17,7 +17,7 @@
 
         return service;
 
-        function createLabels(items){
+        function createLabels(items) {
             return _(items).map('category').uniq().value();
         }
 
@@ -29,42 +29,44 @@
             return categorizeItems(items, filterByIncome);
         }
 
-        function categorizeItems(items, byFilteryType){
+        function categorizeItems(items, byFilteryType) {
             var categoryDetails = [];
             var total = getTotal(items, byFilteryType);
             //TODO you can refactor this better. Maybe use something like reduce;
             var groupedCategories = _(items).filter(byFilteryType).groupBy('category').value();
 
-            _.forOwn(groupedCategories, function(value, key){
+            _.forOwn(groupedCategories, function (value, key) {
                 var categoryTotal = Math.abs(_(value).map('amount').sum());
-                categoryDetails.push(mapLabelData(key, categoryTotal, calculatePercentage(categoryTotal, total)));
+                categoryDetails.push(mapLabelData(key, categoryTotal, total));
             });
             return categoryDetails;
         }
 
-        function mapLabelData(key, total, totalPercentage){
+        function mapLabelData(key, categoryTotal, total) {
             return {
                 label: key,
-                total: total,
-                percentage: totalPercentage
+                total: categoryTotal,
+                percentage: calculatePercentage(categoryTotal, total)
             };
         }
 
-        function getTotal(items, byFilteryType){
+        function getTotal(items, byFilteryType) {
             var expenseItems = _.filter(items, byFilteryType);
-            return _.sumBy(expenseItems, function(item) { return Math.abs(item.amount); });
+            return _.sumBy(expenseItems, function (item) {
+                return Math.abs(item.amount);
+            });
         }
 
-        function calculatePercentage(category, total){
-            var result = _.round(category/total*100);
+        function calculatePercentage(category, total) {
+            var result = _.round(category / total * 100);
             return result;
         }
 
-        function filterByExpense(item){
+        function filterByExpense(item) {
             return item.amount < 0;
         }
 
-        function filterByIncome(item){
+        function filterByIncome(item) {
             return item.amount > 0;
         }
     }

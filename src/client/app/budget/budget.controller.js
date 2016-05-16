@@ -39,35 +39,38 @@
             updateYears();
         }
 
-        function updateYears(){
-            budgetService.getYears().then(function(result){
+        function updateYears() {
+            budgetService.getYears().then(function (result) {
                 vm.availableYears = result;
             });
         }
 
-        function selectYear(year)
-        {
+        function selectYear(year) {
             vm.selectedYear = year;
             updateItems(year);
         }
 
-        function updateItems(year){
+        function updateItems(year) {
             itemsUpdated = false;
-            budgetService.getYear(year).then(function(result){
+            budgetService.getYear(year).then(function (result) {
                 vm.allItems = result;
                 buildIncomeAndExpenseTables(result);
                 itemsUpdated = true;
             });
         }
 
-        function isBudgetUpdated(){
+        function isBudgetUpdated() {
             return itemsUpdated;
         }
 
-        function buildIncomeAndExpenseTables(items){
-            vm.incomeTable.items = _.filter(items, function(item) { return item.amount > 0;});
+        function buildIncomeAndExpenseTables(items) {
+            vm.incomeTable.items = _.filter(items, function (item) {
+                return item.amount > 0;
+            });
             vm.incomeTable.status.open = true;
-            vm.expenseTable.items = _.filter(items, function(item) { return item.amount < 0;});
+            vm.expenseTable.items = _.filter(items, function (item) {
+                return item.amount < 0;
+            });
             vm.expenseTable.status.open = true;
         }
     }
