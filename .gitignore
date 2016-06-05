@@ -4,5 +4,8 @@ node_modules/
 bower_components/
 build/
 
+# generated files
+report/coverage/*
+
 # other
 .tmp
