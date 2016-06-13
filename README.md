@@ -22,7 +22,7 @@
 
     >Refer to these [instructions on how to not require sudo](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
 
-## Running HotTowel
+## Running piggyMonitor
 
 ### Linting
  - Run code analysis using `gulp vet`. This runs jshint, jscs, and plato.
@@ -42,69 +42,24 @@
 ### Running the optimized code
  - Run the optimize project from the build folder with `gulp serve-build`
 
-## Exploring HotTowel
-HotTowel Angular starter project
+## Exploring piggyMonitor
+piggyMonitor Angular starter project
 
 ### Structure
-The structure also contains a gulpfile.js and a server folder. The server is there just so we can serve the app using node. Feel free to use any server you wish.
+The structure also contains a gulpfile.js and a server folder.
 
+The server is there just so we can serve the app using node.
 	/src
 		/client
 			/app
-			/content
 
 ### Installing Packages
-When you generate the project it should run these commands, but if you notice missing packages, run these again:
 
+To install packages for gulp via [npm](https://docs.npmjs.com/getting-started/using-a-package.json). Packages from package.json
  - `npm install`
+
+To install packages for the app via . Packages from bower.json
  - `bower install`
-
-### The Modules
-The app has 4 feature modules and depends on a series of external modules and custom but cross-app modules
-
-```
-app --> [
-        app.admin --> [
-            app.core,
-            app.widgets
-        ],
-        app.dashboard --> [
-            app.core,
-            app.widgets
-        ],
-        app.layout --> [
-            app.core
-        ],
-        app.widgets,
-		app.core --> [
-			ngAnimate,
-			ngSanitize,
-			ui.router,
-			blocks.exception,
-			blocks.logger,
-			blocks.router
-		]
-    ]
-```
-
-#### core Module
-Core modules are ones that are shared throughout the entire application and may be customized for the specific application. Example might be common data services.
-
-This is an aggregator of modules that the application will need. The `core` module takes the blocks, common, and Angular sub-modules as dependencies.
-
-#### blocks Modules
-Block modules are reusable blocks of code that can be used across projects simply by including them as dependencies.
-
-##### blocks.logger Module
-The `blocks.logger` module handles logging across the Angular app.
-
-##### blocks.exception Module
-The `blocks.exception` module handles exceptions across the Angular app.
-
-It depends on the `blocks.logger` module, because the implementation logs the exceptions.
-
-##### blocks.router Module
-The `blocks.router` module contains a routing helper module that assists in adding routes to the $routeProvider.
 
 ## Gulp Tasks
 
@@ -113,6 +68,20 @@ The `blocks.router` module contains a routing helper module that assists in addi
 - `gulp help`
 
     Displays all of the available gulp tasks.
+
+### Build app and specs base file
+
+The index.html and specs.html, are generated via gulp using a boilerplate.
+
+The boilerplates can be found in the boilerplate folder.
+
+- `gulp inject`
+
+    Builds the index.html
+
+- `gulp build-spec`
+
+    Builds the specs.html
 
 ### Code Analysis
 
@@ -138,17 +107,9 @@ The `blocks.router` module contains a routing helper module that assists in addi
 
     Runs all unit tests using karma runner, mocha, chai and sinon with phantomjs. Depends on vet task, for code analysis.
 
-- `gulp test --startServers`
-
-    Runs all unit tests and midway tests. Cranks up a second node process to run a server for the midway tests to hit a web api.
-
 - `gulp autotest`
 
     Runs a watch to run all unit tests.
-
-- `gulp autotest --startServers`
-
-    Runs a watch to run all unit tests and midway tests. Cranks up a second node process to run a server for the midway tests to hit a web api.
 
 ### Cleaning Up
 

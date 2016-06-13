@@ -1,15 +1,15 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('app.core')
-        .filter('removeNegativeSym', removeNegativeSymFIlter);
+  angular
+      .module('app.core')
+      .filter('removeNegativeSym', removeNegativeSymFIlter);
 
-    removeNegativeSymFIlter.$inject = [];
+  removeNegativeSymFIlter.$inject = [];
 
-    function removeNegativeSymFIlter() {
-        return function (input) {
-            return input < 0 ? (input * -1) : input;
-        };
-    }
+  function removeNegativeSymFIlter() {
+    return function (input) {
+      return input < 0 ? (input * -1) : input;
+    };
+  }
 })();

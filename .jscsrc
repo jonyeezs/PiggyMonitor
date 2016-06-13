@@ -1,3 +1,4 @@
+
 {
     "excludeFiles": ["node_modules/**", "bower_components/**"],
 
@@ -13,11 +14,11 @@
     "requireOperatorBeforeLineBreak": true,
     "requireCamelCaseOrUpperCaseIdentifiers": true,
     "maximumLineLength": {
-      "value": 100,
+      "value": 120,
       "allowComments": true,
       "allowRegex": true
     },
-    "validateIndentation": 4,
+    "validateIndentation": 2,
     "validateQuoteMarks": "'",
 
     "disallowMultipleLineStrings": true,
@@ -49,9 +50,9 @@
     "requireSpacesInConditionalExpression": true,
     "requireSpaceBeforeBlockStatements": true,
     "requireLineFeedAtFileEnd": true,
-    "disallowSpacesInsideObjectBrackets": "all",
     "disallowSpacesInsideArrayBrackets": "all",
     "disallowSpacesInsideParentheses": true,
+    "disallowSpacesInsideObjectBrackets": false,
 
     "jsDoc": {
         "checkAnnotations": true,
@@ -67,8 +68,8 @@
     "disallowDanglingUnderscores": null,
     "disallowEmptyBlocks": null,
     "disallowTrailingComma": null,
-    "requireCommaBeforeLineBreak": null,
-    "requireDotNotation": null,
+    "requireCommaBeforeLineBreak": true,
+    "requireDotNotation": true,
     "requireMultipleVarDecl": null,
     "requireParenthesesAroundIIFE": true
 }

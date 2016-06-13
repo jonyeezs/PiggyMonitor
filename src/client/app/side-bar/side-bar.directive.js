@@ -1,20 +1,20 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('app.sidebar')
-        .directive('sideBar', sideBar);
-    /* @ngInject */
-    function sideBar () {
-        var directive = {
-            restrict: 'EA',
-            templateUrl: 'app/side-bar/sidebar.html',
-            scope: true,
-            bindToController: {
-                items: '='
-            },
-            controller: 'SidebarController',
-            controllerAs: 'vm'
-        };
-        return directive;
-    }})();
+  angular
+      .module('app.sidebar')
+      .directive('sideBar', sideBar);
+  /* @ngInject */
+  function sideBar () {
+    var directive = {
+      restrict: 'EA',
+      templateUrl: 'app/side-bar/sidebar.html',
+      scope: true,
+      bindToController: {
+        items: '='
+      },
+      controller: 'SidebarController',
+      controllerAs: 'vm'
+    };
+    return directive;
+  }})();

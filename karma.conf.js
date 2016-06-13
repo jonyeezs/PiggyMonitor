@@ -14,11 +14,6 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: gulpConfig.karma.exclude,
-
-        proxies: {
-            '/': 'http://localhost:8888/'
-        },
-
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: gulpConfig.karma.preprocessors,
@@ -31,7 +26,7 @@ module.exports = function(config) {
         coverageReporter: {
             dir: gulpConfig.karma.coverage.dir,
             reporters: gulpConfig.karma.coverage.reporters
-        },
+          },
 
         // web server port
         port: 9876,
@@ -42,7 +37,7 @@ module.exports = function(config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
         // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
@@ -55,5 +50,5 @@ module.exports = function(config) {
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false
-    });
-};
+      });
+  };

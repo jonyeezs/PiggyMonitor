@@ -1,12 +1,12 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular.module('app.budget', [
-        'ui.bootstrap',
-        'app.core',
-        'blocks.article',
-        'app.summary',
-        'app.sidebar'
-      ]);
+  angular.module('app.budget', [
+      'ui.bootstrap',
+      'app.core',
+      'blocks.article',
+      'app.summary',
+      'app.sidebar'
+    ]);
 
 })();

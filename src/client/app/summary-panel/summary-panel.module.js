@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular.module('app.summary', ['app.core', 'chart.js']);
+  angular.module('app.summary', ['app.core', 'chart.js']);
 })();
