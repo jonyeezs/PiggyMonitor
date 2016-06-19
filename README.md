@@ -22,25 +22,7 @@
 
     >Refer to these [instructions on how to not require sudo](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
 
-## Running piggyMonitor
-
-### Linting
- - Run code analysis using `gulp vet`. This runs jshint, jscs, and plato.
-
-### Tests
- - Run the unit tests using `gulp test` (via karma, mocha, sinon).
-
-### Running in dev mode
-     - Run the project with `gulp serve-dev`
-
- - opens it in a browser and updates the browser with any files changes.
-
-### Building the project
- - Build the optimized project using `gulp build`
- - This create the optimized code for the project and puts it in the build folder
-
-### Running the optimized code
- - Run the optimize project from the build folder with `gulp serve-build`
+***
 
 ## Exploring piggyMonitor
 piggyMonitor Angular starter project
@@ -49,9 +31,21 @@ piggyMonitor Angular starter project
 The structure also contains a gulpfile.js and a server folder.
 
 The server is there just so we can serve the app using node.
-	/src
-		/client
-			/app
+
+    /src
+        /client
+            /app
+            /spec
+
+#### Test Stack
+Framework and libaries setup in _karma.conf.js::frameworks_
+
+- Using [Karma](https://karma-runner.github.io/0.13/index.html) as the test runner.
+- The specs is build on [Mocha](https://mochajs.org/) test framework.
+- Using [Chai](http://chaijs.com/api/bdd/) assertions.
+- and lastly, [Sinon](http://sinonjs.org/docs/) for test doubles
+
+
 
 ### Installing Packages
 
@@ -61,7 +55,9 @@ To install packages for gulp via [npm](https://docs.npmjs.com/getting-started/us
 To install packages for the app via . Packages from bower.json
  - `bower install`
 
-## Gulp Tasks
+***
+
+## Running piggyMonitor with Gulp
 
 ### Task Listing
 
@@ -82,90 +78,6 @@ The boilerplates can be found in the boilerplate folder.
 - `gulp build-spec`
 
     Builds the specs.html
-
-### Code Analysis
-
-- `gulp vet`
-
-    Performs static code analysis on all javascript files. Runs jshint and jscs.
-
-- `gulp vet --verbose`
-
-    Displays all files affected and extended information about the code analysis.
-
-- `gulp plato`
-
-    Performs code analysis using plato on all javascript files. Plato generates a report in the reports folder.
-
-### Testing
-
-- `gulp serve-specs`
-
-    Serves and browses to the spec runner html page and runs the unit tests in it. Injects any changes on the fly and re runs the tests. Quick and easy view of tests as an alternative to terminal via `gulp test`.
-
-- `gulp test`
-
-    Runs all unit tests using karma runner, mocha, chai and sinon with phantomjs. Depends on vet task, for code analysis.
-
-- `gulp autotest`
-
-    Runs a watch to run all unit tests.
-
-### Cleaning Up
-
-- `gulp clean`
-
-    Remove all files from the build and temp folders
-
-- `gulp clean-images`
-
-    Remove all images from the build folder
-
-- `gulp clean-code`
-
-    Remove all javascript and html from the build folder
-
-- `gulp clean-fonts`
-
-    Remove all fonts from the build folder
-
-- `gulp clean-styles`
-
-    Remove all styles from the build folder
-
-### Fonts and Images
-
-- `gulp fonts`
-
-    Copy all fonts from source to the build folder
-
-- `gulp images`
-
-    Copy all images from source to the build folder
-
-### Styles
-
-- `gulp styles`
-
-    Compile less files to CSS, add vendor prefixes, and copy to the build folder
-
-### Bower Files
-
-- `gulp wiredep`
-
-    Looks up all bower components' main files and JavaScript source code, then adds them to the `index.html`.
-
-    The `.bowerrc` file also runs this as a postinstall task whenever `bower install` is run.
-
-### Angular HTML Templates
-
-- `gulp templatecache`
-
-    Create an Angular module that adds all HTML templates to Angular's $templateCache. This pre-fetches all HTML templates saving XHR calls for the HTML.
-
-- `gulp templatecache --verbose`
-
-    Displays all files affected by the task.
 
 ### Serving Development Code
 
@@ -212,6 +124,90 @@ The boilerplates can be found in the boilerplate folder.
 - `gulp serve-build --debug-brk`
 
     Launch debugger and break on 1st line with node-inspector.
+
+### Testing
+
+- `gulp serve-specs`
+
+    Serves and browses to the spec runner html page and runs the unit tests in it. Injects any changes on the fly and re runs the tests. Quick and easy view of tests as an alternative to terminal via `gulp test`.
+
+- `gulp test`
+
+    Runs all unit tests using karma runner, mocha, chai and sinon with phantomjs. Depends on vet task, for code analysis.
+
+- `gulp autotest`
+
+    Runs a watch to run all unit tests.
+
+### Code Analysis
+
+- `gulp vet`
+
+    Performs static code analysis on all javascript files. Runs jshint and jscs.
+
+- `gulp vet --verbose`
+
+    Displays all files affected and extended information about the code analysis.
+
+- `gulp plato`
+
+    Performs code analysis using plato on all javascript files. Plato generates a report in the reports folder.
+
+### Cleaning Up
+
+- `gulp clean`
+
+    Remove all files from the build and temp folders
+
+- `gulp clean-images`
+
+    Remove all images from the build folder
+
+- `gulp clean-code`
+
+    Remove all javascript and html from the build folder
+
+- `gulp clean-fonts`
+
+    Remove all fonts from the build folder
+
+- `gulp clean-styles`
+
+    Remove all styles from the build folder
+
+### Bower Files
+
+- `gulp wiredep`
+
+    Looks up all bower components' main files and JavaScript source code, then adds them to the `index.html`.
+
+    The `.bowerrc` file also runs this as a postinstall task whenever `bower install` is run.
+
+### Fonts and Images
+
+- `gulp fonts`
+
+    Copy all fonts from source to the build folder
+
+- `gulp images`
+
+    Copy all images from source to the build folder
+
+### Styles
+
+- `gulp styles`
+
+    Compile less files to CSS, add vendor prefixes, and copy to the build folder
+
+### Angular HTML Templates
+
+- `gulp templatecache`
+
+    Create an Angular module that adds all HTML templates to Angular's $templateCache. This pre-fetches all HTML templates saving XHR calls for the HTML.
+
+- `gulp templatecache --verbose`
+
+    Displays all files affected by the task.
 
 ### Bumping Versions
 
