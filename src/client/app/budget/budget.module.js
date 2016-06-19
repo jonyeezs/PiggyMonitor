@@ -4,7 +4,7 @@
   angular.module('app.budget', [
       'ui.bootstrap',
       'app.core',
-      'blocks.article',
+      'app.widgets',
       'app.summary',
       'app.sidebar'
     ]);

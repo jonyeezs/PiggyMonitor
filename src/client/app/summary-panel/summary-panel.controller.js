@@ -30,7 +30,7 @@
       if (!year) {
         return;
       }
-      budgetService.getYearWithOccurance(year, vm.occurance).then(function (items) {
+      budgetService.getByYearWithOccurance(year, vm.occurance).then(function (items) {
         populateExpensePieData(items);
         populateIncomeVsExpense(items);
       });

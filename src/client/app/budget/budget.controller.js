@@ -8,6 +8,7 @@
   BudgetController.$inject = ['_', 'budgetService', 'logger'];
   /* @ngInject */
   function BudgetController(_, budgetService, logger) {
+    var itemsUpdated;
     var vm = this;
     vm.title = 'Budget';
     vm.yearSelectionMsg = 'Select Budget Year';
@@ -28,8 +29,6 @@
       }
     };
     vm.allItems = [];
-
-    var itemsUpdated;
 
     activate();
 
@@ -52,7 +51,7 @@
 
     function updateItems(year) {
       itemsUpdated = false;
-      budgetService.getYear(year).then(function(result) {
+      budgetService.getByYear(year).then(function(result) {
         vm.allItems = result;
         buildIncomeAndExpenseTables(result);
         itemsUpdated = true;
