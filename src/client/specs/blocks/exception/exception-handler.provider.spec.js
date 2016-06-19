@@ -16,10 +16,6 @@ describe('blocks.exception', function() {
   bard.verifyNoOutstandingHttpRequests();
 
   describe('exceptionHandlerProvider', function() {
-    it('should have a dummy test', inject(function() {
-      expect(true).to.equal(true);
-    }));
-
     it('should have exceptionHandlerProvider defined', inject(function() {
       expect(exceptionHandlerProvider).to.be.defined;
     }));
