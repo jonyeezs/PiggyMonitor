@@ -3,11 +3,11 @@
 
   angular
       .module('app.core')
-      .filter('removeNegativeSym', removeNegativeSymFIlter);
+      .filter('removeNegativeSym', removeNegativeSymFilter);
 
-  removeNegativeSymFIlter.$inject = [];
+  removeNegativeSymFilter.$inject = [];
 
-  function removeNegativeSymFIlter() {
+  function removeNegativeSymFilter() {
     return function (input) {
       return input < 0 ? (input * -1) : input;
     };
