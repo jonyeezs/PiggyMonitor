@@ -42,7 +42,7 @@ Framework and libaries setup in _karma.conf.js::frameworks_
 
 - Using [Karma](https://karma-runner.github.io/0.13/index.html) as the test runner.
 - The specs is build on [Mocha](https://mochajs.org/) test framework.
-- Using [Chai](http://chaijs.com/api/bdd/) assertions.
+- Using [Chai](https://gist.github.com/yoavniran/1e3b0162e1545055429e) assertions.
 - and lastly, [Sinon](http://sinonjs.org/docs/) for test doubles
 
 
@@ -75,7 +75,7 @@ The boilerplates can be found in the boilerplate folder.
 
     Builds the index.html
 
-- `gulp build-spec`
+- `gulp build-specs`
 
     Builds the specs.html
 
