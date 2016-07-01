@@ -1,5 +1,5 @@
 var args = require('yargs').argv;
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync'); //This thing is awesome https://browsersync.io/
 var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
@@ -14,7 +14,7 @@ var port = process.env.PORT || config.defaultPort;
 
 /**
  * yargs variables can be passed in to alter the behavior, when present.
- * Example: gulp serve-dev
+ * Example: gulp dev
  *
  * --verbose  : Various tasks will produce more output to the console.
  * --nosync   : Don't launch the browser with browser-sync when serving code.
@@ -28,6 +28,70 @@ var port = process.env.PORT || config.defaultPort;
  */
 gulp.task('help', $.taskListing);
 gulp.task('default', ['help']);
+
+///////// TASK THAT SERVE PAGES
+
+/**
+ * Run the spec runner
+ * Serves and browses to the spec runner html page and runs the unit tests in it.
+ * Injects any changes on the fly and re runs the tests.
+ * @return {Stream}
+ */
+gulp.task('specs', ['wire-specs'], function(done) {
+  log('run the spec runner');
+  serve(true /* isDev */, true /* specRunner */);
+  done();
+});
+
+/**
+ * serve the dev environment
+ * --debug-brk or --debug
+ * --nosync
+ */
+gulp.task('dev', ['inject-to-index'], function() {
+  serve(true /*isDev*/);
+});
+
+/**
+ * serve the build environment
+ * --debug-brk or --debug
+ * --nosync
+ */
+gulp.task('build', ['build-app'], function() {
+  serve(false /*isDev*/);
+});
+
+///////// OTHER MAIN TASK
+
+/**
+ * Create a visualizer report
+ */
+gulp.task('plato', function(done) {
+  log('Analyzing source with Plato');
+  log('Browse to /report/plato/index.html to see Plato results');
+
+  startPlatoVisualizer(done);
+});
+
+/**
+ * Run specs and wait.
+ * Watch for file changes and re-run tests on each change
+ * To start servers and run midway specs as well:
+ *    gulp autotest --startServers
+ */
+gulp.task('autotest', function(done) {
+  startTests(false /*singleRun*/, done);
+});
+
+/**
+ * Run specs once and exit
+ * To start servers and run midway specs as well:
+ *    gulp test --startServers
+ * @return {Stream}
+ */
+gulp.task('test', ['vet', 'create-templatecache'], function(done) {
+  startTests(true /*singleRun*/, done);
+});
 
 /**
  * vet the code and create coverage report
@@ -46,151 +110,51 @@ gulp.task('vet', function() {
 });
 
 /**
- * Create a visualizer report
+ * Bump the version
+ * --type=pre will bump the prerelease version *.*.*-x
+ * --type=patch or no flag will bump the patch version *.*.x
+ * --type=minor will bump the minor version *.x.*
+ * --type=major will bump the major version x.*.*
+ * --version=1.2.3 will bump to a specific version and ignore other flags
  */
-gulp.task('plato', function(done) {
-  log('Analyzing source with Plato');
-  log('Browse to /report/plato/index.html to see Plato results');
-
-  startPlatoVisualizer(done);
-});
-
-/**
- * Compile less to css
- * @return {Stream}
- */
-gulp.task('styles', ['clean-styles'], function() {
-  log('Compiling Less --> CSS');
-
-  return gulp
-    .src(config.less)
-    .pipe($.plumber()) // exit gracefully if something fails after this
-    .pipe($.less())
-    //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
-    .pipe($.autoprefixer({ browsers: ['last 2 version', '> 5%'] }))
-    .pipe(gulp.dest(config.temp));
-});
-
-/**
- * Copy fonts
- * @return {Stream}
- */
-gulp.task('fonts', ['clean-fonts'], function() {
-  log('Copying fonts');
-
-  return gulp
-    .src(config.fonts)
-    .pipe(gulp.dest(config.build + 'fonts'));
-});
-
-/**
- * Compress images
- * @return {Stream}
- */
-gulp.task('images', ['clean-images'], function() {
-  log('Compressing and copying images');
-
-  return gulp
-    .src(config.images)
-    .pipe($.imagemin({ optimizationLevel: 4 }))
-    .pipe(gulp.dest(config.build + 'images'));
-});
-
-gulp.task('less-watcher', function() {
-  gulp.watch([config.less], ['styles']);
-});
-
-/**
- * Create $templateCache from the html templates
- * @return {Stream}
- */
-gulp.task('templatecache', ['clean-code'], function() {
-  log('Creating an AngularJS $templateCache');
-
-  return gulp
-    .src(config.htmltemplates)
-    .pipe($.if(args.verbose, $.bytediff.start()))
-    .pipe($.minifyHtml({ empty: true }))
-    .pipe($.if(args.verbose, $.bytediff.stop(bytediffFormatter)))
-    .pipe($.angularTemplatecache(
-      config.templateCache.file,
-      config.templateCache.options
-    ))
-    .pipe(gulp.dest(config.temp));
-});
-
-/**
- * Wire-up the bower dependencies
- * @return {Stream}
- */
-gulp.task('wiredep', function() {
-  log('Wiring the bower dependencies into the html');
-
-  var wiredep = require('wiredep').stream;
-  var options = config.getWiredepDefaultOptions();
-
-  // Only include stubs if flag is enabled
-  var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;
-
-  return gulp
-    .src(config.index)
-    .pipe(wiredep(options))
-    .pipe(inject(js, '', config.jsOrder))
-    .pipe(gulp.dest(config.client));
-});
-
-gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
-  log('Wire up css into the html, after files are ready');
-
-  return gulp
-    .src(config.index)
-    .pipe(inject(config.css))
-    .pipe(gulp.dest(config.client));
-});
-
-/**
- * Run the spec runner
- * @return {Stream}
- */
-gulp.task('serve-specs', ['build-specs'], function(done) {
-  log('run the spec runner');
-  serve(true /* isDev */, true /* specRunner */);
-  done();
-});
-
-/**
- * Inject all the spec files into the specs.html
- * @return {Stream}
- */
-gulp.task('build-specs', ['templatecache'], function(done) {
-  log('building the spec runner');
-
-  var wiredep = require('wiredep').stream;
-  var templateCache = config.temp + config.templateCache.file;
-  var options = config.getWiredepDefaultOptions();
-  var specs = config.specs;
-
-  if (args.startServers) {
-    specs = [].concat(specs, config.serverIntegrationSpecs);
+gulp.task('bump', function() {
+  var msg = 'Bumping versions';
+  var type = args.type;
+  var version = args.ver;
+  var options = {};
+  if (version) {
+    options.version = version;
+    msg += ' to ' + version;
+  } else {
+    options.type = type;
+    msg += ' for a ' + type;
   }
-  options.devDependencies = true;
+  log(msg);
 
   return gulp
-    .src(config.specRunner)
-    .pipe(wiredep(options))
-    .pipe(inject(config.js, '', config.jsOrder))
-    .pipe(inject(config.testlibraries, 'testlibraries'))
-    .pipe(inject(specs, 'specs', ['**/*']))
-    .pipe(inject(templateCache, 'templates'))
-    .pipe(gulp.dest(config.client));
+    .src(config.packages)
+    .pipe($.print())
+    .pipe($.bump(options))
+    .pipe(gulp.dest(config.root));
+});
+
+/**
+ * Remove all files from the build, temp, and reports folders
+ * @param  {Function} done - callback when complete
+ */
+gulp.task('clean', function(done) {
+  var delconfig = [].concat(config.build, config.temp, config.report);
+  log('Cleaning: ' + $.util.colors.blue(delconfig));
+  del(delconfig, done);
 });
 
 /**
  * Build everything
+ * Copies all fonts, copies images and runs `gulp optimize` to build the production code to the build folder.
  * This is separate so we can run tests on
  * optimize before handling image or fonts
  */
-gulp.task('build', ['optimize', 'images', 'fonts'], function() {
+gulp.task('build-app', ['optimize-build', 'compress-images', 'copy-fonts'], function() {
   log('Building everything');
 
   var msg = {
@@ -208,54 +172,59 @@ gulp.task('build', ['optimize', 'images', 'fonts'], function() {
  * and inject them into the new index.html
  * @return {Stream}
  */
-gulp.task('optimize', ['inject', 'test'], function() {
-  log('Optimizing the js, css, and html');
-
-  var assets = $.useref.assets({ searchPath: './' });
-  // Filters are named for the gulp-useref path
-  var cssFilter = $.filter('**/*.css');
-  var jsAppFilter = $.filter('**/' + config.optimized.app);
-  var jslibFilter = $.filter('**/' + config.optimized.lib);
-
-  var templateCache = config.temp + config.templateCache.file;
-
-  return gulp
-    .src(config.index)
-    .pipe($.plumber())
-    .pipe(inject(templateCache, 'templates'))
-    .pipe(assets) // Gather all assets from the html with useref
-    // Get the css
-    .pipe(cssFilter)
-    .pipe($.minifyCss())
-    .pipe(cssFilter.restore())
-    // Get the custom javascript
-    .pipe(jsAppFilter)
-    .pipe($.ngAnnotate({ add: true }))
-    .pipe($.uglify())
-    .pipe(getHeader())
-    .pipe(jsAppFilter.restore())
-    // Get the vendor javascript
-    .pipe(jslibFilter)
-    .pipe($.uglify()) // another option is to override wiredep to use min files
-    .pipe(jslibFilter.restore())
-    // Take inventory of the file names for future rev numbers
-    .pipe($.rev())
-    // Apply the concat and file replacement with useref
-    .pipe(assets.restore())
-    .pipe($.useref())
-    // Replace the file names in the html with rev numbers
-    .pipe($.revReplace())
-    .pipe(gulp.dest(config.build));
-});
+gulp.task('optimize-build', ['inject-to-index', 'test'], optimize);
 
 /**
- * Remove all files from the build, temp, and reports folders
- * @param  {Function} done - callback when complete
+ * Injects dependencies, stylings, and angular's $templateCache.
  */
-gulp.task('clean', function(done) {
-  var delconfig = [].concat(config.build, config.temp, config.report);
-  log('Cleaning: ' + $.util.colors.blue(delconfig));
-  del(delconfig, done);
+gulp.task('inject-to-index', ['wire-dep', 'create-templatecache', 'wire-css']);
+
+/**
+ * Wire-up the bower dependencies
+ * @return {Stream}
+ */
+gulp.task('wire-dep', wireBowerToHtml);
+
+/**
+ * Wire-up the css
+ * @return {Stream}
+ */
+gulp.task('wire-css', ['compile-styles'], wireCssToHtml);
+
+/**
+ * Inject all the spec files into the specs.html
+ * @return {Stream}
+ */
+gulp.task('wire-specs', ['create-templatecache'], buildSpecHtml);
+
+/**
+ * Compile less to css
+ * @return {Stream}
+ */
+gulp.task('compile-styles', ['clean-styles'], compileLessToCss);
+
+/**
+ * Copy fonts
+ * @return {Stream}
+ */
+gulp.task('copy-fonts', ['clean-fonts'], copyFontsForBuild);
+
+/**
+ * Compress images
+ * @return {Stream}
+ */
+gulp.task('compress-images', ['clean-images'], compressCopyImagesForBuild);
+
+/**
+ * Create $templateCache from the html templates
+ * @return {Stream}
+ */
+gulp.task('create-templatecache', ['clean-code'], createTemplateCache);
+
+///////// WATCHES
+
+gulp.task('less-watcher', function() {
+  gulp.watch([config.less], ['compile-styles']);
 });
 
 /**
@@ -299,79 +268,141 @@ gulp.task('clean-code', function(done) {
   clean(files, done);
 });
 
-/**
- * Run specs once and exit
- * To start servers and run midway specs as well:
- *    gulp test --startServers
- * @return {Stream}
- */
-gulp.task('test', ['vet', 'templatecache'], function(done) {
-  startTests(true /*singleRun*/, done);
-});
+///////// TASK METHODS
 
-/**
- * Run specs and wait.
- * Watch for file changes and re-run tests on each change
- * To start servers and run midway specs as well:
- *    gulp autotest --startServers
- */
-gulp.task('autotest', function(done) {
-  startTests(false /*singleRun*/, done);
-});
-
-/**
- * serve the dev environment
- * --debug-brk or --debug
- * --nosync
- */
-gulp.task('serve-dev', ['inject'], function() {
-  serve(true /*isDev*/);
-});
-
-/**
- * serve the build environment
- * --debug-brk or --debug
- * --nosync
- */
-gulp.task('serve-build', ['build'], function() {
-  serve(false /*isDev*/);
-});
-
-/**
- * Bump the version
- * --type=pre will bump the prerelease version *.*.*-x
- * --type=patch or no flag will bump the patch version *.*.x
- * --type=minor will bump the minor version *.x.*
- * --type=major will bump the major version x.*.*
- * --version=1.2.3 will bump to a specific version and ignore other flags
- */
-gulp.task('bump', function() {
-  var msg = 'Bumping versions';
-  var type = args.type;
-  var version = args.ver;
-  var options = {};
-  if (version) {
-    options.version = version;
-    msg += ' to ' + version;
-  } else {
-    options.type = type;
-    msg += ' for a ' + type;
-  }
-  log(msg);
+function compileLessToCss() {
+  log('Compiling Less --> CSS');
 
   return gulp
-    .src(config.packages)
-    .pipe($.print())
-    .pipe($.bump(options))
-    .pipe(gulp.dest(config.root));
-});
+    .src(config.less)
+    .pipe($.plumber()) // exit gracefully if something fails after this
+    .pipe($.less())
+    //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
+    .pipe($.autoprefixer({ browsers: ['last 2 version', '> 5%'] }))
+    .pipe(gulp.dest(config.temp));
+}
 
-/**
- * Optimize the code and re-load browserSync
- */
-gulp.task('browserSyncReload', ['optimize'], browserSync.reload);
+function copyFontsForBuild() {
+  log('Copying fonts');
 
-////////////////
+  return gulp
+    .src(config.fonts)
+    .pipe(gulp.dest(config.build + 'fonts'));
+}
+
+function compressCopyImagesForBuild() {
+  log('Compressing and copying images');
+
+  return gulp
+    .src(config.images)
+    .pipe($.imagemin({ optimizationLevel: 4 }))
+    .pipe(gulp.dest(config.build + 'images'));
+}
+
+function createTemplateCache() {
+  log('Creating an AngularJS $templateCache');
+
+  return gulp
+    .src(config.htmltemplates)
+    .pipe($.if(args.verbose, $.bytediff.start()))
+    .pipe($.minifyHtml({ empty: true }))
+    .pipe($.if(args.verbose, $.bytediff.stop(bytediffFormatter)))
+    .pipe($.angularTemplatecache(
+      config.templateCache.file,
+      config.templateCache.options
+    ))
+    .pipe(gulp.dest(config.temp));
+}
+
+function wireBowerToHtml() {
+  log('Wiring the bower dependencies into the html');
+
+  var wiredep = require('wiredep').stream;
+  var options = config.getWiredepDefaultOptions();
+
+  // Only include stubs if flag is enabled
+  var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;
+
+  return gulp
+    .src(config.index)
+    .pipe(wiredep(options))
+    .pipe(inject(js, '', config.jsOrder))
+    .pipe(gulp.dest(config.client));
+}
+
+function wireCssToHtml() {
+  log('Wire up css into the html, after files are ready');
+
+  return gulp
+    .src(config.index)
+    .pipe(inject(config.css))
+    .pipe(gulp.dest(config.client));
+}
+
+function buildSpecHtml(done) {
+  log('building the spec runner');
+
+  var wiredep = require('wiredep').stream;
+  var templateCache = config.temp + config.templateCache.file;
+  var options = config.getWiredepDefaultOptions();
+  var specs = config.specs;
+
+  if (args.startServers) {
+    specs = [].concat(specs, config.serverIntegrationSpecs);
+  }
+  options.devDependencies = true;
+
+  return gulp
+    .src(config.specRunner)
+    .pipe(wiredep(options))
+    .pipe(inject(config.js, '', config.jsOrder))
+    .pipe(inject(config.testlibraries, 'testlibraries'))
+    .pipe(inject(specs, 'specs', ['**/*']))
+    .pipe(inject(templateCache, 'templates'))
+    .pipe(gulp.dest(config.client));
+}
+
+function optimize() {
+  log('Optimizing the js, css, and html');
+
+  var assets = $.useref.assets({ searchPath: './' });
+  // Filters are named for the gulp-useref path
+  var cssFilter = $.filter('**/*.css');
+  var jsAppFilter = $.filter('**/' + config.optimized.app);
+  var jslibFilter = $.filter('**/' + config.optimized.lib);
+
+  var templateCache = config.temp + config.templateCache.file;
+
+  return gulp
+    .src(config.index)
+    .pipe($.plumber())
+    .pipe(inject(templateCache, 'templates'))
+    .pipe(assets) // Gather all assets from the html with useref
+    // Get the css
+    .pipe(cssFilter)
+    .pipe($.minifyCss())
+    .pipe(cssFilter.restore())
+    // Get the custom javascript
+    .pipe(jsAppFilter)
+    .pipe($.ngAnnotate({ add: true }))
+    .pipe($.uglify())
+    .pipe(getHeader())
+    .pipe(jsAppFilter.restore())
+    // Get the vendor javascript
+    .pipe(jslibFilter)
+    .pipe($.uglify()) // another option is to override wiredep to use min files
+    .pipe(jslibFilter.restore())
+    // Take inventory of the file names for future rev numbers
+    .pipe($.rev())
+    // Apply the concat and file replacement with useref
+    .pipe(assets.restore())
+    .pipe($.useref())
+    // Replace the file names in the html with rev numbers
+    .pipe($.revReplace())
+    .pipe(gulp.dest(config.build));
+}
+
+///////// COMMON METHODS
 
 /**
  * When files change, log it
@@ -471,13 +502,6 @@ function getNodeOptions(isDev) {
   };
 }
 
-//function runNodeInspector() {
-//    log('Running node-inspector.');
-//    log('Browse to http://localhost:8080/debug?port=5858');
-//    var exec = require('child_process').exec;
-//    exec('node-inspector');
-//}
-
 /**
  * Start BrowserSync
  * --nosync will avoid browserSync
@@ -492,10 +516,10 @@ function startBrowserSync(isDev, specRunner) {
   // If build: watches the files, builds, and restarts browser-sync.
   // If dev: watches less, compiles it to css, browser-sync handles reload
   if (isDev) {
-    gulp.watch([config.less], ['styles'])
+    gulp.watch([config.less], ['compile-styles'])
       .on('change', changeEvent);
   } else {
-    gulp.watch([config.less, config.js, config.html], ['browserSyncReload'])
+    gulp.watch([config.less, config.js, config.html], ['browserSync-reload'])
       .on('change', changeEvent);
   }
 
@@ -529,6 +553,11 @@ function startBrowserSync(isDev, specRunner) {
 
   browserSync(options);
 }
+
+/**
+ * Optimize the code and re-load browserSync
+ */
+gulp.task('browserSync-reload', ['optimize-build'], browserSync.reload);
 
 /**
  * Start Plato inspector and visualizer

@@ -82,19 +82,19 @@ The boilerplates can be found in the boilerplate folder.
 
 ### Serving Development Code
 
-- `gulp serve-dev`
+- `gulp dev`
 
     Serves the development code and launches it in a browser. The goal of building for development is to do it as fast as possible, to keep development moving efficiently. This task serves all code from the source folders and compiles less to css in a temp folder.
 
-- `gulp serve-dev --nosync`
+- `gulp dev --nosync`
 
     Serves the development code without launching the browser.
 
-- `gulp serve-dev --debug`
+- `gulp dev --debug`
 
     Launch debugger with node-inspector.
 
-- `gulp serve-dev --debug-brk`
+- `gulp dev --debug-brk`
 
     Launch debugger and break on 1st line with node-inspector.
 
@@ -128,7 +128,7 @@ The boilerplates can be found in the boilerplate folder.
 
 ### Testing
 
-- `gulp serve-specs`
+- `gulp specs`
 
     Serves and browses to the spec runner html page and runs the unit tests in it. Injects any changes on the fly and re runs the tests. Quick and easy view of tests as an alternative to terminal via `gulp test`.
 
