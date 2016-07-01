@@ -43,10 +43,15 @@ The server is there just so we can serve the app using node [expressjs](http://e
 #### Test Stack
 Framework and libaries setup in _karma.conf.js::frameworks_
 
-- Using [Karma](https://karma-runner.github.io/0.13/index.html) as the test runner.
-- The specs is build on [Mocha](https://mochajs.org/) test framework.
-- Using [Chai](https://gist.github.com/yoavniran/1e3b0162e1545055429e) assertions.
-- and lastly, [Sinon](http://sinonjs.org/docs/) for test doubles
+- Using [Karma](k) as the test runner.
+- The specs is build on [Mocha](m) test framework.
+- Using [Chai](c) assertions.
+- and lastly, [Sinon](s) for test doubles
+
+[k]: https://karma-runner.github.io/0.13/index.html
+[m]: https://mochajs.org/
+[c]: https://gist.github.com/yoavniran/1e3b0162e1545055429e
+[s]: http://sinonjs.org/docs/
 
 ### Installing Packages
 
@@ -66,6 +71,18 @@ To install packages for the app via . Packages from bower.json
 
     Displays all of the available gulp tasks.
 
+### Parameters for tasks
+
+Available [yargs](yargs) variables
+
+ * **--verbose**     : Various tasks will produce more output to the console.
+ * **--nosync**      : Don't automatically launch the browser with browser-sync.
+ * **--debug**       : Launch debugger with node-inspector.
+ * **--debug-brk**   : Launch debugger and break on 1st line with node-inspector.
+ * **--startServers**: Will start servers for midway tests on the test task.    
+
+[yargs]:https://github.com/yargs/yargs)
+
 ### Build app and specs base file
 
 The index.html and specs.html, are generated via gulp using a boilerplate.
@@ -80,51 +97,21 @@ The boilerplates can be found in the boilerplate folder.
 
     Builds the specs.html
 
-### Serving Development Code
+### Development
 
 - `gulp dev`
 
     Serves the development code and launches it in a browser. The goal of building for development is to do it as fast as possible, to keep development moving efficiently. This task serves all code from the source folders and compiles less to css in a temp folder.
 
-- `gulp dev --nosync`
+### Production
 
-    Serves the development code without launching the browser.
+- `gulp build-app`
 
-- `gulp dev --debug`
-
-    Launch debugger with node-inspector.
-
-- `gulp dev --debug-brk`
-
-    Launch debugger and break on 1st line with node-inspector.
-
-### Building Production Code
-
-- `gulp optimize`
-
-    Optimize all javascript and styles, move to a build folder, and inject them into the new index.html
+    Copies all fonts, copies images and runs `gulp optimize-build` to build the production code to the build folder.
 
 - `gulp build`
 
-    Copies all fonts, copies images and runs `gulp optimize` to build the production code to the build folder.
-
-### Serving Production Code
-
-- `gulp serve-build`
-
     Serve the optimized code from the build folder and launch it in a browser.
-
-- `gulp serve-build --nosync`
-
-    Serve the optimized code from the build folder and manually launch the browser.
-
-- `gulp serve-build --debug`
-
-    Launch debugger with node-inspector.
-
-- `gulp serve-build --debug-brk`
-
-    Launch debugger and break on 1st line with node-inspector.
 
 ### Testing
 
@@ -145,70 +132,19 @@ The boilerplates can be found in the boilerplate folder.
 - `gulp vet`
 
     Performs static code analysis on all javascript files. Runs jshint and jscs.
+    _(TODO use eslint)_
 
-- `gulp vet --verbose`
-
-    Displays all files affected and extended information about the code analysis.
+    --verbose to display all files affected and extended info.
 
 - `gulp plato`
 
-    Performs code analysis using plato on all javascript files. Plato generates a report in the reports folder.
+    Performs code analysis using [plato][plato] on all javascript files. Plato generates a report in the reports folder.
 
-### Cleaning Up
+[plato]: https://github.com/es-analysis/plato
+
+### Cleaning Up Build and Temp folder
 
 - `gulp clean`
-
-    Remove all files from the build and temp folders
-
-- `gulp clean-images`
-
-    Remove all images from the build folder
-
-- `gulp clean-code`
-
-    Remove all javascript and html from the build folder
-
-- `gulp clean-fonts`
-
-    Remove all fonts from the build folder
-
-- `gulp clean-styles`
-
-    Remove all styles from the build folder
-
-### Bower Files
-
-- `gulp wiredep`
-
-    Looks up all bower components' main files and JavaScript source code, then adds them to the `index.html`.
-
-    The `.bowerrc` file also runs this as a postinstall task whenever `bower install` is run.
-
-### Fonts and Images
-
-- `gulp fonts`
-
-    Copy all fonts from source to the build folder
-
-- `gulp images`
-
-    Copy all images from source to the build folder
-
-### Styles
-
-- `gulp styles`
-
-    Compile less files to CSS, add vendor prefixes, and copy to the build folder
-
-### Angular HTML Templates
-
-- `gulp templatecache`
-
-    Create an Angular module that adds all HTML templates to Angular's $templateCache. This pre-fetches all HTML templates saving XHR calls for the HTML.
-
-- `gulp templatecache --verbose`
-
-    Displays all files affected by the task.
 
 ### Bumping Versions
 

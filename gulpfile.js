@@ -181,6 +181,9 @@ gulp.task('inject-to-index', ['wire-dep', 'create-templatecache', 'wire-css']);
 
 /**
  * Wire-up the bower dependencies
+ * Looks up all bower components' main files and JavaScript source code,
+ * then adds them to the `index.html`.
+ * The `.bowerrc` file also runs this as a postinstall task whenever `bower install` is run.
  * @return {Stream}
  */
 gulp.task('wire-dep', wireBowerToHtml);
@@ -199,33 +202,33 @@ gulp.task('wire-specs', ['create-templatecache'], buildSpecHtml);
 
 /**
  * Compile less to css
+ * and add vendor prefixes, then copy to the build folder
  * @return {Stream}
  */
 gulp.task('compile-styles', ['clean-styles'], compileLessToCss);
 
 /**
  * Copy fonts
+ * from source to the build folder
  * @return {Stream}
  */
 gulp.task('copy-fonts', ['clean-fonts'], copyFontsForBuild);
 
 /**
- * Compress images
+ * Compress source images and copy
+ * from to the build folder
  * @return {Stream}
  */
 gulp.task('compress-images', ['clean-images'], compressCopyImagesForBuild);
 
 /**
  * Create $templateCache from the html templates
+ * Create an Angular module that adds all HTML templates to Angular's $templateCache.
+ * This pre-fetches all HTML templates saving XHR calls for the HTML.
+ * --verbose: Displays all files affected by the task.
  * @return {Stream}
  */
 gulp.task('create-templatecache', ['clean-code'], createTemplateCache);
-
-///////// WATCHES
-
-gulp.task('less-watcher', function() {
-  gulp.watch([config.less], ['compile-styles']);
-});
 
 /**
  * Remove all fonts from the build folder
