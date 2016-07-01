@@ -30,12 +30,15 @@ piggyMonitor Angular starter project
 ### Structure
 The structure also contains a gulpfile.js and a server folder.
 
-The server is there just so we can serve the app using node.
+The server is there just so we can serve the app using node [expressjs](http://expressjs.com/).
 
     /src
         /client
             /app
             /spec
+        /server
+            app.js
+
 
 #### Test Stack
 Framework and libaries setup in _karma.conf.js::frameworks_
@@ -44,8 +47,6 @@ Framework and libaries setup in _karma.conf.js::frameworks_
 - The specs is build on [Mocha](https://mochajs.org/) test framework.
 - Using [Chai](https://gist.github.com/yoavniran/1e3b0162e1545055429e) assertions.
 - and lastly, [Sinon](http://sinonjs.org/docs/) for test doubles
-
-
 
 ### Installing Packages
 
