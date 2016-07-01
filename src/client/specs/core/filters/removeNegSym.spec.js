@@ -4,9 +4,7 @@ describe('removeNegSym filter', function() {
     beforeEach(function () {
         module('app.core');
 
-        inject(function (_$filter_) {
-            $filter = _$filter_;
-          });
+        bard.inject(this, '$filter');
         filter = $filter('removeNegativeSym');
       });
 
