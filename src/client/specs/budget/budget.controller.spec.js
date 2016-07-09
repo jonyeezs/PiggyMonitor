@@ -57,8 +57,8 @@ describe('budget.controller', function() {
       it('should map allItems to income and expense', function() {
         expect(subject.incomeTable.status.open).to.be.true;
         expect(subject.expenseTable.status.open).to.be.true;
-        expect(subject.incomeTable.items).to.have.lengthOf(2);
-        expect(subject.expenseTable.items).to.have.lengthOf(2);
+        expect(subject.incomeTable.items).to.have.length(2);
+        expect(subject.expenseTable.items).to.have.length(2);
       });
     });
   });
