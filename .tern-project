@@ -3,7 +3,7 @@
   "libs": [],
   "loadEagerly": [
     "src/client/app/**/*.js",
-    "src/client/specs/**/*.js"
+    "src/client/server/**/*.js"
   ],
   "plugins": {
     "node": {},
