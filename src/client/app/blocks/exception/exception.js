@@ -20,7 +20,7 @@
           thrownDescription = '\n' + e.data.description;
           newMessage = message + thrownDescription;
         }
-        e.data.description = newMessage;
+        e.data.description = newMessage || 'unavailable';
         logger.error(newMessage);
         return $q.reject(e);
       };

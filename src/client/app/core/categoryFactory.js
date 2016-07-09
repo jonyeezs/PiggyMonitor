@@ -17,14 +17,29 @@
 
     return service;
 
+    /**
+    * Creates a distinct list of categories from the items.
+    * @param {{category: string}[]} items - list of item objects with minimum property category
+    * @returns {string|Array} category names
+    */
     function createLabels(items) {
       return _(items).map('category').uniq().value();
     }
 
+    /**
+    * Creates a distinct list of categories from the items that are debit (ie: amounts lower than zero);
+    * @param {{category: string, amount: number}[]} items - list of objects with minimum property category and amount.
+    * @returns {{label: string, total: !number, percentage: !number}[]} labels with its category amount info.
+    */
     function createForExpense(items) {
       return categorizeItems(items, filterByExpense);
     }
 
+    /**
+    * Creates a distinct list of categories from the items that are credit (ie: amounts more than zero);
+    * @param {{category: string, amount: number}[]} items - list of objects with minimum property category and amount.
+    * @returns {{label: string, total: !number, percentage: !number}[]} labels with its category amount info.
+    */
     function createForIncome(items) {
       return categorizeItems(items, filterByIncome);
     }
@@ -37,12 +52,12 @@
 
       _.forOwn(groupedCategories, function (value, key) {
         var categoryTotal = Math.abs(_(value).map('amount').sum());
-        categoryDetails.push(mapLabelData(key, categoryTotal, total));
+        categoryDetails.push(mapToLabelData(key, categoryTotal, total));
       });
       return categoryDetails;
     }
 
-    function mapLabelData(key, categoryTotal, total) {
+    function mapToLabelData(key, categoryTotal, total) {
       return {
         label: key,
         total: categoryTotal,
