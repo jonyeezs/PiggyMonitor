@@ -45,12 +45,12 @@ Framework and libaries setup in _karma.conf.js::frameworks_
 
 - Using [Karma](k) as the test runner.
 - The specs is build on [Mocha](m) test framework.
-- Using [Chai](c) assertions.
-- and lastly, [Sinon](s) for test doubles
+- Using [Sinon](s) for test doubles
+- and lastly, [Chai](c) assertions (including Sinon-chai).
 
 [k]: https://karma-runner.github.io/0.13/index.html
 [m]: https://mochajs.org/
-[c]: https://gist.github.com/yoavniran/1e3b0162e1545055429e
+[c]: `https://gist.github.com/yoavniran/1e3b0162e1545055429e`
 [s]: http://sinonjs.org/docs/
 
 ### Installing Packages
