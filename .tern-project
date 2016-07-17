@@ -1,16 +1,14 @@
 {
   "ecmaVersion": 6,
-  "libs": [],
+  "libs": [
+    "browser"
+  ],
   "loadEagerly": [
-    "src/client/app/**/*.js",
-    "src/client/server/**/*.js"
+    "src/client/app/**/*.js"
   ],
   "plugins": {
     "node": {},
-    "angular": {},
     "requirejs": {},
-    "doc_comment": {
-      "fullDocs": true
-    }
+    "angular": {}
   }
 }
