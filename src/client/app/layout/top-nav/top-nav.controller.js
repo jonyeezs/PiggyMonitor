@@ -24,6 +24,12 @@
       });
     }
 
+    /**
+     * Returns the class name for the selected route
+     * @method isCurrent
+     * @param  {{title: string}}  route created from the page's route.js
+     * @return {string}       returns 'current' if it matches to the $state.current's title else an empty string
+     */
     function isCurrent(route) {
       if (!route.title || !$state.current || !$state.current.title) {
         return '';
