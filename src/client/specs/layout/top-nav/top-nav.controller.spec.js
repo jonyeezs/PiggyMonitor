@@ -14,7 +14,7 @@ describe('top-nav controller', function () {
     $rootScope.$apply();
   });
 
-  describe('initialize', function () {
+  describe('activate', function () {
     it('should populate navRoutes ordered by nav', function () {
       expect(subject.navRoutes).to.have.deep.property('[0].state', 'first');
       expect(subject.navRoutes).to.have.deep.property('[1].state', 'second');

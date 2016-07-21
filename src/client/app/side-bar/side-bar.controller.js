@@ -5,9 +5,9 @@
       .module('app.sidebar')
       .controller('SidebarController', SidebarController);
 
-  SidebarController.$inject = ['$scope', 'sidebarservice', 'logger'];
+  SidebarController.$inject = ['sidebar'];
   /* @ngInject */
-  function SidebarController($scope, sidebarservice, logger) {
+  function SidebarController(sidebar, logger) {
     var vm = this;
     activate();
 
@@ -17,7 +17,7 @@
 
     function setupOptions() {
       if (vm.items && vm.items.length > 0) {
-        return sidebarservice.renderOptions(vm.items, sidebarservice.views.Budget);
+        return sidebar.renderOptions(vm.items, sidebar.views.Budget);
       }
       return [];
     }

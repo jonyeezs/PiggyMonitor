@@ -3,7 +3,7 @@
 
   angular
       .module('app.sidebar')
-      .factory('sidebarservice', sidebarservice);
+      .factory('sidebar', sidebarservice);
 
   sidebarservice.$inject = ['_', '$rootScope', 'exception', 'categoryFactory'];
   /* @ngInject */
@@ -40,7 +40,7 @@
           name: 'unavailable',
           content: '<b>404</b>'
         }];
-      }
+    }
       return list;
     }
 
