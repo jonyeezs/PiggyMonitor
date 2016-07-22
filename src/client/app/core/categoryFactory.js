@@ -14,7 +14,6 @@
       createForExpense: createForExpense,
       createForIncome: createForIncome
     };
-
     return service;
 
     /**
