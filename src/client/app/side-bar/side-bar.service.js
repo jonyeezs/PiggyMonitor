@@ -32,21 +32,21 @@
     function renderOptions(items, viewType) {
       var list = [];
       switch (viewType) {
-      case views.Budget:
-        categoryOptions = categoryFactory.createLabels(items);
-        list = _.map(categoryOptions, createBudgetOption);
-        list.unshift({
-          name: 'all',
-          icon: 'all all-side',
-          content: 'all'
-        });
-        break;
-      default:
-        list = [{
-          name: 'unavailable',
-          content: '<b>404</b>'
-        }];
-    }
+        case views.Budget:
+          categoryOptions = categoryFactory.createLabels(items);
+          list = _.map(categoryOptions, createBudgetOption);
+          list.unshift({
+            name: 'all',
+            icon: 'all all-side',
+            content: 'all'
+          });
+          break;
+        default:
+          list = [{
+            name: 'unavailable',
+            content: '<b>404</b>'
+          }];
+      }
       return list;
     }
 

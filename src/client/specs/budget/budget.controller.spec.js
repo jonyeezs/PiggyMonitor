@@ -6,9 +6,9 @@ describe('budget.controller', function() {
 
   beforeEach(function() {
     bard.appModule('app.budget');
-    bard.inject(this, '$controller', '$q', '$rootScope', 'budgetService');
+    bard.inject(this, '$controller', '$q', '$rootScope', 'budget');
 
-    bard.mockService(budgetService, {
+    bard.mockService(budget, {
       getYears: $q.when(availableYears),
       getByYear: $q.when(items)
     });
@@ -46,7 +46,7 @@ describe('budget.controller', function() {
 
       it('should get budget item by selected year', function() {
         expect(subject.selectedYear).to.equal(selectedYear);
-        expect(budgetService.getByYear).to.have.been.calledWith(selectedYear);
+        expect(budget.getByYear).to.have.been.calledWith(selectedYear);
       });
 
       it('should update allItems array', function() {

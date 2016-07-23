@@ -3,7 +3,7 @@
 
   angular
       .module('app.core')
-      .factory('budgetService', budgetService);
+      .factory('budget', budgetService);
 
   budgetService.$inject = ['dataService'];
   /* @ngInject */
