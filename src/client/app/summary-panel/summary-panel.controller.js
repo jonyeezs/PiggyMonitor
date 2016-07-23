@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-      .module('app.summary')
-      .controller('SummaryPanelController', SummaryPanelController);
+    .module('app.summary')
+    .controller('SummaryPanelController', SummaryPanelController);
 
   SummaryPanelController.$inject = ['_', 'budget', 'categoryFactory'];
 
@@ -18,24 +18,19 @@
     activate();
 
     function activate() {
-      beginSummaryProcess(vm.year);
+      if (vm.year) {
+        budget.getByYearWithOccurance(vm.year, vm.occurance).then(function (items) {
+          populateExpensePieData(items);
+          populateIncomeVsExpense(items);
+        });
+      }
     }
 
     function selectOccurance(occurance) {
       vm.occurance = occurance;
     }
 
-    function beginSummaryProcess(year) {
-      vm.showGraph = false;
-      if (!year) {
-        return;
-      }
-      budgetService.getByYearWithOccurance(year, vm.occurance).then(function (items) {
-        populateExpensePieData(items);
-        populateIncomeVsExpense(items);
-      });
-    }
-
+    //TODO think if these mapping should actually be in the chart
     function populateExpensePieData(items) {
       var expensesBreakdown = categoryFactory.createForExpense(items);
       vm.labels = _.map(expensesBreakdown, 'label');
