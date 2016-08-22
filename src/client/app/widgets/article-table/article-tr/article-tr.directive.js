@@ -12,7 +12,8 @@
       transclude: true,
       bindToController: {
         item: '=articleTrData',
-        categories: '<articleTrCategories'
+        categories: '<articleTrCategories',
+        year: '<articleTrYear'
       },
       controller: 'articleTrController',
       controllerAs: 'vm',

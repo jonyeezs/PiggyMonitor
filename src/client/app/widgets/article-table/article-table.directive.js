@@ -13,6 +13,7 @@
       restrict: 'EA',
       scope: {
         items: '=',
+        year: '<'
       },
       link: function (scope) {
         scope.sortType = '';

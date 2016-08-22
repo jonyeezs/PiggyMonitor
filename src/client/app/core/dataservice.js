@@ -12,7 +12,8 @@
     var url = config.dataUrl;
 
     var service = {
-      get: get
+      get: get,
+      patch: patch
     };
 
     return service;
@@ -38,6 +39,16 @@
       function fail(e) {
         return exception.catcher('XHR Failed for ' + resource)(e);
       }
+    }
+
+    /**
+     * Patch with an array of values
+     * @param  {string} resource       the api resource name
+     * @param  {object|array} items    collection of article items of obj {description, category, occurance, amount}
+     * @return {object} promise
+     */
+    function patch(resource, items) {
+      return $http.patch(url + '/' + resource, items);
     }
   }
 })();

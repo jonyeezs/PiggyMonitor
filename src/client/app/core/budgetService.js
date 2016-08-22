@@ -12,7 +12,8 @@
     var service = {
       getYears: getYears,
       getByYear: getByYear,
-      getByYearWithOccurance: getByYearWithOccurance
+      getByYearWithOccurance: getByYearWithOccurance,
+      update: update
     };
 
     return service;
@@ -35,6 +36,10 @@
       }).then(function (result) {
         return result.items;
       });
+    }
+
+    function update(year, item) {
+      return dataService.patch('years/' + year, [item]);
     }
   }
 })();

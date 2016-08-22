@@ -23,13 +23,13 @@
                         <uib-accordion-heading>
                             <i class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i> Income
                         </uib-accordion-heading>
-                        <article-table items="vm.incomeTable.items"></article-table>
+                        <article-table items="vm.incomeTable.items" year="vm.selectedYear"></article-table>
                     </uib-accordion-group>
                     <uib-accordion-group is-open="vm.expenseTable.status.open">
                         <uib-accordion-heading>
                             <i class="glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i> Expenses
                         </uib-accordion-heading>
-                        <article-table items="vm.expenseTable.items"></article-table>
+                        <article-table items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
                     </uib-accordion-group>
                 </uib-accordion>
             </div>
