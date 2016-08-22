@@ -2,19 +2,24 @@
   'use strict';
 
   angular
-      .module('app.widgets')
-      .directive('articleTable', articleTable);
+    .module('app.widgets')
+    .directive('articleTable', articleTable);
 
-  function articleTable() {
+  articleTable.$inject = ['categoryFactory'];
+
+  function articleTable(categoryFactory) {
     var directive = {
-      templateUrl: 'app/widgets/article-table/articletable.html',
+      templateUrl: 'app/widgets/article-table/article-table.html',
       restrict: 'EA',
       scope: {
-        items: '='
+        items: '=',
       },
       link: function (scope) {
         scope.sortType = '';
         scope.sortReverse = false;
+        scope.$watchCollection('items', function(newItems, oldItems) {
+          scope.categories = categoryFactory.createLabels(newItems);
+        });
       }
     };
     return directive;

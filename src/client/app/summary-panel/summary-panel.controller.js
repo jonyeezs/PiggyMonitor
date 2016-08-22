@@ -5,13 +5,13 @@
     .module('app.summary')
     .controller('SummaryPanelController', SummaryPanelController);
 
-  SummaryPanelController.$inject = ['_', 'budget', 'categoryFactory'];
+  SummaryPanelController.$inject = ['_', 'occurances', 'budget', 'categoryFactory'];
 
   /* @ngInject */
-  function SummaryPanelController(_, budget, categoryFactory) {
+  function SummaryPanelController(_, occurances, budget, categoryFactory) {
     var vm = this;
     vm.showGraph = false;
-    vm.occurances = ['monthly', 'semiannual', 'annually'];
+    vm.occurances = occurances;
     vm.selectOccurance = selectOccurance;
     vm.occurance = 'monthly';
 

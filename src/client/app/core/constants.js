@@ -6,5 +6,6 @@
       .module('app.core')
       .constant('toastr', toastr)
       .constant('_', _)
-      .constant('moment', moment);
+      .constant('moment', moment)
+      .constant('occurances', ['daily', 'weekly', 'fortnightly', 'monthly', 'quarterly', 'semiannual', 'annually']);
 })();
