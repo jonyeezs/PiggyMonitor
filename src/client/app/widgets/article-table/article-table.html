@@ -30,10 +30,16 @@
                 <span ng-show="sortType == 'amount' && sortReverse" class="fa fa-caret-up"></span>
             </th>
             <th class="col-md-2">
-              &nbsp;
+              <button ng-if="items.length > 0" class="btn btn-default btn-sm pull-right" ng-click="toggleItemizer()">
+                    <span class="glyphicon glyphicon-plus"></span>
+              </button>
+
             </th>
         </tr>
     </thead>
+    <tbody ng-show="addItem" >
+        <tr article-itemizer ng-show="addItem" itemizer-year="year" itemizer-categories="categories" itemizer-on-completed="onComplete()" ng-form="newItemForm"></tr>
+    </tbody>
     <tbody>
         <tr ng-repeat="item in items | orderBy:sortType:sortReverse"
           article-tr

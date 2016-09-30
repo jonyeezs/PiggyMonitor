@@ -1,0 +1,27 @@
+<td>
+  <input name="description" ng-model="vm.item.description" required/>
+</td>
+<td class="text-left">
+  <select name="category" ng-model="vm.item.category" ng-options="category as category for category in vm.categories" required></select>
+</td>
+<td class="text-center">
+  <select class="text-center" name="occurance" ng-model="vm.item.occurance" ng-options="occurance as occurance for occurance in vm.occurances" required></select>
+</td>
+<td class="text-right">
+  <input class="text-right" type="number" name="amount" ng-model="vm.item.amount" required/>
+</td>
+<td>
+  <div class="pull-right" ng-show="!vm.adding">
+    <button class="btn btn-primary btn-sm" ng-click="vm.save(newItemForm.$valid)">
+      <span class="glyphicon glyphicon-ok"></span>
+    </button>
+    <button class="btn btn-default btn-sm" ng-click="vm.cancel()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+  </div>
+  <div class="pull-right" ng-show="vm.adding">
+    <button class="btn btn-primary btn-sm" disabled>
+      <span class="glyphicon glyphicon-refresh spinning"></span>
+    </button>
+  </div>
+</td>

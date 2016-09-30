@@ -13,7 +13,8 @@
       getYears: getYears,
       getByYear: getByYear,
       getByYearWithOccurance: getByYearWithOccurance,
-      update: update
+      update: update,
+      add: add
     };
 
     return service;
@@ -40,6 +41,10 @@
 
     function update(year, item) {
       return dataService.patch('years/' + year, [item]);
+    }
+
+    function add(year, item) {
+      return dataService.post('years/' + year, item);
     }
   }
 })();

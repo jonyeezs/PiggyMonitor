@@ -13,7 +13,8 @@
 
     var service = {
       get: get,
-      patch: patch
+      patch: patch,
+      post: post
     };
 
     return service;
@@ -49,6 +50,10 @@
      */
     function patch(resource, items) {
       return $http.patch(url + '/' + resource, items);
+    }
+
+    function post(resource, item) {
+      return $http.post(url + '/' + resource, item);
     }
   }
 })();

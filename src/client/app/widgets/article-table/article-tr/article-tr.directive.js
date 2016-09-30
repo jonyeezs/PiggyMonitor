@@ -9,7 +9,6 @@
     var directive = {
       templateUrl: 'app/widgets/article-table/article-tr/article-tr.html',
       restrict: 'EA',
-      transclude: true,
       bindToController: {
         item: '=articleTrData',
         categories: '<articleTrCategories',

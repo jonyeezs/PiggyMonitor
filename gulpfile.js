@@ -1,3 +1,4 @@
+// TODO Gotta simply this gulp. atleast hide task that we don't need to know about (ie subtasks)
 var args = require('yargs').argv;
 var browserSync = require('browser-sync'); //This thing is awesome https://browsersync.io/
 var config = require('./gulp.config')();
