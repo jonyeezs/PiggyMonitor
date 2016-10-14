@@ -7,7 +7,6 @@
       'app.widgets',
       'app.budget',
       'app.dashboard',
-      'app.summary',
       'app.layout',
       'chart.js'
   ]);
