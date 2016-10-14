@@ -25,6 +25,7 @@
       });
     }
 
+    //TODO: should try use a raml generator
     function getByYear(year) {
       return dataService.get('years/' + year).then(function (result) {
         return result.items;
