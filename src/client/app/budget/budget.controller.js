@@ -22,7 +22,6 @@
     vm.availableOccurances = [];
     vm.selectOccurance = selectOccurance;
 
-    vm.isBudgetUpdated = isBudgetUpdated;
     /* table Status */
     vm.incomeTable = {
       items: [],
@@ -79,11 +78,6 @@
         buildIncomeAndExpenseTables(result);
         itemsUpdated = true;
       });
-
-    }
-
-    function isBudgetUpdated() {
-      return itemsUpdated;
     }
 
     function buildIncomeAndExpenseTables(items) {
