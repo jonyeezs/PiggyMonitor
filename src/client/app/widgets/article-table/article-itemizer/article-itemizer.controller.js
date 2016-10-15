@@ -9,6 +9,7 @@
 
   /* @ngInject */
   function articleItemizerController(_ ,occurances, budget) {
+    /* jshint validthis: true */
     var vm = this;
     vm.item = {};
     vm.occurances = occurances;

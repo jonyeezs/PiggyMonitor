@@ -6,9 +6,9 @@
     .module('app.budget')
     .controller('BudgetController', BudgetController);
 
-  BudgetController.$inject = ['_', 'budget', 'logger'];
+  BudgetController.$inject = ['budget', 'budgetHelper', 'logger'];
   /* @ngInject */
-  function BudgetController(_, budget, logger) {
+  function BudgetController(budget, budgetHelper, logger) {
     var itemsUpdated;
     var vm = this;
     vm.title = 'Budget';
@@ -35,7 +35,6 @@
         open: false
       }
     };
-    vm.allItems = [];
 
     activate();
 
@@ -71,33 +70,16 @@
         getItems = budget.getByYear(year);
       }
       getItems.then(function (result) {
-        vm.allItems = result;
         if (!vm.availableOccurances.length) {
-          updateOccurances(result);
+          vm.availableOccurances = budgetHelper.getOccurances(result);
         }
-        buildIncomeAndExpenseTables(result);
+        var tables = budgetHelper.splitToIncomeAndExpense(result);
+        vm.incomeTable = tables.incomes;
+        vm.expenseTable = tables.expenses;
+        vm.incomeTable.status.open = vm.incomeTable.lenth > 0;
+        vm.expenseTable.status.open = vm.expenseTable.lenth > 0;
         itemsUpdated = true;
       });
-    }
-
-    function buildIncomeAndExpenseTables(items) {
-      vm.incomeTable.items = _.filter(items, function (item) {
-        return item.amount > 0;
-      });
-      vm.incomeTable.status.open = true;
-      vm.expenseTable.items = _.filter(items, function (item) {
-        return item.amount < 0;
-      });
-      vm.expenseTable.status.open = true;
-    }
-
-    function updateOccurances(items) {
-      vm.availableOccurances = _(items)
-        .map('occurance')
-        .uniq()
-        .map(function(occuranceType) { return {key: occuranceType, value: occuranceType};})
-        .value();
-        vm.availableOccurances.unshift({key: 'default', value: undefined});
     }
   }
 })();

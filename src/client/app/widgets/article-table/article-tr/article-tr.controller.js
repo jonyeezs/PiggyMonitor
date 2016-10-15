@@ -9,6 +9,7 @@
 
   /* @ngInject */
   function articleTrController(_ ,occurances, budget) {
+    /* jshint validthis: true */
     var vm = this;
 
     vm.editable = false;
