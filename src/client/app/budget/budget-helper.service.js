@@ -19,7 +19,7 @@ function BudgetHelper(_) {
       .uniq()
       .map(function(occuranceType) { return { key: occuranceType, value: occuranceType };})
       .value();
-    occurances.unshift({key: 'default occurance', value: undefined});
+    occurances.unshift({key: 'default occurance', value: null});
     return occurances;
   }
 

@@ -1,0 +1,13 @@
+<div class="btn-group pull-left" uib-dropdown>
+  <button id="single-button-{{$index}}" type="button" class="btn btn-primary" uib-dropdown-toggle>
+                {{!$ctrl.selected ? $ctrl.selectionInfo : $ctrl.selected}}<span class="caret drop-options"></span>
+            </button>
+  <ul class="dropdown-menu drop-options" uib-dropdown-menu role="menu" aria-labelledby="single-button-{{$index}}">
+    <li ng-show="$ctrl.selected !== $ctrl.selectionInfo" class="header">
+      {{$ctrl.selectionInfo}}
+    </li>
+    <li ng-show="$ctrl.selected !== $ctrl.selectionInfo" class="divider">
+    </li>
+    <li role="menuitem" ng-repeat="option in $ctrl.availableOptions"><a ng-click="$ctrl.select(option)">{{option.key}}</a></li>
+  </ul>
+</div>

@@ -1,19 +1,18 @@
-//TODO move logic into a service
 (function () {
-  'use strict';
 
   angular
     .module('app.budget')
     .controller('BudgetController', BudgetController);
 
-  BudgetController.$inject = ['budget', 'budgetHelper', 'logger'];
+  BudgetController.$inject = ['_', 'budget', 'budgetHelper', 'logger'];
   /* @ngInject */
-  function BudgetController(budget, budgetHelper, logger) {
+  function BudgetController(_, budget, budgetHelper, logger) {
     var itemsUpdated;
     var vm = this;
     vm.title = 'Budget';
 
     vm.yearSelectionMsg = 'Select Budget Year';
+    vm.availableYears = [];
     vm.selectedYear = '';
     vm.selectYear = selectYear;
 
@@ -45,8 +44,13 @@
     }
 
     function updateYears() {
-      budget.getYears().then(function (result) {
-        vm.availableYears = result;
+      budget.getYears().then(function (results) {
+        vm.availableYears = _.map(results, function (result) {
+          return {
+            key: result,
+            value: result
+          };
+        });
       });
     }
 
@@ -74,10 +78,10 @@
           vm.availableOccurances = budgetHelper.getOccurances(result);
         }
         var tables = budgetHelper.splitToIncomeAndExpense(result);
-        vm.incomeTable = tables.incomes;
-        vm.expenseTable = tables.expenses;
-        vm.incomeTable.status.open = vm.incomeTable.lenth > 0;
-        vm.expenseTable.status.open = vm.expenseTable.lenth > 0;
+        vm.incomeTable.items = tables.incomes;
+        vm.expenseTable.items = tables.expenses;
+        vm.incomeTable.status.open = vm.incomeTable.items.length > 0;
+        vm.expenseTable.status.open = vm.expenseTable.items.length > 0;
         itemsUpdated = true;
       });
     }

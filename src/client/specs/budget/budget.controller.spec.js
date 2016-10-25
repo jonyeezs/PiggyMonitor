@@ -5,7 +5,7 @@ describe('budget.controller', function () {
 
   beforeEach(function () {
     bard.appModule('app.budget');
-    bard.inject(this, '$controller', '$q', '$rootScope', 'budget', 'budgetHelper');
+    bard.inject(this, '_', '$controller', '$q', '$rootScope', 'budget', 'budgetHelper');
 
     bard.mockService(budget, {
       getYears: $q.when(availableYears),
@@ -18,7 +18,13 @@ describe('budget.controller', function () {
 
   describe('activate', function () {
     it('should populate availableYears', function () {
-      expect(subject.availableYears).to.have.members(availableYears);
+      expect(subject.availableYears).to.deep.have.members([{
+        key: availableYears[0],
+        value: availableYears[0]
+      }, {
+        key: availableYears[1],
+        value: availableYears[1]
+      }]);
     });
 
     it('should minimize all tables', function () {
