@@ -13,6 +13,7 @@
     var vm = this;
 
     vm.editable = false;
+    vm.editting = false;
     vm.occurances = occurances;
     vm.edit = edit;
     vm.save = save;
@@ -25,12 +26,16 @@
 
     function save() {
       if (vm.trForm.$dirty) {
+        vm.editting = true;
         vm.item = vm.editted;
         budget.update(vm.year, vm.item)
         .then(function() {
           vm.editable = false;
           vm.trForm.$setPristine();
-        });
+        })
+        .finally(function() {
+          vm.editting = false;
+        });;
       }
       else {
         reset();

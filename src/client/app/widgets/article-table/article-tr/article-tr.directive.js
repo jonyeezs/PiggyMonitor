@@ -8,7 +8,7 @@
   function articleTr() {
     var directive = {
       templateUrl: 'app/widgets/article-table/article-tr/article-tr.html',
-      restrict: 'EA',
+      restrict: 'A',
       bindToController: {
         item: '=articleTrData',
         categories: '<articleTrCategories',

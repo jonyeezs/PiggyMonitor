@@ -1,5 +1,5 @@
 <td ng-switch="vm.editable">
-  <input ng-switch-when="true" name="description" ng-model="vm.editted.description"/>
+  <input ng-switch-when="true" name="description" ng-model="vm.editted.description" />
   <span ng-switch-default class='item-padding'>{{vm.item.description}}</span>
 </td>
 <td ng-switch="vm.editable" class="text-left">
@@ -11,7 +11,7 @@
   <span ng-switch-default class='item-padding'>{{vm.item.occurance}}</span>
 </td>
 <td ng-switch="vm.editable" class="text-right">
-  <input ng-switch-when="true" class="text-right" type="number" name="amount" ng-model="vm.editted.amount"/>
+  <input ng-switch-when="true" class="text-right" type="number" name="amount" ng-model="vm.editted.amount" />
   <span ng-switch-default class='item-padding'>{{vm.item.amount | removeNegativeSym | currency}}</span>
 </td>
 <td>
@@ -19,10 +19,10 @@
     <span class="glyphicon glyphicon-pencil"></span>
   </button>
   <div class="pull-right" ng-if="vm.editable">
-    <button class="btn btn-primary btn-sm" ng-click="vm.save()">
-      <span class="glyphicon glyphicon-ok"></span>
+    <button class="btn btn-primary btn-sm" ng-click="vm.save()" ng-disabled="vm.editting">
+      <span ng-class="!vm.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
     </button>
-    <button class="btn btn-default btn-sm" ng-click="vm.cancel()">
+    <button class="btn btn-default btn-sm" ng-click="vm.cancel()" ng-hide='vm.editting'>
       <span class="glyphicon glyphicon-remove"></span>
     </button>
   </div>

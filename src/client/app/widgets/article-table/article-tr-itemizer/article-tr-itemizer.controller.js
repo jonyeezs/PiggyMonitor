@@ -5,7 +5,7 @@
     .module('app.widgets')
     .controller('articleItemizerController', articleItemizerController);
 
-  articleItemizerController.$inject = ['_', 'occurances', 'budget'];
+  articleItemizerController.$inject = ['_', 'budget'];
 
   /* @ngInject */
   function articleItemizerController(_ ,occurances, budget) {

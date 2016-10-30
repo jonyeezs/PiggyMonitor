@@ -13,9 +13,9 @@
       }
     });
 
-  articleTableCtrl.$inject = ['categoryFactory'];
+  articleTableCtrl.$inject = ['ArticleSetup'];
 
-  function articleTableCtrl(categoryFactory) {
+  function articleTableCtrl(ArticleSetup) {
     var ctrl = this;
 
     ctrl.$onInit = function () {
@@ -40,39 +40,14 @@
         ctrl.addItem = !ctrl.addItem;
       };
 
-      ctrl.columnSetup = setupColumn(ctrl.articleType);
+      ctrl.columnSetup = ArticleSetup.getColumns(ctrl.articleType);
     };
 
     ctrl.$onChanges = function(changes) {
       if (changes.items)
       {
-        ctrl.categories = categoryFactory.createLabels(changes.items.currentValue);
+        ctrl.categories = ArticleSetup.getCategories(changes.items.currentValue);
       }
     };
-
-    /**
-     * creates the header and the columns
-     * @method setupColumn
-     * @param  {string}    type - ledger or budget
-     * @return {[columnSetup]}         collection of columns in left-first order
-     * @typedef {Object}  columnSetup
-     * @property {string} header - column's display name
-     * @property {string} prop - the property on the item object
-     * @property {string} class - column's css style
-     * NOTE: The collection needs to be updated whenever the payload properties changes
-     */
-    function setupColumn(type) {
-      if (type === 'ledger') {
-        //TODO for ledger
-      }
-      else {
-        return [
-          { name: 'Item',      prop: 'description', class: 'col-md-5 text-left' },
-          { name: 'Category',  prop: 'category',    class: 'col-md-2 text-left' },
-          { name: 'Frequency', prop: 'occurance',   class: 'col-md-2 text-center' },
-          { name: 'Amount',    prop: 'amount',      class: 'col-md-1 text-right' }
-        ];
-      }
-    }
   }
 })();
