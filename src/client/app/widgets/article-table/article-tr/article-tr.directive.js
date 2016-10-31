@@ -11,14 +11,15 @@
       restrict: 'A',
       bindToController: {
         item: '=articleTrData',
-        categories: '<articleTrCategories',
-        year: '<articleTrYear'
       },
       controller: 'articleTrController',
       controllerAs: 'vm',
-      require: '^form',
-      link: function(scope, element, attrs, formCtrl) {
-        scope.vm.trForm = formCtrl;
+      require: {form: 'form', articleTable: '^^articleTable'},
+      link: function(scope, element, attrs, apis) {
+        scope.vm.trForm = apis.form;
+        scope.vm.articleType = apis.articleTable.articleType;
+        scope.vm.year = apis.articleTable.year;
+        scope.vm.columnSetup = apis.articleTable.columnSetup;
       }
     };
     return directive;

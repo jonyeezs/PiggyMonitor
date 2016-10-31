@@ -5,14 +5,13 @@
     .module('app.widgets')
     .controller('articleTrController', articleTrController);
 
-  articleTrController.$inject = ['_', 'occurances', 'Budget'];
-  function articleTrController(_ ,occurances, Budget) {
+  articleTrController.$inject = ['_', 'Budget'];
+  function articleTrController(_ , Budget) {
     /* jshint validthis: true */
     var vm = this;
 
     vm.editable = false;
     vm.editting = false;
-    vm.occurances = occurances;
     vm.edit = edit;
     vm.save = save;
     vm.cancel = reset;
@@ -26,7 +25,7 @@
       if (vm.trForm.$dirty) {
         vm.editting = true;
         vm.item = vm.editted;
-        budget.update(vm.year, vm.item)
+        Budget.update(vm.year, vm.item)
         .then(function() {
           vm.editable = false;
           vm.trForm.$setPristine();
