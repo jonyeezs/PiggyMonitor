@@ -5,21 +5,18 @@
     .module('app.widgets')
     .controller('articleItemizerController', articleItemizerController);
 
-  articleItemizerController.$inject = ['_', 'occurances', 'budget'];
-
-  /* @ngInject */
-  function articleItemizerController(_ ,occurances, budget) {
+  articleItemizerController.$inject = ['_', 'Budget'];
+  function articleItemizerController(_ , Budget) {
     /* jshint validthis: true */
     var vm = this;
     vm.item = {};
-    vm.occurances = occurances;
     vm.save = save;
     vm.cancel = cancel;
 
     function save(formIsValid) {
       if (formIsValid) {
         vm.adding = true;
-        budget.add(vm.year, vm.item)
+        Budget.add(vm.year, vm.item)
         .then(function() {
         })
         .finally(function() {

@@ -5,14 +5,14 @@ describe('budget service', function () {
   beforeEach(function () {
     module('app.core');
 
-    bard.inject(this, '$q', '$rootScope', 'budget', 'dataService');
+    bard.inject(this, '$q', '$rootScope', 'Budget', 'dataService');
 
     bard.mockService(dataService, {
       get: $q.when(fakeResult),
       patch: $q.resolve()
     });
 
-    subject = budget;
+    subject = Budget;
   });
 
   describe('getYears', function () {

@@ -1,0 +1,14 @@
+<td ng-repeat="column in vm.columnSetup" ng-switch="column.inputType" ng-class="column.class">
+  <select ng-switch-when="select" name="{{column.prop}}" ng-model="vm.item[column.prop]" ng-options="option as option for option in column.getOptions()" required></select>
+  <input ng-switch-default name="occurance" type="{{column.inputType}}" ng-model="vm.item[column.prop]" required></input>
+</td>
+<td>
+  <div class="pull-right">
+    <button class="btn btn-primary btn-sm" ng-click="vm.save(newItemForm.$valid)" ng-disabled="vm.adding">
+      <span ng-class="!vm.adding ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
+    </button>
+    <button class="btn btn-default btn-sm" ng-click="vm.cancel()" ng-hide="vm.adding">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+  </div>
+</td>

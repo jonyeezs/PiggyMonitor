@@ -1,28 +1,20 @@
-<td ng-switch="vm.editable">
-  <input ng-switch-when="true" name="description" ng-model="vm.editted.description"/>
-  <span ng-switch-default class='item-padding'>{{vm.item.description}}</span>
-</td>
-<td ng-switch="vm.editable" class="text-left">
-  <select ng-switch-when="true" name="category" ng-model="vm.editted.category" ng-options="category as category for category in vm.categories"></select>
-  <span ng-switch-default class='item-padding'>{{vm.item.category}}</span>
-</td>
-<td ng-switch="vm.editable" class="text-center">
-  <select ng-switch-when="true" class="text-center" name="occurance" ng-model="vm.editted.occurance" ng-options="occurance as occurance for occurance in vm.occurances"></select>
-  <span ng-switch-default class='item-padding'>{{vm.item.occurance}}</span>
-</td>
-<td ng-switch="vm.editable" class="text-right">
-  <input ng-switch-when="true" class="text-right" type="number" name="amount" ng-model="vm.editted.amount"/>
-  <span ng-switch-default class='item-padding'>{{vm.item.amount | removeNegativeSym | currency}}</span>
+<td ng-repeat="column in vm.columnSetup" ng-class="column.class">
+  <span ng-if="vm.editable" ng-switch="column.inputType">
+    <select ng-switch-when="select" name="{{column.prop}}" ng-model="vm.editted[column.prop]" ng-options="option as option for option in column.getOptions()" required></select>
+    <input ng-switch-default name="occurance" type="{{column.inputType}}" ng-model="vm.editted[column.prop]" required></input>
+  </span>
+  <span ng-if="!vm.editable && column.prop != 'amount'" class='item-padding'>{{vm.item[column.prop]}}</span>
+  <span ng-if="!vm.editable && column.prop === 'amount'" class='item-padding'>{{vm.item[column.prop] | removeNegativeSym | currency}}</span>
 </td>
 <td>
   <button class="btn btn-default btn-sm pull-right" ng-click="vm.edit()" ng-if="!vm.editable">
     <span class="glyphicon glyphicon-pencil"></span>
   </button>
   <div class="pull-right" ng-if="vm.editable">
-    <button class="btn btn-primary btn-sm" ng-click="vm.save()">
-      <span class="glyphicon glyphicon-ok"></span>
+    <button class="btn btn-primary btn-sm" ng-click="vm.save()" ng-disabled="vm.editting">
+      <span ng-class="!vm.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
     </button>
-    <button class="btn btn-default btn-sm" ng-click="vm.cancel()">
+    <button class="btn btn-default btn-sm" ng-click="vm.cancel()" ng-hide='vm.editting'>
       <span class="glyphicon glyphicon-remove"></span>
     </button>
   </div>

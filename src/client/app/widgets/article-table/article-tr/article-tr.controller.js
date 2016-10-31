@@ -5,15 +5,13 @@
     .module('app.widgets')
     .controller('articleTrController', articleTrController);
 
-  articleTrController.$inject = ['_', 'occurances', 'budget'];
-
-  /* @ngInject */
-  function articleTrController(_ ,occurances, budget) {
+  articleTrController.$inject = ['_', 'Budget'];
+  function articleTrController(_ , Budget) {
     /* jshint validthis: true */
     var vm = this;
 
     vm.editable = false;
-    vm.occurances = occurances;
+    vm.editting = false;
     vm.edit = edit;
     vm.save = save;
     vm.cancel = reset;
@@ -25,12 +23,16 @@
 
     function save() {
       if (vm.trForm.$dirty) {
+        vm.editting = true;
         vm.item = vm.editted;
-        budget.update(vm.year, vm.item)
+        Budget.update(vm.year, vm.item)
         .then(function() {
           vm.editable = false;
           vm.trForm.$setPristine();
-        });
+        })
+        .finally(function() {
+          vm.editting = false;
+        });;
       }
       else {
         reset();

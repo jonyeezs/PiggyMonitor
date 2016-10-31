@@ -2,21 +2,23 @@
   'use strict';
 
   angular
-      .module('app.widgets')
-      .directive('articleTr', articleTr);
+    .module('app.widgets')
+    .directive('articleTrItemizer', articleItemizer);
 
-  function articleTr() {
+  articleItemizer.$inject = [];
+
+  function articleItemizer() {
     var directive = {
-      templateUrl: 'app/widgets/article-table/article-tr/article-tr.html',
+      templateUrl: 'app/widgets/article-table/article-tr-itemizer/article-tr-itemizer.html',
       restrict: 'A',
       bindToController: {
-        item: '=articleTrData',
+        onCreate: '&itemizerOnCompleted'
       },
-      controller: 'articleTrController',
+      controller: 'articleItemizerController',
       controllerAs: 'vm',
       require: {form: 'form', articleTable: '^^articleTable'},
       link: function(scope, element, attrs, apis) {
-        scope.vm.trForm = apis.form;
+        scope.vm.newItemForm = apis.form;
         scope.vm.articleType = apis.articleTable.articleType;
         scope.vm.year = apis.articleTable.year;
         scope.vm.columnSetup = apis.articleTable.columnSetup;

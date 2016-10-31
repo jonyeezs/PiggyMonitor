@@ -11,13 +11,13 @@
             <uib-accordion-heading>
               <i class="glyphicon" ng-class="{'glyphicon-chevron-down': vm.incomeTable.status.open, 'glyphicon-chevron-right': !vm.incomeTable.status.open}"></i> Income
             </uib-accordion-heading>
-            <article-table items="vm.incomeTable.items" year="vm.selectedYear"></article-table>
+            <article-table article-type="budget" items="vm.incomeTable.items" year="vm.selectedYear"></article-table>
           </uib-accordion-group>
           <uib-accordion-group is-open="vm.expenseTable.status.open">
             <uib-accordion-heading>
               <i class="glyphicon" ng-class="{'glyphicon-chevron-down': vm.expenseTable.status.open, 'glyphicon-chevron-right': !vm.expenseTable.status.open}"></i> Expenses
             </uib-accordion-heading>
-            <article-table items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
+            <article-table article-type="budget" items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
           </uib-accordion-group>
         </uib-accordion>
       </div>
