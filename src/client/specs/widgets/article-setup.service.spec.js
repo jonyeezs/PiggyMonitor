@@ -16,10 +16,10 @@ describe('Article-setup Service', function () {
     subject = ArticleSetup;
   });
 
-  describe('getColumns', function () {
+  describe('getColumnConfig', function () {
     describe('with items', function () {
       it('should call update the categories', function () {
-        subject.getColumns('ledger', [1, 2, 3]);
+        subject.getColumnConfig('ledger', [1, 2, 3]);
         expect(categoryFactory.createLabels).to.have.been.called;
       });
     });
@@ -28,10 +28,10 @@ describe('Article-setup Service', function () {
       it('should call the function from the service', function () {
         var user = {
           getOccurances: function () { return 'wrongcall'; },
-          getColumns: subject.getColumns
+          getColumnConfig: subject.getColumnConfig
         };
 
-        var columns = user.getColumns('budget');
+        var columns = user.getColumnConfig('budget');
         var result = _.find(columns, ['prop', 'occurance']).getOptions();
 
         expect(result).not.to.eql('wrongcall');
@@ -41,7 +41,7 @@ describe('Article-setup Service', function () {
 
   describe('categories', function () {
     it('should return the most updated categories on getColumn', function () {
-      var columns = subject.getColumns('budget');
+      var columns = subject.getColumnConfig('budget');
       var result = _.find(columns,['prop', 'category']).getOptions();
 
       expect(result).to.eql([]);

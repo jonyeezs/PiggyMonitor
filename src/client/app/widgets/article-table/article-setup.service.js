@@ -11,7 +11,7 @@
     var categories = [];
 
     var service = {
-      getColumns: getColumns,
+      getColumnConfig: getColumnConfig,
       setCategories: setCategories
     };
 
@@ -19,7 +19,7 @@
 
     /**
      * creates the header and the columns
-     * @method getColumns
+     * @method getColumnConfig
      * @param  {string}    articleType - ledger or budget
      * @param  {[Object]}  items - list of items in the article. This is to obtain the categories
      * @return {[columnSetup]}         collection of columns in left-first order
@@ -31,7 +31,7 @@
      * @property {Function} getOptions - a function to call the latest options
      * NOTE: The collection needs to be updated whenever the payload properties changes
      */
-    function getColumns(articleType, items) {
+    function getColumnConfig(articleType, items) {
       if(items && items.length > 0) {
         setCategories(items);
       }

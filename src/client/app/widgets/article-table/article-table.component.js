@@ -40,7 +40,7 @@
         ctrl.addItem = !ctrl.addItem;
       };
 
-      ctrl.columnSetup = ArticleSetup.getColumns(ctrl.articleType);
+      ctrl.columnSetup = ArticleSetup.getColumnConfig(ctrl.articleType);
     };
 
     ctrl.$onChanges = function(changes) {
