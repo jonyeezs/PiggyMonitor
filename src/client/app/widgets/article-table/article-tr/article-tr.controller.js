@@ -5,10 +5,8 @@
     .module('app.widgets')
     .controller('articleTrController', articleTrController);
 
-  articleTrController.$inject = ['_', 'occurances', 'budget'];
-
-  /* @ngInject */
-  function articleTrController(_ ,occurances, budget) {
+  articleTrController.$inject = ['_', 'occurances', 'Budget'];
+  function articleTrController(_ ,occurances, Budget) {
     /* jshint validthis: true */
     var vm = this;
 

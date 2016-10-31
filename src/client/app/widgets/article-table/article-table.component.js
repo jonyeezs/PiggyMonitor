@@ -46,7 +46,7 @@
     ctrl.$onChanges = function(changes) {
       if (changes.items)
       {
-        ctrl.categories = ArticleSetup.getCategories(changes.items.currentValue);
+        ArticleSetup.setCategories(changes.items.currentValue);
       }
     };
   }

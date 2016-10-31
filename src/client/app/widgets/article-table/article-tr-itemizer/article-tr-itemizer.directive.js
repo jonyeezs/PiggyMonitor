@@ -12,8 +12,6 @@
       templateUrl: 'app/widgets/article-table/article-tr-itemizer/article-tr-itemizer.html',
       restrict: 'A',
       bindToController: {
-        year: '<itemizerYear',
-        categories: '<itemizerCategories',
         onCreate: '&itemizerOnCompleted'
       },
       controller: 'articleItemizerController',
@@ -22,6 +20,7 @@
       link: function(scope, element, attrs, apis) {
         scope.vm.newItemForm = apis.form;
         scope.vm.articleType = apis.articleTable.articleType;
+        scope.vm.year = apis.articleTable.year;
         scope.vm.columnSetup = apis.articleTable.columnSetup;
       }
     };

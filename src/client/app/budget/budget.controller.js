@@ -4,9 +4,9 @@
     .module('app.budget')
     .controller('BudgetController', BudgetController);
 
-  BudgetController.$inject = ['_', 'budget', 'budgetHelper', 'logger'];
+  BudgetController.$inject = ['_', 'Budget', 'budgetHelper', 'logger'];
   /* @ngInject */
-  function BudgetController(_, budget, budgetHelper, logger) {
+  function BudgetController(_, Budget, budgetHelper, logger) {
     var itemsUpdated;
     var vm = this;
     vm.title = 'Budget';
@@ -44,7 +44,7 @@
     }
 
     function updateYears() {
-      budget.getYears().then(function (results) {
+      Budget.getYears().then(function (results) {
         vm.availableYears = _.map(results, function (result) {
           return {
             key: result,
@@ -68,10 +68,10 @@
       itemsUpdated = false;
       var getItems;
       if (occurance) {
-        getItems = budget.getByYearWithOccurance(year, occurance);
+        getItems = Budget.getByYearWithOccurance(year, occurance);
       }
       else {
-        getItems = budget.getByYear(year);
+        getItems = Budget.getByYear(year);
       }
       getItems.then(function (result) {
         if (!vm.availableOccurances.length) {

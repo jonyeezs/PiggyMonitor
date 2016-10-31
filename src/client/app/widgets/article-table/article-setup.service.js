@@ -12,8 +12,7 @@
 
     var service = {
       getColumns: getColumns,
-      setCategories: setCategories,
-      getCategories: getCategories
+      setCategories: setCategories
     };
 
     return service;
@@ -59,7 +58,7 @@
     }
 
     function getCategories() {
-      return categories;
+      return _.clone(categories);
     }
   }
 })();
