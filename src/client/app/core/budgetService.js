@@ -20,20 +20,20 @@
     return service;
 
     function getYears() {
-      return dataService.get('years').then(function (result) {
+      return dataService.get('budgets/years').then(function (result) {
         return result.years;
       });
     }
 
     //TODO: should try use a raml generator
     function getByYear(year) {
-      return dataService.get('years/' + year).then(function (result) {
+      return dataService.get('budgets/years/' + year).then(function (result) {
         return result.items;
       });
     }
 
     function getByYearWithOccurance(year, occuranceType) {
-      return dataService.get('years/' + year, {
+      return dataService.get('budgets/years/' + year, {
         occurance: occuranceType
       }).then(function (result) {
         return result.items;
@@ -41,11 +41,11 @@
     }
 
     function update(year, item) {
-      return dataService.patch('years/' + year, [item]);
+      return dataService.patch('budgets/years/' + year, [item]);
     }
 
     function add(year, item) {
-      return dataService.post('years/' + year, item);
+      return dataService.post('budgets/years/' + year, item);
     }
   }
 })();

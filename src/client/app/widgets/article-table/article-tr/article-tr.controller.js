@@ -16,6 +16,8 @@
     vm.save = save;
     vm.cancel = reset;
 
+    vm.disableRemoveNeg = vm.articleType !== 'budget';
+
     function edit() {
       vm.editted = _.clone(vm.item);
       vm.editable = true;

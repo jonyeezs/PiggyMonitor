@@ -4,7 +4,7 @@
     <input ng-switch-default name="occurance" type="{{column.inputType}}" ng-model="vm.editted[column.prop]" required></input>
   </span>
   <span ng-if="!vm.editable && column.prop != 'amount'" class='item-padding'>{{vm.item[column.prop]}}</span>
-  <span ng-if="!vm.editable && column.prop === 'amount'" class='item-padding'>{{vm.item[column.prop] | removeNegativeSym | currency}}</span>
+  <span ng-if="!vm.editable && column.prop === 'amount'" class='item-padding'>{{vm.item[column.prop] | removeNegativeSym:vm.disableRemoveNeg | currency}}</span>
 </td>
 <td>
   <button class="btn btn-default btn-sm pull-right" ng-click="vm.edit()" ng-if="!vm.editable">

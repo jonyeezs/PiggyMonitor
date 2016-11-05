@@ -15,7 +15,7 @@
   var config = {
     appErrorPrefix: '[piggyMonitor Error] ',
     appTitle: 'piggyMonitor',
-    dataUrl: 'http://localhost:9292/budgets'
+    dataUrl: 'http://localhost:9292'
   };
 
   core.value('config', config);
