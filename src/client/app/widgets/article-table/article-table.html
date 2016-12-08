@@ -13,10 +13,10 @@
     </tr>
   </thead>
   <tbody ng-show="$ctrl.addItem">
-    <tr ng-if="$ctrl.addItem" article-tr-itemizer ng-form="newItemForm" itemizer-on-completed="$ctrl.onComplete()"></tr>
+    <tr article-tr-itemizer ng-if="$ctrl.addItem" itemizer-on-completed="$ctrl.onComplete()"></tr>
   </tbody>
   <tbody>
-    <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" article-tr article-tr-data="item" article-tr-categories="$ctrl.categories" article-tr-year="$ctrl.year" ng-form="articleTrForm">
+    <tr article-tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" article-tr-data="item">
     </tr>
   </tbody>
 </table>

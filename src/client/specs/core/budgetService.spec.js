@@ -26,7 +26,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with year', function () {
-      expect(dataService.get).to.be.calledWith('years');
+      expect(dataService.get).to.be.calledWith('budgets/years');
     });
 
     it('should return a promise that resolves with a years property', function () {
@@ -51,7 +51,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('years/' + testYear);
+      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear);
     });
 
     it('should return a promise that resolves with a years property', function () {
@@ -77,7 +77,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('years/' + testYear, {
+      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear, {
         occurance: someOccuranceType
       });
     });
@@ -101,7 +101,7 @@ describe('budget service', function () {
         amount: '23.00'
       });
 
-      expect(dataService.patch).to.be.calledWith('years/2016');
+      expect(dataService.patch).to.be.calledWith('budgets/years/2016');
       expect(dataService.patch.args[0][1]).to.be.an('array');
     });
   });

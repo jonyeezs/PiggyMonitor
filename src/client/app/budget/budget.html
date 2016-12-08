@@ -17,7 +17,7 @@
             <uib-accordion-heading>
               <i class="glyphicon" ng-class="{'glyphicon-chevron-down': vm.expenseTable.status.open, 'glyphicon-chevron-right': !vm.expenseTable.status.open}"></i> Expenses
             </uib-accordion-heading>
-            <article-table article-type="budget" items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
+            <article-table article-type="expense" items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
           </uib-accordion-group>
         </uib-accordion>
       </div>

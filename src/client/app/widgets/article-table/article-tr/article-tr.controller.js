@@ -5,10 +5,11 @@
     .module('app.widgets')
     .controller('articleTrController', articleTrController);
 
-  articleTrController.$inject = ['_', 'Budget'];
-  function articleTrController(_ , Budget) {
+  articleTrController.$inject = ['_', 'Budget', 'Ledger'];
+  function articleTrController(_ , Budget, Ledger) {
     /* jshint validthis: true */
     var vm = this;
+    var EntryService = vm.articleType == 'budget' ? Budget : Ledger;
 
     vm.editable = false;
     vm.editting = false;
@@ -16,35 +17,30 @@
     vm.save = save;
     vm.cancel = reset;
 
-    vm.disableRemoveNeg = vm.articleType !== 'budget';
-
     function edit() {
       vm.editted = _.clone(vm.item);
       vm.editable = true;
     }
 
-    function save() {
-      if (vm.trForm.$dirty) {
+    function save(form) {
+      if (form.$valid) {
         vm.editting = true;
         vm.item = vm.editted;
-        Budget.update(vm.year, vm.item)
+        EntryService.update(vm.year, vm.item)
         .then(function() {
           vm.editable = false;
-          vm.trForm.$setPristine();
+          form.$setPristine();
         })
         .finally(function() {
           vm.editting = false;
-        });;
-      }
-      else {
-        reset();
+        });
       }
     }
 
-    function reset() {
+    function reset(form) {
       vm.editable = false;
       vm.editted = vm.item;
-      vm.trForm.$setPristine();
+      form.$setPristine();
     }
   }
 })();

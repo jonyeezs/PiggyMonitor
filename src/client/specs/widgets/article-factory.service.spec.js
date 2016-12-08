@@ -1,5 +1,5 @@
 /* jshint -W117, -W030 */
-describe('Article-setup Service', function () {
+describe('Article-factory', function () {
   var subject;
 
   beforeEach(function () {
@@ -12,8 +12,8 @@ describe('Article-setup Service', function () {
       createLabels: undefined
     });
 
-    bard.inject(this, 'ArticleSetup');
-    subject = ArticleSetup;
+    bard.inject(this, 'ArticleFactory');
+    subject = ArticleFactory;
   });
 
   describe('getColumnConfig', function () {
@@ -32,7 +32,7 @@ describe('Article-setup Service', function () {
         };
 
         var columns = user.getColumnConfig('budget');
-        var result = _.find(columns, ['prop', 'occurance']).getOptions();
+        var result = _.find(columns, ['prop', 'occurance']).options;
 
         expect(result).not.to.eql('wrongcall');
       });
@@ -42,15 +42,17 @@ describe('Article-setup Service', function () {
   describe('categories', function () {
     it('should return the most updated categories on getColumn', function () {
       var columns = subject.getColumnConfig('budget');
-      var result = _.find(columns,['prop', 'category']).getOptions();
+      var result = _.find(columns,['prop', 'category']).options;
 
       expect(result).to.eql([]);
-      categoryFactory.createLabels.restore();
-      sinon.stub(categoryFactory, 'createLabels').returns(['a', 'b', 'c', 'd']); //NOTE: sinon on bower seems to be broken
-      subject.setCategories(['random']);
 
-      var result = _.find(columns,['prop', 'category']).getOptions();
+      categoryFactory.createLabels.restore();
+      //NOTE: sinon on bower seems to be broken
+      sinon.stub(categoryFactory, 'createLabels').returns(['a', 'b', 'c', 'd']);
+      var columns = subject.getColumnConfig('budget', [{}, {}, {}]);
+
+      result = _.find(columns,['prop', 'category']).options;
       expect(result).to.eql(['a', 'b', 'c', 'd']);
     });
-  })
+  });
 });

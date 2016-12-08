@@ -14,10 +14,10 @@
       },
       controller: 'articleTrController',
       controllerAs: 'vm',
-      require: {form: 'form', articleTable: '^^articleTable'},
+      require: {articleTable: '^^articleTable'},
       link: function(scope, element, attrs, apis) {
-        scope.vm.trForm = apis.form;
         scope.vm.articleType = apis.articleTable.articleType;
+        scope.vm.disableRemoveNeg = apis.articleTable.articleType === 'ledger';
         scope.vm.year = apis.articleTable.year;
         scope.vm.columnSetup = apis.articleTable.columnSetup;
       }

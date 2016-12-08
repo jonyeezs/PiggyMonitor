@@ -89,20 +89,6 @@ Available [yargs](yargs) variables
 
 [yargs]:https://github.com/yargs/yargs)
 
-### Build app and specs base file
-
-The index.html and specs.html, are generated via gulp using a boilerplate.
-
-The boilerplates can be found in the boilerplate folder.
-
-- `gulp inject`
-
-    Builds the index.html
-
-- `gulp build-specs`
-
-    Builds the specs.html
-
 ### Development
 
 - `gulp dev`

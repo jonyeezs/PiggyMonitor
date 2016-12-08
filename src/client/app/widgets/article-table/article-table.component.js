@@ -13,9 +13,10 @@
       }
     });
 
-  articleTableCtrl.$inject = ['ArticleSetup'];
+  articleTableCtrl.$inject = ['ArticleFactory'];
 
-  function articleTableCtrl(ArticleSetup) {
+  function articleTableCtrl(ArticleFactory) {
+    /* jshint validthis: true */
     var ctrl = this;
 
     ctrl.$onInit = function () {
@@ -28,25 +29,25 @@
       };
 
       ctrl.toggleSort = function(header) {
-          ctrl.sortType = header;
-          ctrl.sortDesc = !ctrl.sortDesc;
-      }
+        ctrl.sortType = header;
+        ctrl.sortDesc = !ctrl.sortDesc;
+      };
 
       ctrl.isToggled = function(header) {
         return ctrl.sortType === header;
-      }
+      };
 
       ctrl.toggleItemizer = function() {
         ctrl.addItem = !ctrl.addItem;
       };
 
-      ctrl.columnSetup = ArticleSetup.getColumnConfig(ctrl.articleType);
+      ctrl.columnSetup = ArticleFactory.getColumnConfig(ctrl.articleType);
     };
 
     ctrl.$onChanges = function(changes) {
       if (changes.items)
       {
-        ArticleSetup.setCategories(changes.items.currentValue);
+        ctrl.columnSetup = ArticleFactory.getColumnConfig(ctrl.articleType, changes.items.currentValue);
       }
     };
   }

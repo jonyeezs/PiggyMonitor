@@ -26,10 +26,11 @@ describe('drop-options component', function () {
       beforeEach(function() {
         element.find('button').click();
       });
+
       it('should have display list of all options without selection info', function() {
         var list = element.find('li').not('.ng-hide');
         expect(list.length).to.equal(scope.availableOptions.length);
-      })
+      });
     });
   });
 

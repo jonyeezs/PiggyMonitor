@@ -16,9 +16,8 @@
       },
       controller: 'articleItemizerController',
       controllerAs: 'vm',
-      require: {form: 'form', articleTable: '^^articleTable'},
+      require: {articleTable: '^^articleTable'},
       link: function(scope, element, attrs, apis) {
-        scope.vm.newItemForm = apis.form;
         scope.vm.articleType = apis.articleTable.articleType;
         scope.vm.year = apis.articleTable.year;
         scope.vm.columnSetup = apis.articleTable.columnSetup;

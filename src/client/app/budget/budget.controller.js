@@ -7,7 +7,6 @@
   BudgetController.$inject = ['_', 'Budget', 'budgetHelper', 'logger'];
   /* @ngInject */
   function BudgetController(_, Budget, budgetHelper, logger) {
-    var itemsUpdated;
     var vm = this;
     vm.title = 'Budget';
 
@@ -39,7 +38,6 @@
 
     function activate() {
       logger.info('Activated Budget View');
-      itemsUpdated = false;
       updateYears();
     }
 
@@ -65,7 +63,6 @@
     }
 
     function updateItems(year, occurance) {
-      itemsUpdated = false;
       var getItems;
       if (occurance) {
         getItems = Budget.getByYearWithOccurance(year, occurance);
@@ -82,7 +79,6 @@
         vm.expenseTable.items = tables.expenses;
         vm.incomeTable.status.open = vm.incomeTable.items.length > 0;
         vm.expenseTable.status.open = vm.expenseTable.items.length > 0;
-        itemsUpdated = true;
       });
     }
   }
