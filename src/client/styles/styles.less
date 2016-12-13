@@ -713,6 +713,31 @@ form label {
     border-top: 0;
     border-bottom: 1px solid #ddd;
 }
+
+.modal-body .table-fixed thead {
+  width: 97%;
+}
+.modal-body .table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.modal-body .table-fixed > tbody > tr:after,
+.modal-body .table-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.modal-body .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.modal-body .table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
 .widget .table {
     margin: 0;
     width: 100%;
@@ -862,11 +887,15 @@ form label {
 .toggle-button span {
     font-size: 13px !important;
 }
-/* Gallery */
-.gallery img {
-    max-width: 170px;
-    margin: 5px;
-}
+/* Upload */
+div.drop-box {
+    color: #ccc;
+    border-style: dashed;
+    border-color: #ccc;
+    line-height: 200px;
+    text-align: center
+  }
+
 /* Responsive */
 @media (max-width: 480px) {
     .mainbar .page-head h2 {

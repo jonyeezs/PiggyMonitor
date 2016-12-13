@@ -7,9 +7,9 @@
     .module('app.core')
     .factory('Ledger', ledgerService);
 
-  ledgerService.$inject = ['dataService'];
+  ledgerService.$inject = ['dataService', 'moment'];
   /* @ngInject */
-  function ledgerService(dataService) {
+  function ledgerService(dataService, moment) {
 
     var service = {
       getYears: getYears,
@@ -22,7 +22,8 @@
 
     function getYears() {
       return dataService.get('ledgers/years').then(function (result) {
-        return result.years;
+        var thisYear = new moment().year();
+        return _.union(result.years, [thisYear]);
       });
     }
 

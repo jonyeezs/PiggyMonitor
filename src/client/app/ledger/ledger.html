@@ -1,11 +1,11 @@
 <section class="mainbar ledger">
   <section class="matter">
     <div class="container">
-      <div class="row">
-        <div ngf-drop ngf-select="vm.upload($file)" class="drop-box" ngf-drag-over-class="'dragover'" ngf-pattern="'.csv'">Drop CBA's csv here or click to upload</div>
-      </div>
       <div class="row option-row">
         <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)"></drop-options>
+      </div>
+      <div class="row">
+        <ledger-upload on-upload-complete="vm.completedUpload(event)"></ledger-upload>
       </div>
       <div class="row">
         <article-table article-type="ledger" items="vm.items" year="vm.selectedYear"></article-table>

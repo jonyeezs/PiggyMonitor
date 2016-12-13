@@ -1,0 +1,41 @@
+<ng-form name="revisionForm">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Revise Uploaded Items</h3>
+  </div>
+  <div class="modal-body container" id="modal-body">
+    <table class="table table-fixed">
+      <thead>
+        <tr>
+          <th class="col-md-2">Date</th>
+          <th class="col-md-5">Item</th>
+          <th class="col-md-3">Category</th>
+          <th class="col-md-2">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in $ctrl.items">
+          <td class="col-md-2">
+            {{item.date | date : 'd MMM yyyy'}}
+          </td>
+          <td class="col-md-5">
+            <input ng-model="item.description" name="description-{{$index}}" style="width: 100%" required />
+          </td>
+          <td class="col-md-3">
+            <select ng-model="item.category" name="category-{{index}}" required>
+              <option ng-repeat="category in $ctrl.categories" value="{{category}}">
+                {{category}}
+              </option>
+            </select>
+          </td>
+          <td class="col-md-2">
+            {{item.amount | currency}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok(revisionForm.$valid)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.ignore()">Cancel</button>
+  </div>
+</ng-form>

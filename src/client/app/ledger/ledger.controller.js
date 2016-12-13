@@ -4,9 +4,9 @@
     .module('app.ledger')
     .controller('LedgerController', LedgerController);
 
-  LedgerController.$inject = ['_', 'Ledger', 'logger', 'Upload', '$q', 'moment'];
+  LedgerController.$inject = ['_', 'Ledger', 'logger'];
   /* @ngInject */
-  function LedgerController(_, Ledger, logger, Upload, $q, Moment) {
+  function LedgerController(_, Ledger, logger) {
     var vm = this;
     vm.title = 'Ledger';
 
@@ -14,7 +14,6 @@
     vm.availableYears = [];
     vm.selectedYear = '';
     vm.selectYear = selectYear;
-    vm.upload = upload;
 
     vm.items = [];
 
@@ -22,32 +21,6 @@
 
     function activate() {
       updateYears();
-    }
-
-    function upload(file) {
-      if (file) {
-        var reader = new FileReader();
-        reader.onload = loadCompletedFile;
-        reader.readAsText(file);
-      }
-    }
-
-    function loadCompletedFile(event) {
-      var csv = event.target.result;
-      var rows = CSV.parse(csv).map(function (row) {
-        return {
-          date: row[0],
-          amount: row[1],
-          description: row[2]
-        }
-      });
-      vm.selectedYear = Moment(rows[0].date, "dd/mm/yyyy").year();
-      var posts = rows.map(function (row) {return Ledger.add(vm.selectedYear, row);});
-      $q.all(posts)
-      .then(function(results) {
-        logger.info('uploaded all transactions');
-        console.log(results);
-      });
     }
 
     function updateYears() {
