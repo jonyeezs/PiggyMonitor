@@ -11,6 +11,7 @@
 
     var service = {
       getYears: getYears,
+      getCategoriesForYear: getCategories,
       getByYear: getByYear,
       getByYearWithOccurance: getByYearWithOccurance,
       update: update,
@@ -30,6 +31,12 @@
       return dataService.get('budgets/years/' + year).then(function (result) {
         return result.items;
       });
+    }
+
+    function getCategories(year) {
+      return dataService.get('budgets/categories/' + year).then(function (result) {
+        return result.categories;
+      })
     }
 
     function getByYearWithOccurance(year, occuranceType) {
