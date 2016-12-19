@@ -20,7 +20,11 @@
                 templateUrl: 'app/ledger/ledger.html',
                 controller: 'LedgerController',
                 controllerAs: 'vm',
-                title: 'Ledger'
+                title: 'Ledger',
+                settings: {
+                  nav: 3,
+                  content: 'Ledger'
+                }
               }
             }
         ];

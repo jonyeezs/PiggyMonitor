@@ -20,7 +20,11 @@
                 templateUrl: 'app/budget/budget.html',
                 controller: 'BudgetController',
                 controllerAs: 'vm',
-                title: 'Budget'
+                title: 'Budget',
+                settings: {
+                  nav: 2,
+                  content: 'Budget'
+                }
               }
             }
         ];

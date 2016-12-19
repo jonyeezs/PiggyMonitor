@@ -20,7 +20,11 @@
                 templateUrl: 'app/dashboard/dashboard.html',
                 controller: 'DashboardController',
                 controllerAs: 'vm',
-                title: 'dashboard'
+                title: 'dashboard',
+                settings: {
+                  nav: 1,
+                  content: 'Dashboard'
+                }
               }
             }
         ];
