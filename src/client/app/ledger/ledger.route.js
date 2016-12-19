@@ -20,11 +20,7 @@
                 templateUrl: 'app/ledger/ledger.html',
                 controller: 'LedgerController',
                 controllerAs: 'vm',
-                title: 'Ledger',
-                settings: {
-                  nav: 3,
-                  content: '<i class="fa fa-lock"></i> Ledger'
-                }
+                title: 'Ledger'
               }
             }
         ];
