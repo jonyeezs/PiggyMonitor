@@ -5,7 +5,7 @@
     .module('app.ledger')
     .component('itemRevisionModal', {
       templateUrl: 'app/ledger/ledger-upload/item-modal.html',
-      controller: itemRevisionModal,
+      controller: itemRevisionModalCtrl,
       bindings: {
         resolve: '<',
         close: '&',
@@ -13,22 +13,40 @@
       }
     });
 
-  itemRevisionModal.$inject = ['Budget'];
+  itemRevisionModalCtrl.$inject = ['Budget', '_'];
 
-  function itemRevisionModal(Budget) {
+  function itemRevisionModalCtrl(Budget, _) {
     /* jshint validthis: true */
     var $ctrl = this;
+
     $ctrl.$onInit = function () {
-      $ctrl.items = angular.copy($ctrl.resolve.items);
-      Budget.getCategoriesForYear($ctrl.items[0].date.getFullYear()).then(function (categories) {
+      $ctrl.items = $ctrl.resolve.items.map(function (item) {
+        return Object.assign(item, {add: true});
+      });
+
+      $ctrl.categoryLoading = true;
+      Budget.getCategoriesForYear($ctrl.items[0].date.getFullYear())
+      .then(function (categories) {
         $ctrl.categories = categories;
       })
+      .finally(function () {
+        $ctrl.categoryLoading = false;
+      })
+    }
+
+    $ctrl.toggleRemove = function(item) {
+        item.add = !item.add;
     }
 
     $ctrl.ok = function(validForm) {
       if (validForm)
       {
-        $ctrl.close({$value: items});
+        console.log('test');
+        var omitAddProp = _.partialRight(_.omit, ['add']);
+        var itemsToUpload = _($ctrl.items)
+                            .filter({'add': true})
+                            .map(omitAddProp);
+        $ctrl.close({$value: itemsToUpload.value()});
       }
     }
 

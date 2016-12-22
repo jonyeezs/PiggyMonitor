@@ -5,7 +5,7 @@
         <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)"></drop-options>
       </div>
       <div class="row">
-        <ledger-upload on-upload-complete="vm.completedUpload(event)"></ledger-upload>
+        <ledger-upload on-upload-complete="vm.completedUpload(uploadedYear)"></ledger-upload>
       </div>
       <div class="row">
         <article-table article-type="ledger" items="vm.items" year="vm.selectedYear"></article-table>

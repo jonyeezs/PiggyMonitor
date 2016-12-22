@@ -33,7 +33,10 @@
         return results;
       })
       .then(LedgerUpload.handleNoCategoryItems)
-      .then(LedgerUpload.createEntries);
+      .then(LedgerUpload.createEntries)
+      .then(function (results) {
+        $ctrl.onUploadComplete({uploadedYear: $ctrl.selectedYear});
+      });
     }
   }
 })();

@@ -9,6 +9,6 @@
   "plugins": {
     "node": {},
     "requirejs": {},
-    "angular": {}
+    "angular": "src/"
   }
 }

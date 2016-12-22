@@ -714,11 +714,17 @@ form label {
     border-bottom: 1px solid #ddd;
 }
 
+.glyphicon.normal-right-spinner {
+    -webkit-animation: glyphicon-spin-r 2s infinite linear;
+    animation: glyphicon-spin-r 2s infinite linear;
+}
+
 .modal-body .table-fixed thead {
   width: 97%;
 }
+
 .modal-body .table-fixed tbody {
-  height: 230px;
+  height: 480px;
   overflow-y: auto;
   width: 100%;
 }
@@ -730,12 +736,20 @@ form label {
     visibility: hidden;
     clear: both;
 }
+
 .modal-body .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
 }
+
 .modal-body .table-fixed tbody td, .table-fixed thead > tr> th {
   float: left;
   border-bottom-width: 0;
+}
+
+.modal-body .table-fixed tbody .item-removed {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
 
 .widget .table {

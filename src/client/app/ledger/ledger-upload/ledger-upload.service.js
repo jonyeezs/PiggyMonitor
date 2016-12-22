@@ -5,13 +5,14 @@
     .module('app.ledger')
     .factory('LedgerUpload', ledgerUpload);
 
-  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'moment', 'Csv'];
+  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'Ledger', 'moment', 'Csv'];
   /* @ngInject */
-  function ledgerUpload(_, $q, $uibModal, moment, Csv) {
+  function ledgerUpload(_, $q, $uibModal, Ledger, moment, Csv) {
 
     var service = {
       getItemsFromCsv: getItemsFromCsv,
-      handleNoCategoryItems: handleNoCategoryItems
+      handleNoCategoryItems: handleNoCategoryItems,
+      createEntries: createEntries
     };
 
     function getItemsFromCsv(file, callback) {
@@ -50,15 +51,17 @@
         }
       }).result;
     }
-    //
-    // vm.selectedYear = Moment(rows[0].date, "dd/mm/yyyy").year();
-    // var posts = rows.map(function (row) {
-    //   return Ledger.add(vm.selectedYear, row);
-    // });
-    // $q.all(posts)
-    //   .then(function (results) {
-    //
-    //   });
+
+    function createEntries(itemsToUpload) {
+    var posts = itemsToUpload.map(function (item) {
+      return Ledger.add(item.date.getFullYear(), item);
+    });
+    return $q.all(posts)
+      .then(function (results) {
+        return results;
+      });
+    }
+
     return service;
   }
 })();

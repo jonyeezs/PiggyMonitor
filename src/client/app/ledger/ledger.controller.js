@@ -14,6 +14,7 @@
     vm.availableYears = [];
     vm.selectedYear = '';
     vm.selectYear = selectYear;
+    vm.completedUpload = completedUpload;
 
     vm.items = [];
 
@@ -44,5 +45,9 @@
         vm.items = result;
       });
     }
+
+    function completedUpload(uploadedYear) {
+      updateItems(uploadedYear);
+    };
   }
 })();

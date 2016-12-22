@@ -8,20 +8,22 @@
         <tr>
           <th class="col-md-2">Date</th>
           <th class="col-md-5">Item</th>
-          <th class="col-md-3">Category</th>
+          <th class="col-md-2">Category</th>
           <th class="col-md-2">Amount</th>
+          <th class="col-md-1"></th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in $ctrl.items">
+        <tr ng-repeat="item in $ctrl.items" ng-class="{'item-removed': !item.add}">
           <td class="col-md-2">
             {{item.date | date : 'd MMM yyyy'}}
           </td>
           <td class="col-md-5">
-            <input ng-model="item.description" name="description-{{$index}}" style="width: 100%" required />
+            <input ng-model="item.description" name="description-{{$index}}" style="width: 100%" ng-disabled="!item.add" ng-required="item.add" />
           </td>
-          <td class="col-md-3">
-            <select ng-model="item.category" name="category-{{index}}" required>
+          <td class="col-md-2">
+            <span ng-show="$ctrl.categoryLoading" class="glyphicon glyphicon-repeat normal-right-spinner"></span>
+            <select ng-show="!$ctrl.categoryLoading" ng-model="item.category" name="category-{{index}}" ng-disabled="!item.add" ng-required="item.add">
               <option ng-repeat="category in $ctrl.categories" value="{{category}}">
                 {{category}}
               </option>
@@ -29,6 +31,11 @@
           </td>
           <td class="col-md-2">
             {{item.amount | currency}}
+          </td>
+          <td class="col-md-1">
+            <button class="btn btn-default btn-sm" ng-click="$ctrl.toggleRemove(item)" ng-hide='vm.editting'>
+              <span class="glyphicon" ng-class="item.add ? 'glyphicon-trash' : 'glyphicon-check'"></span>
+            </button>
           </td>
         </tr>
       </tbody>
