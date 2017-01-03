@@ -5,7 +5,8 @@
       'ui.bootstrap',
       'app.core',
       'app.widgets',
-      'ngFileUpload'
+      'ngFileUpload',
+      'app.infographs'
     ]);
 
 })();

@@ -47,7 +47,7 @@
     }
 
     function completedUpload(uploadedYear) {
-      updateItems(uploadedYear);
+      selectYear(uploadedYear);
     };
   }
 })();

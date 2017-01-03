@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-      .module('app.core')
-      .factory('Budget', budgetService);
+    .module('app.core')
+    .factory('Budget', budgetService);
 
   budgetService.$inject = ['dataService'];
   /* @ngInject */
@@ -15,7 +15,8 @@
       getByYear: getByYear,
       getByYearWithOccurance: getByYearWithOccurance,
       update: update,
-      add: add
+      add: add,
+      getStatement: getStatement
     };
 
     return service;
@@ -53,6 +54,15 @@
 
     function add(year, item) {
       return dataService.post('budgets/years/' + year, item);
+    }
+
+    function getStatement(year, occurance) {
+      return dataService.get('budgets/years/' + year + '/summary', {
+        as_statement: 1,
+        occurance: occurance
+      }).then(function (result) {
+        return result.summary.breakdowns;
+      });
     }
   }
 })();
