@@ -29,13 +29,20 @@ describe('budget service', function () {
       expect(dataService.get).to.be.calledWith('budgets/years');
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       subjectPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
+
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
@@ -54,13 +61,19 @@ describe('budget service', function () {
       expect(dataService.get).to.be.calledWith('budgets/years/' + testYear);
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       subjectPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
@@ -82,13 +95,19 @@ describe('budget service', function () {
       });
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       resultPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
