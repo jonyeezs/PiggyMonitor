@@ -1,8 +1,8 @@
 (function () {
   angular
-    .module('app.infographs', ['app.core'])
+    .module('app.infographs')
     .component('barSummaryCompare', {
-      template: '<canvas ng-if="$ctrl.data.length > 0" class="chart chart-bar" chart-options="$ctrl.config" chart-data="$ctrl.data" chart-labels="$ctrl.labels" chart-series="$ctrl.series"></canvas>',
+      template: '<div class="chart-container"><canvas ng-if="$ctrl.labels.length > 0" class="chart chart-bar" chart-options="$ctrl.config" chart-data="$ctrl.data" chart-labels="$ctrl.labels" chart-series="$ctrl.series"></canvas></div>',
       controller: barCompareCtrl,
       bindings: {
         ledger: '<',
@@ -15,23 +15,20 @@
   function barCompareCtrl(Budget, _) {
     var ctrl = this;
     let ledger_totals;
-    ctrl.data = [];
-    ctrl.labels = [];
 
     ctrl.$onInit = function () {
       ctrl.series = ['Ledger', 'Budget'];
       ctrl.config = {
         responsive: true,
-        maintainAspectRatio: false,
         scales: {
           xAxes: [{
-            barThickness: 20
+            stacked: true
           }],
           yAxes: [{
             type: 'logarithmic',
             display: true,
             ticks: {
-              min: 100
+              min: 10
             }
           }]
         }
@@ -39,6 +36,13 @@
     }
 
     ctrl.$onChanges = function (changes) {
+      if (changes.ledger.isFirstChange()) {
+        ctrl.data = [[], []];
+      }
+
+      if (changes.year.isFirstChange()) {
+        ctrl.labels = [];
+      }
       if (changes.ledger && changes.ledger.currentValue) {
         ledger_totals = summarize(changes.ledger.currentValue);
         populateLedger();
@@ -64,7 +68,10 @@
 
     function populateLedger() {
       if (ledger_totals && ctrl.labels.length > 0) {
-        ctrl.data[0] = ctrl.labels.map(function (category) { return _.find(ledger_totals, {category: category}).total; });
+        ctrl.data[0] = ctrl.labels.map(function (category) {
+          var foundItem = _.find(ledger_totals, {category: category});
+          return foundItem ? foundItem.total : 0;
+        });
       }
     }
 
