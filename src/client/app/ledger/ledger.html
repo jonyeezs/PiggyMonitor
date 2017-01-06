@@ -1,14 +1,26 @@
 <section class="mainbar ledger">
   <section class="matter">
     <div class="container-fluid">
-      <div class="row option-row">
-        <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)"></drop-options>
-      </div>
       <div class="row">
-        <ledger-upload on-upload-complete="vm.completedUpload(uploadedYear)"></ledger-upload>
+        <div class="col-md-6 option-row">
+          <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)">
+          </drop-options>
+        </div>
+        <div class="col-md-6">
+          <ledger-upload on-upload-complete="vm.completedUpload(uploadedYear)"></ledger-upload>
+        </div>
       </div>
       <div class="row" ng-if="vm.items.length > 0">
-        <bar-summary-compare year="vm.selectedYear" ledger="vm.items"></bar-summary-compare>
+        <div class="col-md-8">
+          <widget title="Budget Comparison" heading-colour="wviolet">
+            <bar-summary-compare year="vm.selectedYear" ledger="vm.items"></bar-summary-compare>
+          </widget>
+        </div>
+        <div class="col-md-4">
+          <widget title="Cash-flow" heading-colour="wblue">
+            <bar-cash-flow items="vm.items"></bar-cash-flow>
+          </widget>
+        </div>
       </div>
       <div class="row">
         <article-table article-type="ledger" items="vm.items" year="vm.selectedYear"></article-table>

@@ -59,6 +59,8 @@
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
   <script src="/bower_components/Chart.js/Chart.js"></script>
   <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+  <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
+  <script src="/bower_components/csv-js/csv.js"></script>
   <script src="/bower_components/angular-mocks/angular-mocks.js"></script>
   <script src="/bower_components/sinon/index.js"></script>
   <script src="/bower_components/bardjs/dist/bard.js"></script>
@@ -73,6 +75,7 @@
   <script src="/src/client/app/budget/budget.module.js"></script>
   <script src="/src/client/app/core/core.module.js"></script>
   <script src="/src/client/app/dashboard/dashboard.module.js"></script>
+  <script src="/src/client/app/infographs/infographs.module.js"></script>
   <script src="/src/client/app/layout/layout.module.js"></script>
   <script src="/src/client/app/ledger/ledger.module.js"></script>
   <script src="/src/client/app/widgets/widgets.module.js"></script>
@@ -93,9 +96,15 @@
   <script src="/src/client/app/core/ledger.service.js"></script>
   <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
   <script src="/src/client/app/dashboard/dashboard.route.js"></script>
+  <script src="/src/client/app/infographs/bar-cash-flow.component.js"></script>
+  <script src="/src/client/app/infographs/bar-summary-compare.component.js"></script>
   <script src="/src/client/app/layout/shell.controller.js"></script>
   <script src="/src/client/app/layout/top-nav/ht-top-nav.directive.js"></script>
   <script src="/src/client/app/layout/top-nav/top-nav.controller.js"></script>
+  <script src="/src/client/app/ledger/ledger-upload/item-revision-modal.component.js"></script>
+  <script src="/src/client/app/ledger/ledger-upload/ledger-upload.component.js"></script>
+  <script src="/src/client/app/ledger/ledger-upload/ledger-upload.service.js"></script>
+  <script src="/src/client/app/ledger/ledger.controller.js"></script>
   <script src="/src/client/app/ledger/ledger.route.js"></script>
   <script src="/src/client/app/widgets/article-table/article-factory.service.js"></script>
   <script src="/src/client/app/widgets/article-table/article-table.component.js"></script>
@@ -104,7 +113,7 @@
   <script src="/src/client/app/widgets/article-table/article-tr/article-tr.controller.js"></script>
   <script src="/src/client/app/widgets/article-table/article-tr/article-tr.directive.js"></script>
   <script src="/src/client/app/widgets/drop-options/drop-options.component.js"></script>
-  <script src="/src/client/app/widgets/ht-widget-header.directive.js"></script>
+  <script src="/src/client/app/widgets/widget.directive.js"></script>
   <!-- endinject -->
 
   <!-- inject:spechelpers:js -->
@@ -119,10 +128,11 @@
   <script src="/src/client/specs/core/core.route.spec.js"></script>
   <script src="/src/client/specs/core/dataService.spec.js"></script>
   <script src="/src/client/specs/core/filters/removeNegSym.spec.js"></script>
+  <script src="/src/client/specs/infographs/bar-cash-flow.component.spec.js"></script>
   <script src="/src/client/specs/layout/shell.controller.spec.js"></script>
   <script src="/src/client/specs/layout/top-nav/top-nav.controller.spec.js"></script>
   <script src="/src/client/specs/widgets/article-factory.service.spec.js"></script>
-  <script src="/src/client/specs/widgets/article-table.directive.spec.js"></script>
+  <script src="/src/client/specs/widgets/article-table.component.spec.js"></script>
   <script src="/src/client/specs/widgets/drop-options.component.spec.js"></script>
   <!-- endinject -->
 
