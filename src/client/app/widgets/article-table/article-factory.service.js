@@ -27,7 +27,7 @@
     /**
      * creates the header and the columns
      * @method getColumnConfig
-     * @param  {string}    articleType - ledger or budget
+     * @param  {string}    articleType - actual or budget
      * @param  {[Object]}  items - list of items in the article. This is to obtain the categories
      * @return {[columnSetup]}         collection of columns in left-first order
      * NOTE: The collection needs to be updated whenever the payload properties changes

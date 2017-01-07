@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('app.ledger')
+    .module('app.actual')
     .factory('LedgerUpload', ledgerUpload);
 
-  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'Ledger', 'moment', 'Csv'];
+  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'Actual', 'moment', 'Csv'];
   /* @ngInject */
-  function ledgerUpload(_, $q, $uibModal, Ledger, moment, Csv) {
+  function ledgerUpload(_, $q, $uibModal, Actual, moment, Csv) {
 
     var service = {
       getItemsFromCsv: getItemsFromCsv,
@@ -54,7 +54,7 @@
 
     function createEntries(itemsToUpload) {
     var posts = itemsToUpload.map(function (item) {
-      return Ledger.add(item.date.getFullYear(), item);
+      return Actual.add(item.date.getFullYear(), item);
     });
     return $q.all(posts)
       .then(function (results) {

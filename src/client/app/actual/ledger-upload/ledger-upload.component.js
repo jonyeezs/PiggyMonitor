@@ -2,9 +2,9 @@
   'use strict';
 
   angular
-    .module('app.ledger')
+    .module('app.actual')
     .component('ledgerUpload', {
-      templateUrl: 'app/ledger/ledger-upload/ledger-upload.html',
+      templateUrl: 'app/actual/ledger-upload/ledger-upload.html',
       controller: ledgerUploadCtrl,
       bindings: {
         onUploadComplete: '&'

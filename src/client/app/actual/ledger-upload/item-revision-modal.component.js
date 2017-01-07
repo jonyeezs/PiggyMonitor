@@ -2,9 +2,9 @@
   'use strict';
 
   angular
-    .module('app.ledger')
+    .module('app.actual')
     .component('itemRevisionModal', {
-      templateUrl: 'app/ledger/ledger-upload/item-modal.html',
+      templateUrl: 'app/actual/ledger-upload/item-modal.html',
       controller: itemRevisionModalCtrl,
       bindings: {
         resolve: '<',

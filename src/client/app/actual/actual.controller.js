@@ -1,16 +1,16 @@
 (function () {
 
   angular
-    .module('app.ledger')
-    .controller('LedgerController', LedgerController);
+    .module('app.actual')
+    .controller('ActualController', ActualController);
 
-  LedgerController.$inject = ['_', 'Ledger', 'logger'];
+  ActualController.$inject = ['_', 'Actual', 'logger'];
   /* @ngInject */
-  function LedgerController(_, Ledger, logger) {
+  function ActualController(_, Actual, logger) {
     var vm = this;
-    vm.title = 'Ledger';
+    vm.title = 'Actual';
 
-    vm.yearSelectionMsg = 'Select Ledger Year';
+    vm.yearSelectionMsg = 'Select Actual Year';
     vm.availableYears = [];
     vm.selectedYear = '';
     vm.selectYear = selectYear;
@@ -25,7 +25,7 @@
     }
 
     function updateYears() {
-      Ledger.getYears().then(function (results) {
+      Actual.getYears().then(function (results) {
         vm.availableYears = _.map(results, function (result) {
           return {
             key: result,
@@ -41,7 +41,7 @@
     }
 
     function updateItems(year) {
-      Ledger.getByYear(year).then(function (result) {
+      Actual.getByYear(year).then(function (result) {
         vm.items = result;
       });
     }

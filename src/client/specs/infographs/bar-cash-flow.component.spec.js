@@ -30,8 +30,7 @@ describe('bar-cash-flow controller', function () {
       });
 
       it('should populate data with total for income and expenses', function() {
-        expect(subject.data[0]).to.equal(7.55);
-        expect(subject.data[1]).to.equal(10);
+        expect(subject.data[0]).to.eql([7.55, 10]);
       });
     });
   });

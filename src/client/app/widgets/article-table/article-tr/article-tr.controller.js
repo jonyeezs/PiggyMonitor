@@ -5,11 +5,11 @@
     .module('app.widgets')
     .controller('articleTrController', articleTrController);
 
-  articleTrController.$inject = ['_', 'Budget', 'Ledger'];
-  function articleTrController(_ , Budget, Ledger) {
+  articleTrController.$inject = ['_', 'Budget', 'Actual'];
+  function articleTrController(_ , Budget, Actual) {
     /* jshint validthis: true */
     var vm = this;
-    var EntryService = vm.articleType == 'budget' ? Budget : Ledger;
+    var EntryService = vm.articleType == 'budget' ? Budget : Actual;
 
     vm.editable = false;
     vm.editting = false;

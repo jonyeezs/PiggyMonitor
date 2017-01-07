@@ -67,6 +67,7 @@
   <!-- build:js js/app.js -->
   <!-- inject:js -->
   <script src="/src/client/app/app.module.js"></script>
+  <script src="/src/client/app/actual/actual.module.js"></script>
   <script src="/src/client/app/blocks/exception/exception.module.js"></script>
   <script src="/src/client/app/blocks/logger/logger.module.js"></script>
   <script src="/src/client/app/blocks/router/router.module.js"></script>
@@ -75,8 +76,12 @@
   <script src="/src/client/app/dashboard/dashboard.module.js"></script>
   <script src="/src/client/app/infographs/infographs.module.js"></script>
   <script src="/src/client/app/layout/layout.module.js"></script>
-  <script src="/src/client/app/ledger/ledger.module.js"></script>
   <script src="/src/client/app/widgets/widgets.module.js"></script>
+  <script src="/src/client/app/actual/actual.controller.js"></script>
+  <script src="/src/client/app/actual/actual.route.js"></script>
+  <script src="/src/client/app/actual/ledger-upload/item-revision-modal.component.js"></script>
+  <script src="/src/client/app/actual/ledger-upload/ledger-upload.component.js"></script>
+  <script src="/src/client/app/actual/ledger-upload/ledger-upload.service.js"></script>
   <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
   <script src="/src/client/app/blocks/exception/exception.js"></script>
   <script src="/src/client/app/blocks/logger/logger.js"></script>
@@ -84,6 +89,7 @@
   <script src="/src/client/app/budget/budget-helper.service.js"></script>
   <script src="/src/client/app/budget/budget.controller.js"></script>
   <script src="/src/client/app/budget/budget.route.js"></script>
+  <script src="/src/client/app/core/actual.service.js"></script>
   <script src="/src/client/app/core/budgetService.js"></script>
   <script src="/src/client/app/core/categoryFactory.js"></script>
   <script src="/src/client/app/core/config.js"></script>
@@ -91,7 +97,6 @@
   <script src="/src/client/app/core/core.route.js"></script>
   <script src="/src/client/app/core/dataService.js"></script>
   <script src="/src/client/app/core/filters/removeNegSym.js"></script>
-  <script src="/src/client/app/core/ledger.service.js"></script>
   <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
   <script src="/src/client/app/dashboard/dashboard.route.js"></script>
   <script src="/src/client/app/infographs/bar-cash-flow.component.js"></script>
@@ -99,11 +104,6 @@
   <script src="/src/client/app/layout/shell.controller.js"></script>
   <script src="/src/client/app/layout/top-nav/ht-top-nav.directive.js"></script>
   <script src="/src/client/app/layout/top-nav/top-nav.controller.js"></script>
-  <script src="/src/client/app/ledger/ledger-upload/item-revision-modal.component.js"></script>
-  <script src="/src/client/app/ledger/ledger-upload/ledger-upload.component.js"></script>
-  <script src="/src/client/app/ledger/ledger-upload/ledger-upload.service.js"></script>
-  <script src="/src/client/app/ledger/ledger.controller.js"></script>
-  <script src="/src/client/app/ledger/ledger.route.js"></script>
   <script src="/src/client/app/widgets/article-table/article-factory.service.js"></script>
   <script src="/src/client/app/widgets/article-table/article-table.component.js"></script>
   <script src="/src/client/app/widgets/article-table/article-tr-itemizer/article-tr-itemizer.controller.js"></script>

@@ -6,7 +6,7 @@
       'app.core',
       'app.widgets',
       'app.budget',
-      'app.ledger',
+      'app.actual',
       'app.dashboard',
       'app.layout',
       'chart.js'

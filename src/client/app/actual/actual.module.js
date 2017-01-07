@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.ledger', [
+  angular.module('app.actual', [
       'ui.bootstrap',
       'app.core',
       'app.widgets',

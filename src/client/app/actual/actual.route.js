@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-      .module('app.ledger')
+      .module('app.actual')
       .run(appRun);
 
   appRun.$inject = ['routerHelper'];
@@ -14,16 +14,16 @@
   function getStates() {
     return [
             {
-              state: 'ledger',
+              state: 'actual',
               config: {
-                url: '/ledger',
-                templateUrl: 'app/ledger/ledger.html',
-                controller: 'LedgerController',
+                url: '/actual',
+                templateUrl: 'app/actual/actual.html',
+                controller: 'ActualController',
                 controllerAs: 'vm',
-                title: 'Ledger',
+                title: 'Actual',
                 settings: {
                   nav: 3,
-                  content: 'Ledger'
+                  content: 'Actual'
                 }
               }
             }

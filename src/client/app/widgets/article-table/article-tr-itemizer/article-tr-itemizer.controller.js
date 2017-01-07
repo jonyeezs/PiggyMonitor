@@ -5,12 +5,12 @@
     .module('app.widgets')
     .controller('articleItemizerController', articleItemizerController);
 
-  articleItemizerController.$inject = ['_', 'Budget', 'Ledger'];
+  articleItemizerController.$inject = ['_', 'Budget', 'Actual'];
 
-  function articleItemizerController(_, Budget, Ledger) {
+  function articleItemizerController(_, Budget, Actual) {
     /* jshint validthis: true */
     var vm = this;
-    var EntryService = vm.articleType == 'budget' ? Budget : Ledger;
+    var EntryService = vm.articleType == 'budget' ? Budget : Actual;
 
     vm.item = {};
     vm.save = save;

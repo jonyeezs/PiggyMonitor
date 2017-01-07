@@ -17,7 +17,7 @@
       require: {articleTable: '^^articleTable'},
       link: function(scope, element, attrs, apis) {
         scope.vm.articleType = apis.articleTable.articleType;
-        scope.vm.disableRemoveNeg = apis.articleTable.articleType === 'ledger';
+        scope.vm.disableRemoveNeg = apis.articleTable.articleType === 'actual';
         scope.vm.year = apis.articleTable.year;
         scope.vm.columnSetup = apis.articleTable.columnSetup;
       }
