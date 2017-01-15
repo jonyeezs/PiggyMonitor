@@ -35,7 +35,7 @@
     function getColumnConfig(articleType, items) {
       var categories = items && items.length > 0 ? getCategories(items) : [];
 
-      if (articleType === 'ledger') {
+      if (articleType === 'actual') {
         return [
           {
             name: 'Date',
