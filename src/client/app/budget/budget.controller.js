@@ -25,14 +25,23 @@
       items: [],
       status: {
         open: false
-      }
+      },
+      colSetup: [],
+      tableSettings: {}
     };
     vm.expenseTable = {
       items: [],
       status: {
         open: false
-      }
+      },
+      colSetup: [],
+      tableSettings: {}
     };
+
+    vm.expenseCreated = itemCreated(vm.expenseTable);
+    vm.incomeCreated = itemCreated(vm.incomeTable);
+    vm.expenseUpdated = itemUpdated(vm.expenseTable);
+    vm.incomeUpdated = itemUpdated(vm.incomeTable);
 
     activate();
 
@@ -75,11 +84,45 @@
           vm.availableOccurances = budgetHelper.getOccurances(result);
         }
         var tables = budgetHelper.splitToIncomeAndExpense(result);
+
+        vm.incomeTable.colSetup = vm.expenseTable.colSetup = budgetHelper.getEdiTableColSetup(result);
+
+        vm.incomeTable.tableSettings = vm.expenseTable.tableSettings =
+        {
+          editable: true,
+          creatable: true,
+          deletable: true,
+          multable: true
+        };
+
         vm.incomeTable.items = tables.incomes;
         vm.expenseTable.items = tables.expenses;
+
         vm.incomeTable.status.open = vm.incomeTable.items.length > 0;
         vm.expenseTable.status.open = vm.expenseTable.items.length > 0;
       });
+    }
+
+    function itemCreated(table) {
+      return function (item) {
+        return Budget.add(vm.selectedYear, item)
+          .then(function (id) {
+            item.id = id;
+            table.items.unshift(item);
+          });
+      };
+    }
+
+    function itemUpdated(table) {
+      return function (item) {
+        return Budget.update(vm.selectedYear, item)
+        .then(function(updatedItem) {
+          var index = table.items.findIndex(function (item) { return item.id === updatedItem.id; });
+          if (index != -1) {
+            table.items[index] = updatedItem;
+          }
+        });
+      };
     }
   }
 })();

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.widgets')
+    .module('app.core')
     .factory('ArticleFactory', articleFactory);
 
   articleFactory.$inject = ['_', 'occurances', 'categoryFactory'];
@@ -38,26 +38,26 @@
       if (articleType === 'actual') {
         return [
           {
-            name: 'Date',
+            header: 'Date',
             prop: 'date',
             class: 'col-md-2 text-left',
             inputType: 'date'
           },
           {
-            name: 'Item',
+            header: 'Item',
             prop: 'description',
             class: 'col-md-5 text-left',
             inputType: 'text'
           },
           {
-            name: 'Category',
+            header: 'Category',
             prop: 'category',
             class: 'col-md-2 text-left',
             inputType: 'select',
             options: categories
           },
           {
-            name: 'Amount',
+            header: 'Amount',
             prop: 'amount',
             class: 'col-md-1 text-right',
             inputType: 'number'
@@ -67,27 +67,27 @@
       else {
         return [
           {
-            name: 'Item',
+            header: 'Item',
             prop: 'description',
             class: 'col-md-5 text-left',
             inputType: 'text'
           },
           {
-            name: 'Category',
+            header: 'Category',
             prop: 'category',
             class: 'col-md-2 text-left',
             inputType: 'select',
             options: categories
           },
           {
-            name: 'Frequency',
+            header: 'Frequency',
             prop: 'occurance',
             class: 'col-md-2 text-center',
             inputType: 'select',
             options: occurances
           },
           {
-            name: 'Amount',
+            header: 'Amount',
             prop: 'amount',
             class: 'col-md-1 text-right',
             inputType: 'number'

@@ -8,10 +8,10 @@
       <div class="row">
         <uib-accordion close-others="false">
           <uib-accordion-group class="panel-default" is-open="vm.incomeTable.status.open" heading="Income">
-            <article-table article-type="budget" items="vm.incomeTable.items" year="vm.selectedYear"></article-table>
+            <edi-table items="vm.incomeTable.items" col-setup="vm.incomeTable.colSetup" settings="vm.incomeTable.tableSettings" on-item-created="vm.incomeCreated(item)" on-item-updated="vm.incomeUpdated(event, item)"></edi-table>
           </uib-accordion-group>
           <uib-accordion-group class="panel-default" is-open="vm.expenseTable.status.open" heading="Expenses">
-            <article-table article-type="expense" items="vm.expenseTable.items" year="vm.selectedYear"></article-table>
+            <edi-table items="vm.expenseTable.items" col-setup="vm.expenseTable.colSetup" settings="vm.expenseTable.tableSettings" on-item-created="vm.expenseCreated(item)" on-item-updated="vm.expenseUpdated(event, item)"></edi-table>
           </uib-accordion-group>
         </uib-accordion>
       </div>

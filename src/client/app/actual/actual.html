@@ -24,6 +24,7 @@
       </div>
       <div class="row">
         <article-table article-type="actual" items="vm.items" year="vm.selectedYear"></article-table>
+        <edi-table items="vm.items" col-setup="vm.colSetup" settings="vm.tableSettings" on-item-created="vm.itemCreated(item)" on-item-updated="vm.itemUpdated(event, item)"></edi-table>
       </div>
     </div>
   </section>

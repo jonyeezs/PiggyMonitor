@@ -1,0 +1,33 @@
+<table class="article-table table table-hover">
+  <thead>
+    <tr>
+      <th ng-repeat="colDetail in $ctrl.colSetup track by $index" edi-theader col-detail="::colDetail" on-sort="$ctrl.setSort(column, desc)">
+      </th>
+      <th class="col-md-2">
+        <edi-temizer-button ng-if="$ctrl.settings.creatable"></edi-temizer-button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr edi-temizer ng-if="$ctrl.settings.creatable" col-setup="::$ctrl.colSetup" itemizer-on-completed="$ctrl.itemAdded(item)">
+    </tr>
+  </tbody>
+  <tbody>
+    <tr ng-form="$ctrl.itemForm" ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc">
+      <td edi-td ng-repeat="colDetails in $ctrl.colSetup" ng-model="item" col-detail="::colDetails" edit-state="$ctrl.editState" ng-class="colDetails.class"></td>
+      <td>
+        <button class="btn btn-default btn-sm pull-right" ng-click="$ctrl.edit()" ng-if="$ctrl.settings.editable" ng-hide="$ctrl.editState.inProgress">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <div class="pull-right" ng-if="$ctrl.editState.inProgress">
+          <button class="btn btn-primary btn-sm" ng-click="$ctrl.save($ctrl.itemForm, item)" ng-disabled="$ctrl.editting">
+            <span ng-class="!$ctrl.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
+          </button>
+          <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel()" ng-hide='$ctrl.editting'>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,24 @@
+<tbody ng-show="$ctrl.showForm">
+  <tr>
+    <td ng-form="$ctrl.newItemForm" ng-repeat="column in $ctrl.colSetup" ng-switch="column.inputType" ng-class="column.class">
+      <select ng-switch-when="select" name="{{column.prop}}" ng-model="$ctrl.item[column.prop]" ng-options="option as option for option in column.options" required></select>
+      <div ng-switch-when="datalist">
+        <input list="{{column.prop}}" type="text" ng-model="$ctrl.item[column.prop]" />
+        <datalist id="{{column.prop}}">
+          <option ng-repeat="option in column.options" value="{{option}}">
+          </datalist>
+      </div>
+      <input ng-switch-default name="{{column.prop}}" type="{{column.inputType}}" ng-model="$ctrl.item[column.prop]" required></input>
+    </td>
+    <td>
+      <div class="pull-right">
+        <button class="btn btn-primary btn-sm" ng-click="$ctrl.save($ctrl.newItemForm.$valid)" ng-disabled="$ctrl.adding">
+          <span ng-class="!$ctrl.adding ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
+        </button>
+        <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel()" ng-hide="$ctrl.adding">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+    </td>
+  </tr>
+</tbody>

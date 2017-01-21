@@ -4,9 +4,9 @@
     .module('app.actual')
     .controller('ActualController', ActualController);
 
-  ActualController.$inject = ['_', 'Actual', 'logger'];
+  ActualController.$inject = ['_', 'Actual', 'ArticleFactory', 'logger'];
   /* @ngInject */
-  function ActualController(_, Actual, logger) {
+  function ActualController(_, Actual, ArticleFactory, logger) {
     var vm = this;
     vm.title = 'Actual';
 
@@ -17,6 +17,10 @@
     vm.completedUpload = completedUpload;
 
     vm.items = [];
+    vm.tableSettings = {
+      editable: true,
+      creatable: true
+    };
 
     activate();
 
@@ -42,7 +46,8 @@
 
     function updateItems(year) {
       Actual.getByYear(year).then(function (result) {
-        vm.items = result;
+        vm.items = angular.copy(result);
+        vm.colSetup = ArticleFactory.getColumnConfig('actual', result);
       });
     }
 
