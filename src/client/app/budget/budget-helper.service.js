@@ -2,12 +2,13 @@
     .module('app.budget')
     .factory('budgetHelper', BudgetHelper);
 
-BudgetHelper.$inject = ['_'];
+BudgetHelper.$inject = ['_', 'ArticleFactory'];
 /* @ngInject */
-function BudgetHelper(_) {
+function BudgetHelper(_, ArticleFactory) {
 
   var service = {
     getOccurances: getOccurances,
+    getEdiTableColSetup : getEdiTableColSetup,
     splitToIncomeAndExpense: splitToIncomeAndExpense
   };
 
@@ -21,6 +22,10 @@ function BudgetHelper(_) {
       .value();
     occurances.unshift({key: 'default occurance', value: null});
     return occurances;
+  }
+
+  function getEdiTableColSetup(items) {
+    return ArticleFactory.getColumnConfig('budget', items);
   }
 
   function splitToIncomeAndExpense(items) {

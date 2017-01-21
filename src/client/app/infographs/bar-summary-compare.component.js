@@ -36,11 +36,11 @@
     }
 
     ctrl.$onChanges = function (changes) {
-      if (changes.actual.isFirstChange()) {
+      if (changes.actual && changes.actual.isFirstChange()) {
         ctrl.data = [[], []];
       }
 
-      if (changes.year.isFirstChange()) {
+      if (changes.year && changes.year.isFirstChange()) {
         ctrl.labels = [];
       }
       if (changes.actual && changes.actual.currentValue) {
