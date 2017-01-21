@@ -2,11 +2,11 @@
   <section class="matter">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 option-row">
+        <div class="option-row">
           <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)">
           </drop-options>
         </div>
-        <div class="col-md-6">
+        <div>
           <ledger-upload on-upload-complete="vm.completedUpload(uploadedYear)"></ledger-upload>
         </div>
       </div>
