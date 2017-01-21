@@ -8,6 +8,7 @@ It offers rich features such as:
 1. Inline editing
 1. Adding new items
 1. Multi select
+1. Modular plugins to HTML table
 
 ## Pre-requisite
 
@@ -162,7 +163,7 @@ If the callback returns a promise, it will resolve by expecting the item in the 
 ## TODO
 
 - [ ] Use contenteditable instead of having extra buttons. Here's an example: https://github.com/akatov/angular-contenteditable
-- [ ] Extend some functionalities into modular components
+- [X] Extend some functionalities into modular components
 - [ ] Allow dynamic table setup
 - [ ] Filtering of rows
 - [ ] Multiple sorting
