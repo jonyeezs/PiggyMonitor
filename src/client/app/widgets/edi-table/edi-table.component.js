@@ -15,11 +15,12 @@
       }
     });
 
-  ediTableCtrl.$inject = ['ArticleFactory'];
+  ediTableCtrl.$inject = ['_', 'ArticleFactory'];
 
-  function ediTableCtrl(ArticleFactory) {
+  function ediTableCtrl(_, ArticleFactory) {
     /* jshint validthis: true */
     var ctrl = this;
+    var selectionAvailable = false;
 
     ctrl.$onInit = function () {
       ctrl.sortType = '';
@@ -28,11 +29,10 @@
 
       ctrl.itemAdded = itemAdded;
 
-      ctrl.editState = {
-        inProgress: false,
-        commit: false
-      };
-      ctrl.editting = false;
+      ctrl.onLongPress = onLongPress;
+      ctrl.onTouchEnd = onTouchEnd;
+      ctrl.onShortPress = onShortPress;
+
       ctrl.edit = edit;
       ctrl.save = save;
       ctrl.cancel = cancel;
@@ -41,7 +41,20 @@
     ctrl.$onChanges = function(changes) {
       if (changes.items && changes.items.currentValue)
       {
-        ctrl.items = angular.copy(changes.items.currentValue);
+        ctrl.items = angular.copy(changes.items.currentValue)
+                            .map(selectAndEditState);
+
+        function selectAndEditState(item) {
+          function State() {
+            this._selected = false;
+            this._editState = {
+              inProgress: false,
+              editting: false,
+              commit: false
+            }
+          };
+          return _.assignIn({}, new State(), {data: item});
+        }
       }
     };
 
@@ -57,34 +70,66 @@
       }
     };
 
-    function edit() {
-      ctrl.editState.inProgress = true;
-      ctrl.editState.commit = false;
+    function edit(selectedItem) {
+      if (selectionAvailable && selectedItem._selected) {
+        ctrl.items.filter(function(item) {return item._selected})
+                  .forEach(function (item) {
+                    item._editState.inProgress = true;
+                    item._editState.commit = false;
+                  });
+      }
+      else {
+        selectedItem._editState.inProgress = true;
+        selectedItem._editState.commit = false;
+      }
     }
 
     function save(isItemFormValid, item) {
       if(isItemFormValid && onItemUpdated) {
-        ctrl.editting = true;
-        onItemUpdated({event: 'updated', item: item})
+        item._editState.editting = true;
+        onItemUpdated({event: 'updated', item: item.data})
         .then(function () {
-          ctrl.editState.commit = true;
+          item._editState.commit = true;
         })
         .catch(function () {
-          ctrl.editState.commit = false;
+          item._editState.commit = false;
         })
         .finally(function () {
-          ctrl.editting = false;
-          ctrl.editState.inProgress = false;
+          item._editState.inProgress = true;
+          item._editState.editting = false;
         });
       }
     }
 
-    function cancel() {
-      ctrl.editting = false;
-      ctrl.editState = {
-        inProgress: false,
-        commit: false
-      };
+    function cancel(selectedItem) {
+      if (selectionAvailable && selectedItem._selected) {
+        ctrl.items.filter(function (item) { return item._selected })
+          .forEach(function (item) {
+            item._editState.inProgress = false;
+            item._editState.editting = false;
+            item._editState.commit = false;
+          });
+      } else {
+        selectedItem._editState = {
+          inProgress: false,
+          editting: false,
+          commit: false
+        };
+      }
+    }
+
+    function onLongPress(item) {
+      item._selected = !item._selected;
+    }
+
+    function onTouchEnd(item) {
+      selectionAvailable = ctrl.items.some(function(item) {return item._selected;});
+    }
+
+    function onShortPress(item) {
+      if (selectionAvailable) {
+        item._selected = !item._selected;
+      }
     }
   }
 })();
