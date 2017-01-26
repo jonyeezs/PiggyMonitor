@@ -13,7 +13,7 @@
     </tr>
   </tbody>
   <tbody>
-    <tr ng-form="$ctrl.itemForm" ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" ng-class="{'selected-row': item._selected}">
+    <tr ng-form="itemForm" ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" ng-class="{'selected-row': item._selected}">
       <td edi-td ng-repeat="colDetail in $ctrl.colSetup" ng-model="item.data" col-detail="::colDetail" edit-state="item._editState" ng-class="colDetail.class" edi-touchy="$ctrl.settings.multable" on-long-press="$ctrl.onLongPress(item)" on-short-press="$ctrl.onShortPress(item)"
           on-touch-end="$ctrl.onTouchEnd()"></td>
         <td>
@@ -21,7 +21,7 @@
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
           <div class="pull-right" ng-if="item._editState.inProgress">
-            <button class="btn btn-primary btn-sm" ng-click="$ctrl.save($ctrl.itemForm, item)" ng-disabled="item._editState.editting">
+            <button class="btn btn-primary btn-sm" ng-click="$ctrl.save(itemForm.$valid, item)" ng-disabled="item._editState.editting">
           <span ng-class="!item._editState.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
         </button>
             <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel(item)" ng-hide='item._editState.editting'>

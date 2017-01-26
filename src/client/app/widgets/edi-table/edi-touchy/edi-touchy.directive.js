@@ -41,6 +41,10 @@
           }
         });
 
+        scope.$on('$destroy', function() {
+          disposeEdiTouchyWatcher();
+        });
+
         function onEnter(evt) {
           var functionHandler = $parse(attrs.onLongPress);
 

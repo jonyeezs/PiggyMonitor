@@ -26,3 +26,12 @@ There is still alot of room for improvement:
 - Perhaps look into the performance with so much watcher-hungry ngAttr
 
 I've learnt that refactoring straight away isn't always smart. As you progress further, you come to realize where it makes more sense to refactor and also realize where time is best spent.
+
+
+## lesson\edi-table
+
+Learnt so much about this. Using the $compile api. Working with nested directives.
+
+As well figuring out how ngModelController actually works.
+
+Sometimes things don't follow a nice pattern and seems hacky. But if the hack is only for a specific problem and will never affect anyone else. Maybe its ok to do it that way.

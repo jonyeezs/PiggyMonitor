@@ -20,33 +20,27 @@
     return directive;
   }
 
-  function linkTd(scope, element, attr, model) {
-    scope.$watch('editState', function (newState, oldState) {
-      if(oldState.inProgress && !newState.inProgress) {
-        if(!newState.commit) {
-          model.$rollbackViewValue();
-        }
+  function linkTd(scope, ele, attr, model) {
+    //var key = attr.$$element.context.parentNode.$$hashKey;
+    model.$render = function viewToTdData() {
+      if (model.$viewValue)
+      {
+        scope.tdData = model.$viewValue;
       }
-    })
-
-    scope.updateModel = function () {
-      model.$setViewValue(angular.copy(scope.tdData));
     };
 
-    model.$formatters.push(function (value) {
-      if (value) {
-        scope.tdData = angular.copy(value);
-      }
-      return value;
-    });
+    scope.updateModel = function (propName, newValue) {
+      scope.tdData[propName] = newValue;
+      model.$setViewValue(scope.tdData);
+    };
   }
 
 
   function ediTdCtrl($scope) {
     var ctrl = this;
 
-    ctrl.updateTdData = function () {
-      $scope.updateModel();
+    ctrl.updateTdData = function (propName, value) {
+      $scope.updateModel(propName, value);
     }
   }
 
@@ -62,9 +56,24 @@
           dataModel: 'ngModel'
         },
         link: function (scope, ele, attr, apis) {
-          apis.dataModel.$parsers.push(function(value) {
-            apis.editTd.updateTdData();
-            return true;
+          scope.$on('$destroy', function(evt) {
+            // Because the edit inputs are wrapped around the ngIf of editState.inProgress,
+            // the ngModels for the inputs never get updated.
+            // We have to trigger the saves before this gets destroyed.
+            // the ngIf is the targetSscope which will be a child of edi-td.
+            var toBeCommitted = evt.targetScope.$parent.editState.commit;
+
+            if (toBeCommitted) {
+                ele.triggerHandler('saved');
+            }
+            else {
+              apis.dataModel.$rollbackViewValue();
+            }
+          });
+
+          apis.dataModel.$parsers.push(function sendViewToEdiTd(viewModel) {
+            apis.editTd.updateTdData(apis.dataModel.$name, viewModel);
+            return viewModel;
           })
         }
       };

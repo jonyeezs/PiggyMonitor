@@ -75,19 +75,21 @@
         ctrl.items.filter(function(item) {return item._selected})
                   .forEach(function (item) {
                     item._editState.inProgress = true;
+                    item._editState.editting = false;
                     item._editState.commit = false;
                   });
       }
       else {
         selectedItem._editState.inProgress = true;
+        selectedItem._editState.editting = false;
         selectedItem._editState.commit = false;
       }
     }
 
     function save(isItemFormValid, item) {
-      if(isItemFormValid && onItemUpdated) {
+      if(isItemFormValid && typeof ctrl.onItemUpdated == 'function') {
         item._editState.editting = true;
-        onItemUpdated({event: 'updated', item: item.data})
+        ctrl.onItemUpdated({event: 'updated', item: item.data})
         .then(function () {
           item._editState.commit = true;
         })
@@ -95,7 +97,7 @@
           item._editState.commit = false;
         })
         .finally(function () {
-          item._editState.inProgress = true;
+          item._editState.inProgress = false;
           item._editState.editting = false;
         });
       }
