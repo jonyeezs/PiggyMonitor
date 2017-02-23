@@ -1,34 +1,65 @@
 <table class="article-table table table-hover">
   <thead>
     <tr>
-      <th ng-repeat="colDetail in $ctrl.colSetup track by $index" edi-theader col-detail="::colDetail" ng-class="colDetail.class" on-sort="$ctrl.setSort(column, desc)">
-      </th>
+      <th
+        ng-repeat="colDetail in $ctrl.colSetup track by $index"
+        edi-theader
+        col-detail="::colDetail"
+        ng-class="colDetail.class"
+        on-sort="$ctrl.setSort(column, desc)"></th>
       <th class="col-md-2">
         <edi-temizer-button ng-if="$ctrl.settings.creatable"></edi-temizer-button>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr edi-temizer ng-if="$ctrl.settings.creatable" col-setup="::$ctrl.colSetup" itemizer-on-completed="$ctrl.itemAdded(item)">
-    </tr>
+    <tr
+      edi-temizer
+      ng-if="$ctrl.settings.creatable"
+      col-setup="::$ctrl.colSetup"
+      itemizer-on-completed="$ctrl.itemAdded(item)"></tr>
   </tbody>
   <tbody>
-    <tr ng-form="itemForm" ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" ng-class="{'selected-row': item._selected}">
-      <td edi-td ng-repeat="colDetail in $ctrl.colSetup" ng-model="item.data" col-detail="::colDetail" edit-state="item._editState" ng-class="colDetail.class" edi-touchy="$ctrl.settings.multable" on-long-press="$ctrl.onLongPress(item)" on-short-press="$ctrl.onShortPress(item)"
-          on-touch-end="$ctrl.onTouchEnd()"></td>
-        <td>
-          <button class="btn btn-default btn-sm pull-right" ng-click="$ctrl.edit(item)" ng-if="$ctrl.settings.editable" ng-hide="item._editState.inProgress">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-          <div class="pull-right" ng-if="item._editState.inProgress">
-            <button class="btn btn-primary btn-sm" ng-click="$ctrl.save(itemForm.$valid, item)" ng-disabled="item._editState.editting">
-          <span ng-class="!item._editState.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
+    <tr
+      ng-form="itemForm"
+      ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc"
+      ng-class="{'selected-row': item._multiSelected}"
+      edi-touchy="$ctrl.settings.multable"
+      on-long-press="$ctrl.onLongPress(item)"
+      on-short-press="$ctrl.onShortPress(item)"
+      on-touch-end="$ctrl.onTouchEnd()">
+      <td
+        ng-repeat="colDetail in $ctrl.colSetup"
+        edi-td
+        edi-td-setup="::colDetail"
+        edi-td-state="item._editState"
+        edi-td-multi-select="item._multiSelected"
+        ng-model="item.data"
+        ng-class="colDetail.class"></td>
+      <td>
+        <button
+          class="btn btn-default btn-sm pull-right"
+          ng-click="$ctrl.edit(item)"
+          ng-if="$ctrl.settings.editable"
+          ng-hide="item._editState.inProgress">
+          <span class="glyphicon glyphicon-pencil"></span>
         </button>
-            <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel(item)" ng-hide='item._editState.editting'>
-          <span class="glyphicon glyphicon-remove"></span>
-        </button>
-          </div>
-        </td>
+        <div class="pull-right" ng-if="item._editState.inProgress">
+          <button
+            class="btn btn-primary btn-sm"
+            ng-click="$ctrl.save(itemForm.$valid, item)"
+            ng-disabled="item._editState.editting">
+            <span
+              ng-class="!item._editState.editting ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'"></span>
+          </button>
+          <button
+            class="btn btn-default btn-sm"
+            ng-click="$ctrl.cancel(item)"
+            ng-hide='item._editState.editting'>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

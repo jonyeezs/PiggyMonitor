@@ -1,9 +1,25 @@
 <span ng-if="editState.inProgress" ng-switch="tdSetup.inputType">
-    <select ng-switch-when="select" name="{{tdSetup.prop}}" edi-td-data ng-model="tdData[tdSetup.prop]" ng-options="option as option for option in tdSetup.options" ng-model-options="{ updateOn: 'saved'}" required></select>
-    <input ng-switch-default name="{{tdSetup.prop}}" type="{{tdSetup.inputType}}" edi-td-data ng-model="tdData[tdSetup.prop]" ng-model-options="{ updateOn: 'saved'}" required></input>
+  <select
+    ng-switch-when="select"
+    name="{{tdSetup.prop}}"
+    edi-td-data
+    edi-td-data-multi="selectedForMulti"
+    ng-options="option for option in tdSetup.options track by option"
+    ng-model="tdData[tdSetup.prop]"
+    ng-model-options="{ updateOn: 'saved'}"
+    required></select>
+  <input
+    ng-switch-default
+    name="{{tdSetup.prop}}"
+    type="{{tdSetup.inputType}}"
+    edi-td-data
+    edi-td-data-multi="selectedForMulti"
+    ng-model="tdData[tdSetup.prop]"
+    ng-model-options="{ updateOn: 'saved'}"
+    required></input>
 </span>
 <span ng-if="!editState.inProgress" ng-switch="tdSetup.prop">
-    <span ng-switch-when="amount" class='item-padding'>{{tdData[tdSetup.prop] | removeNegativeSym:disableRemoveNeg | currency}}</span>
-<span ng-switch-when="date" class='item-padding'>{{tdData[tdSetup.prop] | date : 'd MMM'}}</span>
-<span ng-switch-default class='item-padding'>{{tdData[tdSetup.prop]}}</span>
+  <span ng-switch-when="amount" class='item-padding'>{{tdData[tdSetup.prop] | removeNegativeSym:disableRemoveNeg | currency}}</span>
+  <span ng-switch-when="date" class='item-padding'>{{tdData[tdSetup.prop] | date : 'd MMM'}}</span>
+  <span ng-switch-default class='item-padding'>{{tdData[tdSetup.prop]}}</span>
 </span>

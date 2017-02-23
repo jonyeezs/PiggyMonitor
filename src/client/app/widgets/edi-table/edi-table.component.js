@@ -46,7 +46,7 @@
 
         function selectAndEditState(item) {
           function State() {
-            this._selected = false;
+            this._multiSelected = false;
             this._editState = {
               inProgress: false,
               editting: false,
@@ -71,8 +71,8 @@
     };
 
     function edit(selectedItem) {
-      if (selectionAvailable && selectedItem._selected) {
-        ctrl.items.filter(function(item) {return item._selected})
+      if (selectionAvailable && selectedItem._multiSelected) {
+        ctrl.items.filter(function(item) {return item._multiSelected})
                   .forEach(function (item) {
                     item._editState.inProgress = true;
                     item._editState.editting = false;
@@ -86,26 +86,42 @@
       }
     }
 
-    function save(isItemFormValid, item) {
+    function save(isItemFormValid, selectedItem) {
       if(isItemFormValid && typeof ctrl.onItemUpdated == 'function') {
-        item._editState.editting = true;
-        ctrl.onItemUpdated({event: 'updated', item: item.data})
+        updateState(selectedItem, true, 'editting');
+        ctrl.onItemUpdated({event: 'updated', item: selectedItem.data})
         .then(function () {
-          item._editState.commit = true;
+          updateState(selectedItem, true, 'commit');
         })
         .catch(function () {
-          item._editState.commit = false;
+          updateState(selectedItem, false, 'commit');
         })
         .finally(function () {
-          item._editState.inProgress = false;
-          item._editState.editting = false;
+          updateState(selectedItem, false, 'inProgress', 'editting');
+        });
+      }
+    }
+
+    function updateState(selectedItem, value) {
+      var stateProps = Array.from(arguments).slice(2, arguments.length);
+
+      if (selectionAvailable && selectedItem._multiSelected) {
+        ctrl.items.filter(function (item) { return item._multiSelected })
+          .forEach(function (item) {
+            stateProps.forEach(function (stateProp) {
+              item._editState[stateProp] = value;
+            });
+          });
+      } else {
+        stateProps.forEach(function (stateProp) {
+          selectedItem._editState[stateProp] = value;
         });
       }
     }
 
     function cancel(selectedItem) {
-      if (selectionAvailable && selectedItem._selected) {
-        ctrl.items.filter(function (item) { return item._selected })
+      if (selectionAvailable && selectedItem._multiSelected) {
+        ctrl.items.filter(function (item) { return item._multiSelected })
           .forEach(function (item) {
             item._editState.inProgress = false;
             item._editState.editting = false;
@@ -121,16 +137,18 @@
     }
 
     function onLongPress(item) {
-      item._selected = !item._selected;
+      if(!selectionAvailable && !item._editState.inProgress) {
+        item._multiSelected = !item._multiSelected;
+      }
     }
 
     function onTouchEnd(item) {
-      selectionAvailable = ctrl.items.some(function(item) {return item._selected;});
+      selectionAvailable = ctrl.items.some(function(item) {return item._multiSelected;});
     }
 
     function onShortPress(item) {
-      if (selectionAvailable) {
-        item._selected = !item._selected;
+      if (selectionAvailable && !item._editState.inProgress) {
+        item._multiSelected = !item._multiSelected;
       }
     }
   }

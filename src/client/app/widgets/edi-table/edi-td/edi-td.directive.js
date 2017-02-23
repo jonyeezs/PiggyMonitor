@@ -10,8 +10,9 @@
       templateUrl: 'app/widgets/edi-table/edi-td/edi-td.html',
       restrict: 'A',
       scope: {
-        tdSetup: '<colDetail',
-        editState: '<'
+        tdSetup: '<ediTdSetup',
+        editState: '<ediTdState',
+        selectedForMulti: '<?ediTdMultiSelect'
       },
       controller: ediTdCtrl,
       require: 'ngModel',
@@ -21,7 +22,6 @@
   }
 
   function linkTd(scope, ele, attr, model) {
-    //var key = attr.$$element.context.parentNode.$$hashKey;
     model.$render = function viewToTdData() {
       if (model.$viewValue)
       {
@@ -35,7 +35,7 @@
     };
   }
 
-
+  // API Controller of edi-td
   function ediTdCtrl($scope) {
     var ctrl = this;
 
@@ -44,18 +44,43 @@
     }
   }
 
-  // Directive for the ngModel linked to the actual input
+  // Directive for the ngModel that's linked to the actual input
   angular.module('app.edi-table')
     .directive('ediTdData', editTdData);
 
-    function editTdData() {
+    editTdData.$inject = ['EdiTdMultiSelection'];
+    function editTdData(EdiTdMultiSelection) {
       var directive = {
         restrict: 'A',
+        scope: {
+          selectedForMulti: '<?ediTdDataMulti'
+        },
         require: {
           editTd: '^ediTd',
           dataModel: 'ngModel'
         },
         link: function (scope, ele, attr, apis) {
+          var registeredIndex = null;
+
+          // Create watcher on the parent level as an ng directive creates its own child scopes
+          var disposeMultiSelectOptionListener = scope.$watch('selectedForMulti', function(newValue) {
+            if (newValue && registeredIndex == null) {
+              registeredIndex = EdiTdMultiSelection.register(function(value) {
+                apis.dataModel.$setViewValue(value);
+                ele.val(value);
+              }, apis.dataModel.$name);
+
+              ele.change(function() {
+                EdiTdMultiSelection.updateValue(apis.dataModel.$name, registeredIndex, apis.dataModel.$viewValue);
+              });
+            }
+            else {
+              if (registeredIndex != null) {
+                registeredIndex = EdiTdMultiSelection.unregister(apis.dataModel.$name, registeredIndex);
+              }
+            }
+          });
+
           scope.$on('$destroy', function(evt) {
             // Because the edit inputs are wrapped around the ngIf of editState.inProgress,
             // the ngModels for the inputs never get updated.
@@ -69,6 +94,9 @@
             else {
               apis.dataModel.$rollbackViewValue();
             }
+
+            if (registeredIndex != null) registeredIndex = EdiTdMultiSelection.unregister(apis.dataModel.$name, registeredIndex);
+            if (typeof disposeInputChangeWatcher == 'function') disposeInputChangeWatcher();
           });
 
           apis.dataModel.$parsers.push(function sendViewToEdiTd(viewModel) {
