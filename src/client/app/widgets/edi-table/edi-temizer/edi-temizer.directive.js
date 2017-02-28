@@ -5,13 +5,15 @@
     .module('app.edi-table')
     .directive('ediTemizer', ediTemizer);
 
+    ediTemizer.$inject = ['$compile'];
 
-    function ediTemizer () {
+    function ediTemizer ($compile) {
       return {
         templateUrl: 'app/widgets/edi-table/edi-temizer/edi-temizer.html',
         restrict: 'A',
         controller: editTimizerCtrl,
         controllerAs: '$ctrl',
+        scope: true,
         bindToController: {
           colSetup: '<',
           itemizerOnComplete: '&'
@@ -63,6 +65,7 @@
     function completeItemizer() {
       // ed-Itemizier-Cancelled-Or-Done
       $rootScope.$emit('e.i.c.o.d');
+      ctrl.showForm = false;
       ctrl.adding = false;
     }
   }

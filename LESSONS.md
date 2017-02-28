@@ -35,3 +35,5 @@ Learnt so much about this. Using the $compile api. Working with nested directive
 As well figuring out how ngModelController actually works.
 
 Sometimes things don't follow a nice pattern and seems hacky. But if the hack is only for a specific problem and will never affect anyone else. Maybe its ok to do it that way.
+
+Man creating dynamic tables with components is hard. Something that should be simple to use now looks so complicated to jump through hoops!

@@ -14,9 +14,10 @@
     /* jshint validthis: true */
     var ctrl = this;
     var dispose = null;
-    ctrl.showButton = true;
 
     ctrl.$onInit = function () {
+      ctrl.showButton = true;
+
       ctrl.toggleItemizer = function () {
         ctrl.showButton = !ctrl.showButton;
         // ed-Itemizier-Button-Toggler-Toggled!

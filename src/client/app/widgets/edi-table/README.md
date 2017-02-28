@@ -19,7 +19,7 @@ It offers rich features such as:
 
 edi-table offers a out-of-the-box table element you can use.
 
-As well as plugins you can use on your own html table element
+As well as plugins you can use on your own html table element. See [Attributes](#attributes) for further details on what the element attrs mean.
 
 ### edi-table
 
@@ -102,6 +102,24 @@ A cut-down of the objects that matters to the td element
   * **commit**: updates the `ng-model` view and model
 * `edi-td-multi-select`: set to true to have this item changed when any other `edi-td` has this option se to true as well.
 
+### edi-temizer
+
+Creates a td form.
+
+To show and hide the form this component is used:
+```html
+<edi-temizer-button ></edi-temizer-button>
+```
+To include the form
+```html
+    <tr edi-temizer
+      col-setup="$ctrl.colSetup"
+      itemizer-on-complete="$ctrl.itemAdded(item)">
+    </tr>
+```
+
+`itemizer-on-complete` is a callback binding fired when the form is submitted by clicking the tick button.
+
 ## Attributes
 
 Following are explanation on how each attributes work
@@ -123,7 +141,7 @@ options | array of options string when input is a `select` or `datalist` | speci
 
 #### Important notes:
 
-1. For bootstrap gril layout users, An empty header column of size `col-md-2` is added at the end for the operation buttons.
+1. For bootstrap grid layout users, An empty header column of size `col-md-2` is added at the end for the operation buttons.
 
 _**Caveat**: I don't know how this will perform if the setup is change dynamically. I think it'll break so please do use one-time binding_
 

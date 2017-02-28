@@ -12,12 +12,11 @@
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr
-      edi-temizer
-      ng-if="$ctrl.settings.creatable"
-      col-setup="::$ctrl.colSetup"
-      itemizer-on-completed="$ctrl.itemAdded(item)"></tr>
+  <tbody ng-if="$ctrl.settings.creatable">
+    <tr edi-temizer
+      col-setup="$ctrl.colSetup"
+      itemizer-on-complete="$ctrl.itemAdded(item)">
+    </tr>
   </tbody>
   <tbody>
     <tr
