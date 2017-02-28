@@ -7,7 +7,14 @@
     ng-options="option for option in tdSetup.options track by option"
     ng-model="tdData[tdSetup.prop]"
     ng-model-options="{ updateOn: 'saved'}"
+    ng-disabled="editState.editting"
     required></select>
+  <div ng-switch-when="datalist">
+    <input list="{{tdSetup.prop}}" type="text" ng-model="tdData[tdSetup.prop]" ng-disabled="editState.editting"/>
+    <datalist id="{{tdSetup.prop}}">
+      <option ng-repeat="option for option in tdSetup.options track by option" value="{{option}}">
+      </datalist>
+  </div>
   <input
     ng-switch-default
     name="{{tdSetup.prop}}"
@@ -16,6 +23,7 @@
     edi-td-data-multi="selectedForMulti"
     ng-model="tdData[tdSetup.prop]"
     ng-model-options="{ updateOn: 'saved'}"
+    ng-disabled="editState.editting"
     required></input>
 </span>
 <span ng-if="!editState.inProgress" ng-switch="tdSetup.prop">

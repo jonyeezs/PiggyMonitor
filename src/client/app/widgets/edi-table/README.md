@@ -53,6 +53,55 @@ You can then use this information to order your `ngRepeat` rows.
 </table>
 ```
 
+### edi-td
+
+Create `td` elements that allow for editing by updating the state of the component.
+
+This uses the settings from [`colSetup`](#col-setup) to identify the `td`'s associated column. This in turn will bind the `data`'s property to the same column value.
+
+Example how this works.
+
+A cut-down of the objects that matters to the td element
+```json
+{
+  colDetail: {
+    prop: 'title',
+    inputType: 'text'
+  },
+  item: {
+    data: {
+      title: 'value'
+    },
+    editState: {
+      inProgress: false,
+      editting: false,
+      commit: false
+    },
+    multiSelected: false  
+  }  
+}
+```
+
+```html
+<tr ng-repeat="item in items">
+  <td
+    ng-repeat="colDetail in $ctrl.colSetup"
+    edi-td
+    edi-td-setup="colDetail"
+    edi-td-state="item.editState"
+    edi-td-multi-select="item.multiSelected"
+    ng-model="item.data">
+  </td>
+</tr>
+```
+
+* The display value will match the colDetail's prop to the data json object's property.
+* `edi-td-state`: sets the different state of the `td` for editing.
+  * **inProgress**: set to true to show edit mode
+  * **editting**: disables the inputs for editing
+  * **commit**: updates the `ng-model` view and model
+* `edi-td-multi-select`: set to true to have this item changed when any other `edi-td` has this option se to true as well.
+
 ## Attributes
 
 Following are explanation on how each attributes work
