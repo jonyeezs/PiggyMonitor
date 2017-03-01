@@ -71,7 +71,7 @@
           // Prevent the onLongPress event from firing
           $timeout.cancel(timer);
 
-          if (attrs.onShortPress && !scope.longPressSent && !$(evt.target).is('select,input,button,checkbox')) {
+          if (attrs.onShortPress && !scope.longPressSent && !$(evt.target).is('select,input,button,button > span,checkbox')) {
             scope.$apply(function () {
               onShortPressFuncHandler(scope, {
                 $event: evt
