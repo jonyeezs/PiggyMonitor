@@ -26,7 +26,7 @@
       status: {
         open: false
       },
-      colSetup: [],
+      colSetup: budgetHelper.getEdiTableColSetup(),
       tableSettings: {}
     };
     vm.expenseTable = {
@@ -34,7 +34,7 @@
       status: {
         open: false
       },
-      colSetup: [],
+      colSetup: budgetHelper.getEdiTableColSetup(),
       tableSettings: {}
     };
 
@@ -79,6 +79,9 @@
       else {
         getItems = Budget.getByYear(year);
       }
+
+      vm.itemsLoading = true;
+
       getItems.then(function (result) {
         if (!vm.availableOccurances.length) {
           vm.availableOccurances = budgetHelper.getOccurances(result);
@@ -100,6 +103,9 @@
 
         vm.incomeTable.status.open = vm.incomeTable.items.length > 0;
         vm.expenseTable.status.open = vm.expenseTable.items.length > 0;
+      })
+      .finally(function () {
+        vm.itemsLoading = false;
       });
     }
 
