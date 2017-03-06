@@ -1,8 +1,8 @@
 <div class="pull-left" uib-dropdown>
   <button id="single-button-{{$index}}" type="button" class="btn btn-info" uib-dropdown-toggle>
-                {{!$ctrl.selected ? $ctrl.selectionInfo : $ctrl.selected}}<span class="caret drop-options"></span>
+                {{!$ctrl.selected ? $ctrl.selectionInfo : $ctrl.selected}}<span class="drop-options" ng-class="$ctrl.noList ? 'glyphicon glyphicon-thumbs-down' : 'caret'"></span>
             </button>
-  <ul class="dropdown-menu drop-options" uib-dropdown-menu role="menu" aria-labelledby="single-button-{{$index}}">
+  <ul ng-show="!$ctrl.noList" class="dropdown-menu drop-options" uib-dropdown-menu role="menu" aria-labelledby="single-button-{{$index}}">
     <li ng-show="$ctrl.selected !== $ctrl.selectionInfo" class="header">
       {{$ctrl.selectionInfo}}
     </li>
