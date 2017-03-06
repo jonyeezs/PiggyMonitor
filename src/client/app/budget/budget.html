@@ -7,14 +7,14 @@
       </div>
       <div class="row">
         <uib-accordion close-others="false">
-          <div uib-accordion-group class="panel-default" is-open="vm.incomeTable.status.open">
+          <div uib-accordion-group class="panel-default" is-open="vm.incomeTable.status.open" is-disabled="vm.itemsLoading">
             <uib-accordion-heading>
               Income
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !vm.itemsLoading && vm.incomeTable.status.open, 'glyphicon-chevron-right': !vm.itemsLoading &&  !vm.incomeTable.status.open, 'glyphicon-thumbs-down': vm.itemsLoading }"></i>
             </uib-accordion-heading>
             <edi-table items="vm.incomeTable.items" col-setup="vm.incomeTable.colSetup" settings="vm.incomeTable.tableSettings" on-item-created="vm.incomeCreated(item)" on-item-updated="vm.incomeUpdated(event, items)"></edi-table>
           </div>
-          <div uib-accordion-group class="panel-default" is-open="vm.expenseTable.status.open">
+          <div uib-accordion-group class="panel-default" is-open="vm.expenseTable.status.open" is-disabled="vm.itemsLoading">
             <uib-accordion-heading>
               Expense
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': !vm.itemsLoading && vm.expenseTable.status.open, 'glyphicon-chevron-right': !vm.itemsLoading &&  !vm.expenseTable.status.open, 'glyphicon-thumbs-down': vm.itemsLoading }"></i>
