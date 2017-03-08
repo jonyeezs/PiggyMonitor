@@ -81,6 +81,7 @@
       }
 
       vm.itemsLoading = true;
+      vm.incomeTable.status.open = vm.expenseTable.status.open = false;
 
       getItems.then(function (result) {
         if (!vm.availableOccurances.length) {
