@@ -28,8 +28,11 @@ This is the out-of-the-box custom table element. See [Attributes](#Attrubutes) o
 `edi-table` offers all features (that would be described in the plugins).
 
 ```html
-<edi-table col-setup="::$ctrl.setup" items="$ctrl.rows" settings="$ctrl.settings" on-item-created="$ctrl.callback(item)" on-item-updated="$ctrl.callback(event, item)"></edi-table>
+<edi-table col-setup="::$ctrl.setup" items="$ctrl.rows" settings="$ctrl.settings" on-item-created="$ctrl.callback(item)" on-item-updated="$ctrl.callback(event, items)"></edi-table>
 ```
+
+* `on-item-created` - callback of the new item when created through the `edi-temizer`
+* `on-item-updated` - callback of a list of items (if multiple is not selected, list will contain the single item) that were updated; either by deletion or changes in value.
 
 ### edi-theader
 
@@ -53,54 +56,89 @@ You can then use this information to order your `ngRepeat` rows.
 </table>
 ```
 
-### edi-td
+### edi-tr
 
-Create `td` elements that allow for editing by updating the state of the component.
+Creates a table row element where columns are base on the [`colSetup`](#col-setup).
 
-This uses the settings from [`colSetup`](#col-setup) to identify the `td`'s associated column. This in turn will bind the `data`'s property to the same column value.
+`edi-tr` has three features:
+1. create dynamic table
+2. allow for editing
+3. multi-select capabilities
 
-Example how this works.
+Below is an example of the most minimum required objects for the `edi-tr` attributes
 
-A cut-down of the objects that matters to the td element
 ```json
+colDetails: [{
+  prop: 'title',
+  inputType: 'text'
+},
 {
-  colDetail: {
-    prop: 'title',
-    inputType: 'text'
-  },
-  item: {
-    data: {
-      title: 'value'
-    },
-    editState: {
-      inProgress: false,
-      editting: false,
-      commit: false
-    },
-    multiSelected: false  
-  }  
+  prop: 'amount',
+  inputType: 'text'  
+}]
+
+item: {
+  title: 'value',
+  amount: '100'
 }
 ```
+The item object must have properties corresponding to the colDetails' key-value pair of prop
+
+#### 1. Using as a display only table row
+
+These are the minimum required attributes that is needed for all use case.
 
 ```html
-<tr ng-repeat="item in items">
-  <td
-    ng-repeat="colDetail in $ctrl.colSetup"
-    edi-td
-    edi-td-setup="colDetail"
-    edi-td-state="item.editState"
-    edi-td-multi-select="item.multiSelected"
-    ng-model="item.data">
-  </td>
+<tr ng-repeat="item in items"
+  edi-tr
+  ng-model="item"
+  edi-tr-setup="colDetails">
 </tr>
 ```
 
-* The display value will match the colDetail's prop to the data json object's property.
-* `edi-td-state`: sets the different state of the `td` for editing.
-  * **inProgress**: set to true to show edit mode
-  * **editting**: disables the inputs for editing
-  * **commit**: updates the `ng-model` view and model
-* `edi-td-multi-select`: set to true to have this item changed when any other `edi-td` has this option se to true as well.
+#### 2. Enable edit mode
+
+Include these additional attributes
+
+```html
+<tr ...
+  ng-form
+  edi-tr-editable="true"
+  edi-tr-on-save="$ctrl.itemUpdated(items)">
+</tr>
+```
+
+`ng-form` is required to allow `ngModel` to interact with the edit buttons. You may use the controller as you wish.
+
+`edi-tr-on-save` requires an promise callback that will be the method to post your changes.
+
+### edi-td
+
+Component to display data for a column in a row. This component gets utilize by `edi-tr`. So naturally this would extend the edit capabilities.
+
+#### 1. Without edit mode
+
+```html
+<td ng-repeat="colDetail in colSetup" ng-class="colDetail.class">
+  <edi-td td-data="model" edi-td-setup="::colDetail"></edi-td>
+</td>
+```
+
+#### 2. Allow edit
+
+```html
+<td ng-repeat="colDetail in colSetup" ng-class="colDetail.class">
+  <edi-td td-data="model" edi-td-setup="::colDetail" 
+    edi-td-edit-mode="true" 
+    edi-td-on-edit-changes="modelValueChange(changeObj)" 
+    edi-td-disable="false"></edi-td>
+</td>
+```
+
+* Set `edi-td-edit-mode` to true to show the input fields; false to show in display-only mode.
+* Setting `edi-td-disable` to true will disable the input fields.
+* `edi-td-on-edit-changes` callback gets fired when a change has been made to the input field.
+
 
 ### edi-temizer
 
@@ -185,7 +223,7 @@ Setting Key | Description
 editable  | allow for items to be editable
 creatable | allow adding of new items
 deletable | allow deletion of items
-multable  | allow multiple selection
+multable  | allow multiple selection. When selections are updated `on-item-updated` returns a list of the selected items.
 
 By default, they are all disabled.
 

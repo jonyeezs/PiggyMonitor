@@ -121,7 +121,7 @@
     }
 
     function itemUpdated(table) {
-      return function (item) {
+      return function (_evnt, item) {
         return Budget.update(vm.selectedYear, item)
         .then(function(updatedItem) {
           var index = table.items.findIndex(function (item) { return item.id === updatedItem.id; });

@@ -33,28 +33,13 @@
       ctrl.onTouchEnd = onTouchEnd;
       ctrl.onShortPress = onShortPress;
 
-      ctrl.edit = edit;
-      ctrl.save = save;
-      ctrl.cancel = cancel;
+      ctrl.itemUpdated = itemUpdated;
     }
 
     ctrl.$onChanges = function(changes) {
       if (changes.items && changes.items.currentValue)
       {
-        ctrl.items = angular.copy(changes.items.currentValue)
-                            .map(selectAndEditState);
-
-        function selectAndEditState(item) {
-          function State() {
-            this._multiSelected = false;
-            this._editState = {
-              inProgress: false,
-              editting: false,
-              commit: false
-            }
-          };
-          return _.assignIn({}, new State(), {data: item});
-        }
+        ctrl.items = angular.copy(changes.items.currentValue);
       }
     };
 
@@ -70,86 +55,44 @@
       }
     };
 
-    function edit(selectedItem) {
-      if (selectionAvailable && selectedItem._multiSelected) {
-        ctrl.items.filter(function(item) {return item._multiSelected})
-                  .forEach(function (item) {
-                    item._editState.inProgress = true;
-                    item._editState.editting = false;
-                    item._editState.commit = false;
-                  });
-      }
-      else {
-        selectedItem._editState.inProgress = true;
-        selectedItem._editState.editting = false;
-        selectedItem._editState.commit = false;
-      }
-    }
-
-    function save(isItemFormValid, selectedItem) {
-      if(isItemFormValid && typeof ctrl.onItemUpdated == 'function') {
-        updateState(selectedItem, true, 'editting');
-        ctrl.onItemUpdated({event: 'updated', item: selectedItem.data})
-        .then(function () {
-          updateState(selectedItem, true, 'commit');
-        })
-        .catch(function () {
-          updateState(selectedItem, false, 'commit');
-        })
-        .finally(function () {
-          updateState(selectedItem, false, 'inProgress', 'editting');
-        });
-      }
+    function itemUpdated(items) {
+      return ctrl.onItemUpdated({ event: 'updated', items: items});
     }
 
     function updateState(selectedItem, value) {
       var stateProps = Array.from(arguments).slice(2, arguments.length);
 
-      if (selectionAvailable && selectedItem._multiSelected) {
-        ctrl.items.filter(function (item) { return item._multiSelected })
-          .forEach(function (item) {
-            stateProps.forEach(function (stateProp) {
-              item._editState[stateProp] = value;
-            });
-          });
-      } else {
+      return getSelectedItems(selectedItem).forEach(function (item) {
         stateProps.forEach(function (stateProp) {
-          selectedItem._editState[stateProp] = value;
-        });
-      }
+          item._editState[stateProp] = value;
+        })
+      });
     }
 
-    function cancel(selectedItem) {
+    function getSelectedItems(selectedItem) {
+      var updatedItems;
       if (selectionAvailable && selectedItem._multiSelected) {
-        ctrl.items.filter(function (item) { return item._multiSelected })
-          .forEach(function (item) {
-            item._editState.inProgress = false;
-            item._editState.editting = false;
-            item._editState.commit = false;
-          });
+        updatedItems = ctrl.items.filter(function (item) { return item._multiSelected });
       } else {
-        selectedItem._editState = {
-          inProgress: false,
-          editting: false,
-          commit: false
-        };
+        updatedItems = [selectedItem];
       }
+      return updatedItems;
     }
 
     function onLongPress(item) {
-      if(!selectionAvailable && !item._editState.inProgress) {
-        item._multiSelected = !item._multiSelected;
-      }
+      // if(!selectionAvailable && !item._editState.inProgress) {
+      //   item._multiSelected = !item._multiSelected;
+      // }
     }
 
     function onTouchEnd(item) {
-      selectionAvailable = ctrl.items.some(function(item) {return item._multiSelected;});
+      // selectionAvailable = ctrl.items.some(function(item) {return item._multiSelected;});
     }
 
     function onShortPress(item) {
-      if (selectionAvailable && !item._editState.inProgress) {
-        item._multiSelected = !item._multiSelected;
-      }
+      // if (selectionAvailable && !item._editState.inProgress) {
+      //   item._multiSelected = !item._multiSelected;
+      // }
     }
   }
 })();

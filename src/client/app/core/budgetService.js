@@ -48,8 +48,8 @@
       });
     }
 
-    function update(year, item) {
-      return dataService.patch('budgets/years/' + year, [item]);
+    function update(year, items) {
+      return dataService.patch('budgets/years/' + year, items);
     }
 
     function add(year, item) {

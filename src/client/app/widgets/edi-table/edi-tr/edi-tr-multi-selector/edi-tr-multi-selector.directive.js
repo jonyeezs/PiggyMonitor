@@ -8,23 +8,23 @@
 
   // Directive for the ngModel linked to the actual input
   angular.module('app.edi-table')
-    .directive('ediTouchy', ediTouchy);
+    .directive('ediTrMultiSelector',ediTrMultiSelector);
 
-  ediTouchy.$inject = ['$parse', '$timeout'];
+  ediTrMultiSelector.$inject = ['$parse', '$timeout'];
 
-  function ediTouchy($parse, $timeout) {
+  function ediTrMultiSelector($parse, $timeout) {
     var directive = {
       restrict: 'A',
       link: function (scope, ele, attrs) {
 
-        if (!attrs.ediTouchy) {
+        if (!attrs.ediTrMultiSelector) {
           return;
         }
         var timerDuration = 500;
         var timer;
         var eventsBound = false;
 
-        var disposeEdiTouchyWatcher = scope.$watch(attrs.ediTouchy, function (enabled) {
+        var disposeEdiTouchyWatcher = scope.$watch(attrs.ediTrMultiSelector, function (enabled) {
           if (enabled) {
             if (eventsBound) return;
             ele.on('touchstart', onEnter);
