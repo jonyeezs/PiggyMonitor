@@ -37,8 +37,8 @@
   angular.module('app.edi-table')
     .directive('ediTdData', editTdData);
 
-    editTdData.$inject = ['EdiTdMultiSelection'];
-    function editTdData(EdiTdMultiSelection) {
+    editTdData.$inject = [];
+    function editTdData() {
       var directive = {
         restrict: 'A',
         require: {
@@ -52,7 +52,6 @@
             // https://kangax.github.io/compat-table/es6/#test-object_literal_extensions_computed_properties
             apis.editTd.updateTdData({[apis.dataModel.$name]: apis.dataModel.$modelValue});
           })
-
 
           // var registeredIndex = null;
           //

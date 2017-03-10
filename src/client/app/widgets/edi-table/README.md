@@ -34,6 +34,8 @@ This is the out-of-the-box custom table element. See [Attributes](#Attrubutes) o
 * `on-item-created` - callback of the new item when created through the `edi-temizer`
 * `on-item-updated` - callback of a list of items (if multiple is not selected, list will contain the single item) that were updated; either by deletion or changes in value.
 
+**Note: set html attribute `id` with a value to identify the component. This will be used especially for multi-selection. See [edi-tr multi select](#multi-select-capabilities)**
+
 ### edi-theader
 
 This allows you to add a dynamic `th` display that has sorting capabilities.
@@ -101,7 +103,7 @@ These are the minimum required attributes that is needed for all use case.
 Include these additional attributes
 
 ```html
-<tr ...
+<tr edi-tr ...
   ng-form
   edi-tr-editable="true"
   edi-tr-on-save="$ctrl.itemUpdated(items)">
@@ -111,6 +113,33 @@ Include these additional attributes
 `ng-form` is required to allow `ngModel` to interact with the edit buttons. You may use the controller as you wish.
 
 `edi-tr-on-save` requires an promise callback that will be the method to post your changes.
+
+#### 3. Multi-Select Capabilities
+
+```html
+<tr edi-tr ...
+  edi-tr-multi-selector="true">
+</tr>
+```
+
+
+
+Here are some nice Given-When-Thens to explain  row is selection (ie selected rows are given a css class: `selected-row`)
+
+* **Given** no rows are selected in the same `edi-table`
+* **When** a long press is done on a row
+* **Then** that row is highlighted
+* **Note** no long press will work when any row is highlighted
+
+* **Given** a row was highlighted in the same `edi-table`
+* **When** a short press is done on a row
+* **Then** that row is highlighted
+* **Note** any other row can be selected by a short press
+
+* **Given** a row was highlighted in the same `edi-table`
+* **When** a short press is done on the highlighted
+* **Then** the row is unselected
+* **Note** once all hightlighted rows are unselected, long press must be used again to start the selection process
 
 ### edi-td
 
@@ -127,18 +156,16 @@ Component to display data for a column in a row. This component gets utilize by 
 #### 2. Allow edit
 
 ```html
-<td ng-repeat="colDetail in colSetup" ng-class="colDetail.class">
-  <edi-td td-data="model" edi-td-setup="::colDetail" 
-    edi-td-edit-mode="true" 
-    edi-td-on-edit-changes="modelValueChange(changeObj)" 
-    edi-td-disable="false"></edi-td>
-</td>
+<edi-td td-data="model" edi-td-setup="::colDetail" 
+  edi-td-edit-mode="true" 
+  edi-td-on-edit-changes="modelValueChange(changeObj)" 
+  edi-td-disable="false">
+</edi-td>
 ```
 
 * Set `edi-td-edit-mode` to true to show the input fields; false to show in display-only mode.
 * Setting `edi-td-disable` to true will disable the input fields.
 * `edi-td-on-edit-changes` callback gets fired when a change has been made to the input field.
-
 
 ### edi-temizer
 

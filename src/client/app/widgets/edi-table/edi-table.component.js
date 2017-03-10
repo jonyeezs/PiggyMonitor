@@ -29,10 +29,6 @@
 
       ctrl.itemAdded = itemAdded;
 
-      ctrl.onLongPress = onLongPress;
-      ctrl.onTouchEnd = onTouchEnd;
-      ctrl.onShortPress = onShortPress;
-
       ctrl.itemUpdated = itemUpdated;
     }
 
@@ -59,16 +55,6 @@
       return ctrl.onItemUpdated({ event: 'updated', items: items});
     }
 
-    function updateState(selectedItem, value) {
-      var stateProps = Array.from(arguments).slice(2, arguments.length);
-
-      return getSelectedItems(selectedItem).forEach(function (item) {
-        stateProps.forEach(function (stateProp) {
-          item._editState[stateProp] = value;
-        })
-      });
-    }
-
     function getSelectedItems(selectedItem) {
       var updatedItems;
       if (selectionAvailable && selectedItem._multiSelected) {
@@ -77,22 +63,6 @@
         updatedItems = [selectedItem];
       }
       return updatedItems;
-    }
-
-    function onLongPress(item) {
-      // if(!selectionAvailable && !item._editState.inProgress) {
-      //   item._multiSelected = !item._multiSelected;
-      // }
-    }
-
-    function onTouchEnd(item) {
-      // selectionAvailable = ctrl.items.some(function(item) {return item._multiSelected;});
-    }
-
-    function onShortPress(item) {
-      // if (selectionAvailable && !item._editState.inProgress) {
-      //   item._multiSelected = !item._multiSelected;
-      // }
     }
   }
 })();

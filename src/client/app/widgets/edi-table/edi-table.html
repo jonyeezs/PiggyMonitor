@@ -27,11 +27,7 @@
       ng-form
       edi-tr-editable="$ctrl.settings.editable"
       edi-tr-on-save="$ctrl.itemUpdated(items)"
-      ng-class="{'selected-row': item._multiSelected}"
       edi-tr-multi-selector="$ctrl.settings.multable"
-      on-long-press="$ctrl.onLongPress(item)"
-      on-short-press="$ctrl.onShortPress(item)"
-      on-touch-end="$ctrl.onTouchEnd()"
       ng-cloak>
     </tr>
   </tbody>

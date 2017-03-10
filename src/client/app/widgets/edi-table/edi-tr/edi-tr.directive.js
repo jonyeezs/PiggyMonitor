@@ -5,9 +5,9 @@
     .module('app.edi-table')
     .directive('ediTr', editr);
 
-  editr.$inject = ['$q'];
+  editr.$inject = ['$q', 'EdiTrMultiSelection'];
 
-  function editr($q) {
+  function editr($q, EdiTrMultiSelection) {
     var directive = {
       templateUrl: 'app/widgets/edi-table/edi-tr/edi-tr.html',
       restrict: 'A',
@@ -25,9 +25,20 @@
     return directive;
 
     function linkTr(scope, ele, attr, api) {
+
+      var disposeMultiSelectListener = null;
+      var ediTableId = ele.closest('edi-table').attr('id');
+
       //ngModel
       api.model.$render =  function viewToTdData() {
         var value = api.model.$modelValue || api.model.$viewValue;
+
+        //register multi-selector only if the edi-table was given an id
+        if(attr.ediTrMultiSelector && disposeMultiSelectListener == null && ediTableId) {
+          disposeMultiSelectListener = EdiTrMultiSelection.register(function(newValue) {
+
+          }, value.id, ediTableId);
+        }
 
         scope.model = Object.assign({}, value);
       };
@@ -88,6 +99,10 @@
         };
       }
 
+      scope.$on('$destroy', function () {
+        if (disposeMultiSelectListener != null) { disposeMultiSelectListener(); }
+      });
+
       function updateToServer(value) {
         scope._editState.saving = true;
 
@@ -110,7 +125,7 @@
         scope._editState = {
           inProgress: false,
           saving: false
-        }
+        };
       }
     }
   }

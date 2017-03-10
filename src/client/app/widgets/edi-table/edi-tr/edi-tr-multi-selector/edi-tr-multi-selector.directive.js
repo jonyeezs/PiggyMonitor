@@ -8,21 +8,25 @@
 
   // Directive for the ngModel linked to the actual input
   angular.module('app.edi-table')
-    .directive('ediTrMultiSelector',ediTrMultiSelector);
+    .directive('ediTrMultiSelector', ediTrMultiSelector);
 
-  ediTrMultiSelector.$inject = ['$parse', '$timeout'];
+  ediTrMultiSelector.$inject = ['$parse', '$timeout', 'EdiTrMultiSelection'];
 
-  function ediTrMultiSelector($parse, $timeout) {
+  function ediTrMultiSelector($parse, $timeout, EdiTrMultiSelection) {
     var directive = {
       restrict: 'A',
+      //Not using isolated scope as we need to be in the same scope as edi-tr to get its scope.item
       link: function (scope, ele, attrs) {
 
-        if (!attrs.ediTrMultiSelector) {
+        if (attrs.ediTr == null) {
           return;
         }
+
         var timerDuration = 500;
         var timer;
         var eventsBound = false;
+        var selected = false;
+        var ediTableId = ele.closest('edi-table').attr('id');
 
         var disposeEdiTouchyWatcher = scope.$watch(attrs.ediTrMultiSelector, function (enabled) {
           if (enabled) {
@@ -33,20 +37,18 @@
             ele.on('mouseup', onExit);
             ele.on('click', onClick);
             eventsBound = true;
-          }
-          else {
+          } else {
             if (!eventsBound) return;
             ele.off('touchstart touchend mousedown mouseup click');
             eventsBound = false;
           }
         });
 
-        scope.$on('$destroy', function() {
+        scope.$on('$destroy', function () {
           disposeEdiTouchyWatcher();
         });
 
         function onEnter(evt) {
-          var functionHandler = $parse(attrs.onLongPress);
 
           //Cancel existing timer
           $timeout.cancel(timer);
@@ -55,37 +57,32 @@
           // We'll set a timeout for 600 ms for a long press
           timer = $timeout(function () {
             scope.longPressSent = true;
-            // If the touchend event hasn't fired,
-            // apply the function given in on the element's on-long-press attribute
-            scope.$apply(function () {
-              functionHandler(scope, {
-                $event: evt
+
+            // Long press is done when nothing has been selected, then do selection only
+            if (!EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
+              scope.$apply(function () {
+                updateSelection(scope, evt);
               });
-            });
+            }
           }, timerDuration);
         }
 
         function onExit(evt) {
-          var onTouchEndFuncHandler = $parse(attrs.onTouchEnd);
-          var onShortPressFuncHandler = $parse(attrs.onShortPress);
           // Prevent the onLongPress event from firing
           $timeout.cancel(timer);
 
-          if (attrs.onShortPress && !scope.longPressSent && !$(evt.target).is('select,input,button,button > span,checkbox')) {
+          // A normal press with selections made prior, then fire off the selection
+          if (!scope.longPressSent && !$(evt.target)
+            .is('select,input,button,button > span,checkbox') &&
+            EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
             scope.$apply(function () {
-              onShortPressFuncHandler(scope, {
-                $event: evt
-              });
+                updateSelection(scope, evt);
             });
           }
 
-          if (attrs.onTouchEnd) {
-            scope.$apply(function () {
-              onTouchEndFuncHandler(scope, {
-                $event: evt
-              });
-            });
-          }
+          scope.$apply(function () {
+            EdiTrMultiSelection.onTouchEnd(scope.item.id, evt);
+          });
         }
 
         function onClick(evt) {
@@ -95,6 +92,17 @@
           if (scope.longPressSent) {
             evt.stopImmediatePropagation();
           }
+        }
+
+        function updateSelection(scope, evt)
+        {
+            var isToBeSelected = EdiTrMultiSelection.onSelectionPress(scope.item.id, evt, evt.target.closest('edi-table').id);
+            if(isToBeSelected) {
+              ele.addClass('selected-row');
+            }
+            else {
+              ele.removeClass('selected-row');
+            }
         }
       }
     };
