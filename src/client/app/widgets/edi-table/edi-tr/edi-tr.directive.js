@@ -27,27 +27,42 @@
     function linkTr(scope, ele, attr, api) {
 
       var disposeMultiSelectListener = null;
+      var _previousModelValue = undefined;
       var ediTableId = ele.closest('edi-table').attr('id');
 
       //ngModel
       api.model.$render =  function viewToTdData() {
         var value = api.model.$modelValue || api.model.$viewValue;
 
+        scope.model = Object.assign({}, value);
+
         //register multi-selector only if the edi-table was given an id
         if(attr.ediTrMultiSelector && disposeMultiSelectListener == null && ediTableId) {
-          disposeMultiSelectListener = EdiTrMultiSelection.register(function(newValue) {
+          disposeMultiSelectListener = EdiTrMultiSelection.register({
+            set model(changeObj) {
+              scope.model = Object.assign({}, scope.model, changeObj);
+            },
+            get model() {
+              return scope.model;
+            },
+            set previousModel(model) {
+              _previousModelValue = Object.assign({}, model);
 
-          }, value.id, ediTableId);
+              //as we know this is only set when the edit button is evented - we can use this to hide the buttons for the non-OP items
+              scope._editState.multiSelected = true;
+            },
+            get previousModel() {
+              return _previousModelValue;
+            }
+          },
+          rollBackNgModelAndResetEditState,
+          scope.model.id, ediTableId);
         }
-
-        scope.model = Object.assign({}, value);
       };
 
       if (scope.editable)
       {
-        var _previousModelValue = undefined;
-
-        setEditState(scope);
+        resetEditState(scope);
 
         api.model.$validators.required = function (modelValue, viewValue) {
           //No validation needs to be done when it is first rendered from the collection. (this may change)
@@ -57,10 +72,12 @@
         }
       }
 
-      //scope ngModel accessor for controller
+      //callback to obtain changes in the tds
       scope.modelValueChange = function (changeObj) {
         //clones into a new object to overcome the strict equality on $render, with persisting any properties needed by angular
         var data = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
+
+        EdiTrMultiSelection.updateProperty(ediTableId, data.id, changeObj);
         api.model.$setViewValue(data);
       }
 
@@ -72,6 +89,10 @@
           if (!scope.editable) return;
 
           _previousModelValue = api.model.$modelValue;
+
+          if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
+            EdiTrMultiSelection.prepareForEdit(ediTableId, scope.model.id);
+          }
 
           scope._editState.inProgress = true;
           scope._editState.saving = false;
@@ -92,10 +113,11 @@
 
           if (!scope.editable) return;
 
-          rollBackNgModel();
+          if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
+            EdiTrMultiSelection.rollbackAll(scope.model.id, ediTableId);
+          }
 
-          scope._editState.inProgress = false;
-          scope._editState.saving = false;
+          rollBackNgModelAndResetEditState();
         };
       }
 
@@ -111,20 +133,23 @@
             api.form.$setPristine();
             scope._editState.saving = false;
             scope._editState.inProgress = false;
+            EdiTrMultiSelection.completeForEdit(ediTableId);
           }, function () {
             scope._editState.saving = false;
           });
       };
 
-      function rollBackNgModel() {
+      function rollBackNgModelAndResetEditState() {
         scope.model = Object.assign({}, _previousModelValue);
         api.form.$setPristine();
+        resetEditState(scope);
       }
 
-      function setEditState(scope) {
+      function resetEditState(scope) {
         scope._editState = {
           inProgress: false,
-          saving: false
+          saving: false,
+          multiSelected: false
         };
       }
     }

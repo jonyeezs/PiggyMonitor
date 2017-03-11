@@ -54,15 +54,5 @@
     function itemUpdated(items) {
       return ctrl.onItemUpdated({ event: 'updated', items: items});
     }
-
-    function getSelectedItems(selectedItem) {
-      var updatedItems;
-      if (selectionAvailable && selectedItem._multiSelected) {
-        updatedItems = ctrl.items.filter(function (item) { return item._multiSelected });
-      } else {
-        updatedItems = [selectedItem];
-      }
-      return updatedItems;
-    }
   }
 })();

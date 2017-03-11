@@ -98,7 +98,7 @@
 
         function updateSelection(scope, evt)
         {
-            var isToBeSelected = EdiTrMultiSelection.onSelectionPress(scope.item.id, evt, evt.target.closest('edi-table').id);
+            var isToBeSelected = EdiTrMultiSelection.onSelectionPress(scope.item.id, evt.target.closest('edi-table').id);
             if(isToBeSelected) {
               ele.addClass('selected-row');
             }

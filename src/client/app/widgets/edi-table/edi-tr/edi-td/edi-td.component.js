@@ -20,6 +20,12 @@
 
     ctrl.$onInit = function () {
       ctrl.editting = false;
+
+      /**
+       * returns changed object value to the on-edit-changes callback
+       * @method updateTdData
+       * @param  {Object}     change - a single item's property key-value pair that contains the changes
+       */
       ctrl.updateTdData = function (change) {
         ctrl.onEditChanges({changeObj: change});
       }
