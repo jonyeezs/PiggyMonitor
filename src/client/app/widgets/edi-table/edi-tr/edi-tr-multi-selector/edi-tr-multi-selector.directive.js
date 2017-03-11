@@ -22,7 +22,8 @@
           return;
         }
 
-        var timerDuration = 500;
+        var TIMER_DURATION = 500;
+        var LEFT_CLICK = 1, TOUCH_START = 'touchstart';
         var timer;
         var eventsBound = false;
         var selected = false;
@@ -49,6 +50,7 @@
         });
 
         function onEnter(evt) {
+          if ((evt.which !== LEFT_CLICK && evt.type !== TOUCH_START)) return;
 
           //Cancel existing timer
           $timeout.cancel(timer);
@@ -64,7 +66,7 @@
                 updateSelection(scope, evt);
               });
             }
-          }, timerDuration);
+          }, TIMER_DURATION);
         }
 
         function onExit(evt) {
