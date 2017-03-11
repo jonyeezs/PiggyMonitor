@@ -16,6 +16,7 @@
       hasMultiSelected: hasMultiSelected,
       prepareForEdit: prepareForEdit,
       updateProperty: updateProperty,
+      getSelectedItems: getSelectedItems,
       rollbackAll: rollbackAll,
       completeForEdit: completeForEdit,
       onSelectionPress: onSelectionPress,
@@ -30,17 +31,18 @@
      * @method register
      * @param  {Object}   accessor        - ES6 getter + setter model and previousModel. Model setters expects a hash of the item's property to be mutated
      * @param  {Function} rollBackCaller  - callback function to rollback a value
+     * @param  {Function} isSavingCaller  - callback function to set the saving state
      * @param  {Number}   itemId          - unique identifier of the object
      * @param  {Number}   tableId         - id attribute of its edi-table
      * @return {Function}                   function to dispose the listener. MUST remember to dispose when the edi-tr component gets destroyed
      */
-    function register(accessor, rollBackCaller, itemId, tableId) {
+    function register(accessor, rollBackCaller, isSavingCaller, itemId, tableId) {
       tableId = tableId || _GENERIC_TABLE_NAME;
 
       if(!registeredEdiTr[tableId]) {
         registeredEdiTr[tableId] = [];
       }
-      registeredEdiTr[tableId][itemId] = { selected: false, accessor: accessor, rollback: rollBackCaller };
+      registeredEdiTr[tableId][itemId] = { selected: false, accessor: accessor, rollback: rollBackCaller, setSavingState: isSavingCaller };
       registeredEdiTr[tableId].inEdit = false;
       return function () {
         delete registeredEdiTr[tableId][itemId];
@@ -75,6 +77,25 @@
           ediTr.accessor.model = change;
         }
       });
+    }
+
+    /**
+     * returns a list of selected edi-tr's model
+     * @method getSelectedItems
+     * @param  {Number}       tableId  - id attribute of its edi-table
+     * @param  {Boolean}      isSaving - set to true if this the caller is getting because it's saving
+     * @return {[Object]}              - collection of selected items in the same edi-table
+     */
+    function getSelectedItems(tableId, isSaving) {
+
+      return registeredEdiTr[tableId].
+        filter(function(ediTr) {
+          return ediTr.selected;
+        }).
+        map(function(ediTr) {
+          if (isSaving) { ediTr.setSavingState(true); }
+          return ediTr.accessor.model;
+        });
     }
 
     /**

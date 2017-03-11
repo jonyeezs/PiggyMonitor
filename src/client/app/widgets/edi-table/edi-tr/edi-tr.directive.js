@@ -56,6 +56,9 @@
             }
           },
           rollBackNgModelAndResetEditState,
+          function (isSaving) {
+            scope._editState.saving = isSaving;
+          },
           scope.model.id, ediTableId);
         }
       };
@@ -128,7 +131,10 @@
       function updateToServer(value) {
         scope._editState.saving = true;
 
-        return scope.saveCallback({ items: [value] })
+        //TODO this isn't working yet to set the loading state
+        var items = EdiTrMultiSelection.hasMultiSelected(ediTableId) ? EdiTrMultiSelection.getSelectedItems(ediTableId, true) : [value];
+
+        return scope.saveCallback({ items: items })
           .then(function () {
             api.form.$setPristine();
             scope._editState.saving = false;
