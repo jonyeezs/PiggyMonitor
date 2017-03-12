@@ -1,4 +1,4 @@
-<span ng-if="$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.inputType">
+<span ng-show="$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.inputType">
   <select
     ng-switch-when="select"
     name="{{$ctrl.tdSetup.prop}}"
@@ -22,7 +22,7 @@
     ng-disabled="$ctrl.editting"
     required></input>
 </span>
-<span ng-if="!$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.prop">
+<span ng-show="!$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.prop">
   <span ng-switch-when="amount" class='item-padding'>{{$ctrl.tdData[$ctrl.tdSetup.prop] | removeNegativeSym:disableRemoveNeg | currency}}</span>
   <span ng-switch-when="date" class='item-padding'>{{$ctrl.tdData[$ctrl.tdSetup.prop] | date : 'd MMM'}}</span>
   <span ng-switch-default class='item-padding'>{{$ctrl.tdData[$ctrl.tdSetup.prop]}}</span>
