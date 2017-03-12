@@ -5,15 +5,17 @@
   <button class="btn btn-default btn-sm pull-right" ng-click="edit($event, model)" ng-hide="_editState.inProgress || _editState.multiSelected">
       <span class="glyphicon glyphicon-pencil" aria-label="edit item"></span>
     </button>
-  <div class="pull-right" ng-if="_editState.inProgress || _editState.multiSelected">
-    <button class="btn btn-primary btn-sm" ng-click="save($event, model)" ng-disabled="_editState.saving" ng-if="!_editState.multiSelected" >
+  <div class="pull-right" ng-if="_editState.inProgress && !_editState.multiSelected">
+    <button class="btn btn-primary btn-sm" ng-click="save($event, model)" ng-disabled="_editState.saving">
         <span ng-class="!_editState.saving ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'" aria-label="save changes"></span>
       </button>
-    <button class="btn btn-default btn-sm" ng-click="cancel($event)" ng-hide='_editState.saving' ng-if="!_editState.multiSelected" >
-        <span class="glyphicon glyphicon-remove" aria-label="delete item"></span>
+    <button class="btn btn-default btn-sm" ng-click="cancel($event)" ng-hide='_editState.saving'>
+        <span class="glyphicon glyphicon-remove" aria-label="cancel item"></span>
       </button>
-    <div class="btn btn-link btn-sm" ng-if="_editState.multiSelected">
-      <span class="glyphicon glyphicon-link" aria-label="linked to the main edit"></span>
+  </div>
+  <div class="pull-right" ng-if="_editState.multiSelected">
+    <div class="btn-link btn-sm">
+      <span ng-class="!_editState.saving ? 'glyphicon glyphicon-link' : 'glyphicon glyphicon-refresh spinning'" aria-label="linked to the main edit"></span>
     </div>
   </div>
 </td>

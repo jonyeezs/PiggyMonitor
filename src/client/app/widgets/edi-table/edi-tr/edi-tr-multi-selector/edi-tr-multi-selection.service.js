@@ -25,24 +25,32 @@
 
     return service;
 
+
     /**
-     * register an edi-tr directive with a accessor to its model.
+     * Updates the flag for the registered ediTr's edit states. Null is set to a parameter if there are no changes.
+     * @callback stateCallback
+     * @param {boolean} newInProgress
+     * @param {boolean} newSaving
+     * @param {boolean} newMultiSelected
+     */
+    /**
+     * Register an edi-tr directive with a accessor to its model.
      * The register needs accessor to its current model (model) and previousModel before edit begins (previousModel)
      * @method register
-     * @param  {Object}   accessor        - ES6 getter + setter model and previousModel. Model setters expects a hash of the item's property to be mutated
-     * @param  {Function} rollBackCaller  - callback function to rollback a value
-     * @param  {Function} isSavingCaller  - callback function to set the saving state
-     * @param  {Number}   itemId          - unique identifier of the object
-     * @param  {Number}   tableId         - id attribute of its edi-table
-     * @return {Function}                   function to dispose the listener. MUST remember to dispose when the edi-tr component gets destroyed
+     * @param  {Object}        accessor         - ES6 getter + setter model and previousModel. Model setters expects a hash of the item's property to be mutated
+     * @param  {Function}      rollBackCallback - callback function to rollback a value
+     * @param  {stateCallback} stateCallback    - callback function to set the edit state flags. func(inProgress, )
+     * @param  {Number}        itemId           - unique identifier of the object
+     * @param  {Number}        tableId          - id attribute of its edi-table
+     * @return {Function}                         function to dispose the listener. MUST remember to dispose when the edi-tr component gets destroyed
      */
-    function register(accessor, rollBackCaller, isSavingCaller, itemId, tableId) {
+    function register(accessor, rollBackCallback, stateCallback, itemId, tableId) {
       tableId = tableId || _GENERIC_TABLE_NAME;
 
       if(!registeredEdiTr[tableId]) {
         registeredEdiTr[tableId] = [];
       }
-      registeredEdiTr[tableId][itemId] = { selected: false, accessor: accessor, rollback: rollBackCaller, setSavingState: isSavingCaller };
+      registeredEdiTr[tableId][itemId] = { selected: false, accessor: accessor, rollback: rollBackCallback, updateEditState: stateCallback };
       registeredEdiTr[tableId].inEdit = false;
       return function () {
         delete registeredEdiTr[tableId][itemId];
@@ -82,9 +90,9 @@
     /**
      * returns a list of selected edi-tr's model
      * @method getSelectedItems
-     * @param  {Number}       tableId  - id attribute of its edi-table
-     * @param  {Boolean}      isSaving - set to true if this the caller is getting because it's saving
-     * @return {[Object]}              - collection of selected items in the same edi-table
+     * @param  {Number}       tableId     - id attribute of its edi-table
+     * @param  {Boolean}      updateState - set to true to update all other selected item state for saving phase
+     * @return {[Object]}                 - collection of selected items in the same edi-table
      */
     function getSelectedItems(tableId, isSaving) {
 
@@ -93,13 +101,13 @@
           return ediTr.selected;
         }).
         map(function(ediTr) {
-          if (isSaving) { ediTr.setSavingState(true); }
+          if (isSaving) { ediTr.updateEditState(null, true, true) }
           return ediTr.accessor.model;
         });
     }
 
     /**
-     * updates all selected edi-tr's previousModel and disables press events
+     * updates all selected edi-tr's previousModel, disables press events, and update the edit states
      * @method prepareForEdit
      * @param  {Number}       tableId - id attribute of its edi-table
      * @param  {Number}       itemId  - unique identifier of the object
@@ -116,6 +124,7 @@
         {
           var preCallValue = ediTr.accessor.model;
           ediTr.accessor.previousModel = preCallValue;
+          ediTr.updateEditState(null, null, true);
         }
       });
     }
@@ -139,6 +148,7 @@
     function completeForEdit(tableId) {
       registeredEdiTr[tableId].forEach(function (ediTr) {
         ediTr.selected = false;
+        ediTr.updateEditState(false, false, false);
       });
 
       registeredEdiTr[tableId].inEdit = false;

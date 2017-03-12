@@ -36,28 +36,29 @@
 
         scope.model = Object.assign({}, value);
 
+        //register in the render so that the model id can be obtained
         //register multi-selector only if the edi-table was given an id
         if(attr.ediTrMultiSelector && disposeMultiSelectListener == null && ediTableId) {
           disposeMultiSelectListener = EdiTrMultiSelection.register({
             set model(changeObj) {
-              scope.model = Object.assign({}, scope.model, changeObj);
+              scope.model = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
+              api.model.$setViewValue(scope.model);
             },
             get model() {
-              return scope.model;
+              return api.model.$modelValue;
             },
             set previousModel(model) {
               _previousModelValue = Object.assign({}, model);
-
-              //as we know this is only set when the edit button is evented - we can use this to hide the buttons for the non-OP items
-              scope._editState.multiSelected = true;
             },
             get previousModel() {
               return _previousModelValue;
             }
           },
           rollBackNgModelAndResetEditState,
-          function (isSaving) {
-            scope._editState.saving = isSaving;
+          function updateEdiTrState(isInProgress, isSaving, isMultiSelect) {
+            if (isInProgress != null) scope._editState.inProgress = isInProgress;
+            if (isSaving != null) scope._editState.saving = isSaving;
+            if (isMultiSelect != null) scope._editState.multiSelected = isMultiSelect;
           },
           scope.model.id, ediTableId);
         }
@@ -79,8 +80,9 @@
       scope.modelValueChange = function (changeObj) {
         //clones into a new object to overcome the strict equality on $render, with persisting any properties needed by angular
         var data = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
-
-        EdiTrMultiSelection.updateProperty(ediTableId, data.id, changeObj);
+        if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
+          EdiTrMultiSelection.updateProperty(ediTableId, data.id, changeObj);
+        }
         api.model.$setViewValue(data);
       }
 
