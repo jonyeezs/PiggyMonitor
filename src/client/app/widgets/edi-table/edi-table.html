@@ -8,11 +8,11 @@
         ng-class="colDetail.class"
         on-sort="$ctrl.setSort(column, desc)"></th>
       <th class="col-md-2">
-        <edi-temizer-button ng-if="$ctrl.settings.creatable"></edi-temizer-button>
+        <edi-temizer-button ng-if="$ctrl.settings.creatable && $ctrl.itemAdded != null"></edi-temizer-button>
       </th>
     </tr>
   </thead>
-  <tbody ng-if="$ctrl.settings.creatable">
+  <tbody ng-if="$ctrl.settings.creatable && $ctrl.itemAdded != null">
     <tr edi-temizer
       col-setup="$ctrl.colSetup"
       itemizer-on-complete="$ctrl.itemAdded(item)">

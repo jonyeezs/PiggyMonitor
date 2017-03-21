@@ -27,9 +27,12 @@
       ctrl.sortDesc = false;
       ctrl.setSort = setSort;
 
-      ctrl.itemAdded = itemAdded;
-
-      ctrl.itemUpdated = itemUpdated;
+      if(ctrl.onItemCreated) {
+        ctrl.itemAdded = itemAdded;
+      }
+      if(ctrl.onItemUpdated) {
+        ctrl.itemUpdated = itemUpdated;
+      }
     }
 
     ctrl.$onChanges = function(changes) {
