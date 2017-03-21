@@ -28,7 +28,7 @@
 
       var disposeMultiSelectListener = null;
       var _previousModelValue = undefined;
-      var ediTableId = ele.closest('edi-table').attr('id');
+      var ediTableId = ele.closest('edi-table').attr('id') || ele.closest('table').attr('id');
 
       //ngModel
       api.model.$render =  function viewToTdData() {

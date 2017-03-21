@@ -27,7 +27,7 @@
         var timer;
         var eventsBound = false;
         var selected = false;
-        var ediTableId = ele.closest('edi-table').attr('id');
+        var ediTableId = ele.closest('edi-table').attr('id') || ele.closest('table').attr('id');
 
         var disposeEdiTouchyWatcher = scope.$watch(attrs.ediTrMultiSelector, function (enabled) {
           if (enabled) {
