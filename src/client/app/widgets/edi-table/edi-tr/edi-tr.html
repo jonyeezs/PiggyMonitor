@@ -1,4 +1,4 @@
-<td ng-repeat="colDetail in colSetup" ng-class="colDetail.class">
+<td ng-repeat="colDetail in colSetup track by colDetail.prop" ng-class="colDetail.class">
   <edi-td td-data="model" edi-td-setup="::colDetail" edi-td-edit-mode="_editState.inProgress" edi-td-on-edit-changes="modelValueChange(changeObj)" edi-td-disable="_editState.saving"></edi-td>
 </td>
 <td ng-if="editable">

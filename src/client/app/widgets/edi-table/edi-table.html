@@ -20,7 +20,7 @@
   </tbody>
   <tbody>
     <tr
-      ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc"
+      ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc track by item.id"
       edi-tr
       ng-model="item"
       edi-tr-setup="::$ctrl.colSetup"
