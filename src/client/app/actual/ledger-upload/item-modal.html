@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" edi-tr ng-model="item" init-with-edit edi-tr-setup="::$ctrl.colSetup" ng-form edi-tr-editable="true" ng-cloak>
+        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form edi-tr-editable="true" ng-cloak>
         </tr>
       </tbody>
     </table>

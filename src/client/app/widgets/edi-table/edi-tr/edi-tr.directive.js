@@ -67,7 +67,7 @@
       if (scope.editable)
       {
         resetEditState(scope);
-        scope._editState.inProgress = attr.initWithEdit != null;
+        scope._editState.forceEdit = attr.editOnly != null;
 
         api.model.$validators.required = function (modelValue, viewValue) {
           //FIXME: No validation needs to be done when it is first rendered from the collection. (this may change not the best solution)
@@ -158,6 +158,7 @@
         scope._editState = {
           inProgress: false,
           saving: false,
+          forceEdit: false,
           multiSelected: false
         };
       }

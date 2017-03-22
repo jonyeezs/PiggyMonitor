@@ -66,6 +66,7 @@ Creates a table row element where columns are base on the [`colSetup`](#col-setu
 1. create dynamic table
 2. allow for editing
 3. multi-select capabilities
+4. enforce edit mode
 
 Below is an example of the most minimum required objects for the `edi-tr` attributes
 
@@ -122,7 +123,19 @@ Include these additional attributes
 </tr>
 ```
 
+#### 4. Enforce edit mode
 
+Edit mode will initialize the component with input fields, the save and delete buttons.
+
+In this mode, the component will be restricted to only edit. The cancel button will be removed. So the user can either update it or cancel it.
+
+To enable this mode add the attribute `edit-only` to the component.
+
+```html
+<tr edi-tr ...
+  edit-only>
+</tr>
+```
 
 Here are some nice Given-When-Thens to explain  row is selection (ie selected rows are given a css class: `selected-row`)
 
