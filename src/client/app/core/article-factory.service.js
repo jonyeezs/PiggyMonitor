@@ -46,7 +46,7 @@
           {
             header: 'Item',
             prop: 'description',
-            class: 'col-md-5 text-left',
+            class: 'col-md-5 text-justify',
             inputType: 'text'
           },
           {
@@ -69,7 +69,7 @@
           {
             header: 'Item',
             prop: 'description',
-            class: 'col-md-5 text-left',
+            class: 'col-md-5 text-justify',
             inputType: 'text'
           },
           {

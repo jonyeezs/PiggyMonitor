@@ -5,6 +5,7 @@
       'ui.bootstrap',
       'app.core',
       'app.widgets',
+      'app.edi-table',
       'ngFileUpload',
       'app.infographs'
     ]);

@@ -719,37 +719,33 @@ form label {
     animation: glyphicon-spin-r 2s infinite linear;
 }
 
-.modal-body .table-fixed thead {
-  width: 97%;
+.table-fixed {
+  thead {
+    width: 100%;
+  }
+
+  tbody {
+    height: 480px;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  thead, tbody, tr, td, th {
+    display:block;
+  }
+
+  tbody td, thead > tr > th {
+    float:left;
+    border-bottom-width: 0;
+  }
 }
 
-.modal-body .table-fixed tbody {
-  height: 480px;
-  overflow-y: auto;
+.modal-body input {
   width: 100%;
 }
 
-.modal-body .table-fixed > tbody > tr:after,
-.modal-body .table-fixed > thead > tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-}
-
-.modal-body .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
-  display: block;
-}
-
-.modal-body .table-fixed tbody td, .table-fixed thead > tr> th {
-  float: left;
-  border-bottom-width: 0;
-}
-
-.modal-body .table-fixed tbody .item-removed {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
+.modal-body input[type="date"] {
+  font-size: 1.2rem;
 }
 
 .widget .table {
