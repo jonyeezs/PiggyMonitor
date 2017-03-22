@@ -19,24 +19,45 @@
 
     $ctrl.$onInit = function () {
       $ctrl.upload = upload;
+      $ctrl.uploadInProgress = false;
+      $ctrl.uploadPercentage = 0;
     }
 
     function upload(file) {
       if (file) {
-        LedgerUpload.getItemsFromCsv(file, processItems);
+        $ctrl.uploadInProgress = true;
+        LedgerUpload.getItemsFromCsv(file, processItems, updateProgressBar);
       }
     }
 
     function processItems(promisedResults) {
       promisedResults.then(function (results) {
         $ctrl.selectedYear = moment(results[0].date, "dd/mm/yyyy").year();
+        updateProgressBar(90);
         return results;
       })
-      .then(LedgerUpload.handleNoCategoryItems)
+      .then(LedgerUpload.displayModalWithItemsAndCategories)
+      .then(function handleModalPromises(promises) {
+        promises.opened.then(function() {
+          updateProgress(93);
+        })
+        promises.rendered.then(function() {
+          updateProgress(97);
+        });
+        return promises.result;
+      })
       .then(LedgerUpload.createEntries)
       .then(function (results) {
+        updateProgressBar(100);
         $ctrl.onUploadComplete({uploadedYear: $ctrl.selectedYear});
+      })
+      .finally(function () {
+        $ctrl.uploadInProgress = false;
       });
+    }
+
+    function updateProgressBar(percentageComplete) {
+      $ctrl.uploadPercentage = percentageComplete;
     }
   }
 })();

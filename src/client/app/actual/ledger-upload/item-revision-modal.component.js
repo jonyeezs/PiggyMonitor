@@ -13,27 +13,23 @@
       }
     });
 
-  itemRevisionModalCtrl.$inject = ['ArticleFactory', 'Budget', '_'];
+  itemRevisionModalCtrl.$inject = ['ArticleFactory', '_'];
 
-  function itemRevisionModalCtrl(ArticleFactory, Budget, _) {
+  function itemRevisionModalCtrl(ArticleFactory, _) {
     /* jshint validthis: true */
     var $ctrl = this;
 
     $ctrl.$onInit = function () {
       $ctrl.loadingTable = true;
-      Budget.getCategoriesForYear($ctrl.resolve.items[0].date.getFullYear())
-      .then(function (categories) {
-        $ctrl.colSetup = buildColumns();
-        _.find($ctrl.colSetup, ['prop', 'category']).options = categories;
-      })
-      .then(function () {
-        $ctrl.items = $ctrl.resolve.items.map(function (item) {
-          return Object.assign(item, {add: true});
-        });
-      })
-      .finally(function () {
-        $ctrl.loadingTable = false;
-      })
+
+      $ctrl.colSetup = buildColumns();
+      _.find($ctrl.colSetup, ['prop', 'category']).options = $ctrl.resolve.categories;
+
+      $ctrl.items = $ctrl.resolve.items.map(function (item) {
+        return Object.assign(item, {add: true});
+      });
+
+      $ctrl.loadingTable = false;
     }
 
     function setSort(column, sortDesc) {

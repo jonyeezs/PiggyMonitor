@@ -2,6 +2,13 @@
   <div class="modal-header">
     <h3 class="modal-title" id="modal-title">Complete The Import Process</h3>
   </div>
+
+  <div ng-show="$ctrl.loadingTable" class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{$ctrl.progressPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+      <span>{{$ctrl.progressMessage}}</span>
+    </div>
+  </div>
+
   <div ng-show="!$ctrl.loadingTable" class="modal-body container">
     <table class="table table-fixed">
       <thead>

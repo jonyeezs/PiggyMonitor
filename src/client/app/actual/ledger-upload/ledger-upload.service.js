@@ -5,61 +5,80 @@
     .module('app.actual')
     .factory('LedgerUpload', ledgerUpload);
 
-  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'Actual', 'moment', 'Csv'];
+  ledgerUpload.$inject = ['_', '$q', '$uibModal', 'Actual', 'Budget', 'moment', 'Csv'];
   /* @ngInject */
-  function ledgerUpload(_, $q, $uibModal, Actual, moment, Csv) {
+  function ledgerUpload(_, $q, $uibModal, Actual, Budget, moment, Csv) {
 
     var service = {
       getItemsFromCsv: getItemsFromCsv,
-      handleNoCategoryItems: handleNoCategoryItems,
+      displayModalWithItemsAndCategories: displayModalWithItemsAndCategories,
       createEntries: createEntries
     };
 
-    function getItemsFromCsv(file, callback) {
+    function getItemsFromCsv(file, completionCallback, progressCallback) {
       var reader = new FileReader();
       reader.onload = loadCompletedFile;
+      reader.onprogress = handleProgress(progressCallback);
       reader.readAsText(file);
 
       function loadCompletedFile(event) {
         var csv = event.target.result;
-        var rows = Csv.parse(csv).map(function (row) {
-          return {
-            date: moment(row[0], 'DD-MM-YYYY').toDate(),
-            amount: parseInt(row[1]),
-            description: row[2],
-            category: ''
-          }
-        });
-        callback($q.resolve(rows));
+        var rows = Csv.parse(csv)
+          .map(function (row) {
+            return {
+              date: moment(row[0], 'DD-MM-YYYY')
+                .toDate(),
+              amount: parseInt(row[1]),
+              description: row[2],
+              category: ''
+            }
+          });
+        completionCallback($q.resolve(rows));
       };
     }
 
-    function handleNoCategoryItems(items) {
-      var itemsWithNoCategory = _.filter(items, {'category': ''});
+    function handleProgress(progressCallBack) {
+      return function updateProgress(evt) {
+        //- 20 to handle building items
+        progressCallBack(evt.lengthComputable ? parseInt(((evt.loaded / evt.total) * 100), 10) - 20 : 30);
+      };
+    }
 
-      return $uibModal.open({
-        animation: true,
-        ariaLabeledy: 'Revise items',
-        ariaDescribedBy: 'Make ammendments before submitting',
-        backdrop: 'static',
-        size: 'lg',
-        component: 'itemRevisionModal',
-        resolve: {
-          items: function () {
-            return itemsWithNoCategory;
-          }
-        }
-      }).result;
+    function displayModalWithItemsAndCategories(items) {
+      return Budget.getCategoriesForYear(items[0].date.getFullYear())
+        .then(function (categories) {
+          var modalPromises = $uibModal.open({
+              animation: true,
+              ariaLabeledy: 'Revise items',
+              ariaDescribedBy: 'Make ammendments before submitting',
+              backdrop: 'static',
+              size: 'lg',
+              component: 'itemRevisionModal',
+              resolve: {
+                items: function () {
+                  return items;
+                },
+                categories: function () {
+                  return categories;
+                }
+              }
+            });
+          return {
+            result: modalPromises.result,
+            opened: modalPromises.opened,
+            rendered: modalPromises.rendered
+          };
+        });
     }
 
     function createEntries(itemsToUpload) {
-    var posts = itemsToUpload.map(function (item) {
-      return Actual.add(item.date.getFullYear(), item);
-    });
-    return $q.all(posts)
-      .then(function (results) {
-        return results;
+      var posts = itemsToUpload.map(function (item) {
+        return Actual.add(item.date.getFullYear(), item);
       });
+      return $q.all(posts)
+        .then(function (results) {
+          return results;
+        });
     }
 
     return service;
