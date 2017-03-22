@@ -67,9 +67,10 @@
       if (scope.editable)
       {
         resetEditState(scope);
+        scope._editState.inProgress = attr.initWithEdit != null;
 
         api.model.$validators.required = function (modelValue, viewValue) {
-          //No validation needs to be done when it is first rendered from the collection. (this may change)
+          //FIXME: No validation needs to be done when it is first rendered from the collection. (this may change not the best solution)
           if (api.model.$$currentValidationRunId <= 1) return true;
 
           return scope.colSetup.every(function(col) { return api.form[col.prop].$error.required == null; });

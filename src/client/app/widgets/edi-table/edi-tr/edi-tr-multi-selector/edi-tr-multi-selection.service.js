@@ -64,6 +64,8 @@
     function hasMultiSelected(tableId) {
       tableId = tableId || _GENERIC_TABLE_NAME;
 
+      if (!registeredEdiTr[tableId]) return false;
+
       return registeredEdiTr[tableId].some(function (ediTr) { return ediTr.selected === true; });
     }
 
