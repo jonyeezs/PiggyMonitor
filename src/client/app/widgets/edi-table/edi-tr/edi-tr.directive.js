@@ -5,9 +5,9 @@
     .module('app.edi-table')
     .directive('ediTr', editr);
 
-  editr.$inject = ['$q', 'EdiTrMultiSelection'];
+  editr.$inject = ['$q', '$timeout', 'EdiTrMultiSelection'];
 
-  function editr($q, EdiTrMultiSelection) {
+  function editr($q, $timeout, EdiTrMultiSelection) {
     var directive = {
       templateUrl: 'app/widgets/edi-table/edi-tr/edi-tr.html',
       restrict: 'A',
@@ -29,6 +29,16 @@
       var disposeMultiSelectListener = null;
       var _previousModelValue = undefined;
       var ediTableId = ele.closest('edi-table').attr('id') || ele.closest('table').attr('id');
+      var displayActions = false;
+
+      scope.showActions = function() {
+        if (scope.editable) {
+          $timeout(/*A trick to wait for DOM to render: http://javascript.info/settimeout-setinterval#allowing-the-browser-to-render */)
+          .then(function () {
+            scope.displayActions = true;
+          });
+        }
+      }
 
       //ngModel
       api.model.$render =  function viewToTdData() {
