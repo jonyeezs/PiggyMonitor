@@ -3,9 +3,9 @@
 
   angular
     .module('app.actual')
-    .component('itemRevisionModal', {
+    .component('itemCreationModal', {
       templateUrl: 'app/actual/ledger-upload/item-modal.html',
-      controller: itemRevisionModalCtrl,
+      controller: itemCreationModalCtrl,
       bindings: {
         resolve: '<',
         close: '&',
@@ -13,11 +13,13 @@
       }
     });
 
-  itemRevisionModalCtrl.$inject = ['ArticleFactory', '_'];
+  itemCreationModalCtrl.$inject = ['ArticleFactory', 'LedgerUpload', '_'];
 
-  function itemRevisionModalCtrl(ArticleFactory, _) {
+  function itemCreationModalCtrl(ArticleFactory, LedgerUpload, _) {
     /* jshint validthis: true */
     var $ctrl = this;
+
+    var removedItems = [];
 
     $ctrl.$onInit = function () {
       $ctrl.loadingTable = true;
@@ -25,8 +27,8 @@
       $ctrl.colSetup = buildColumns();
       _.find($ctrl.colSetup, ['prop', 'category']).options = $ctrl.resolve.categories;
 
-      $ctrl.items = $ctrl.resolve.items.map(function (item) {
-        return Object.assign(item, {add: true});
+      $ctrl.items = $ctrl.resolve.items.map(function (item, index) {
+        return Object.assign(item, {id: index});
       });
 
       $ctrl.loadingTable = false;
@@ -42,20 +44,25 @@
         item.add = !item.add;
     }
 
-    $ctrl.ok = function(validForm) {
-      if (validForm)
-      {
-        console.log('test');
-        var omitAddProp = _.partialRight(_.omit, ['add']);
-        var itemsToUpload = _($ctrl.items)
-                            .filter({'add': true})
-                            .map(omitAddProp);
-        $ctrl.close({$value: itemsToUpload.value()});
+    $ctrl.createEntries = function(items, validForm) {
+      if (validForm) {
+        return LedgerUpload.createEntries(items)
+        .then(function (results) {
+          if(removeItems(items)) {
+            $ctrl.close(success);
+          }
+        })
       }
     }
 
     $ctrl.ignore = function () {
       $ctrl.dismiss();
+    }
+
+    function removeItems(items) {
+      _.remove(array, function(n) {
+          return n % 2 == 0;
+        });
     }
 
     function buildColumns() {

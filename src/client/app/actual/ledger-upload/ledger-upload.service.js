@@ -53,7 +53,7 @@
               ariaDescribedBy: 'Make ammendments before submitting',
               backdrop: 'static',
               size: 'lg',
-              component: 'itemRevisionModal',
+              component: 'itemCreationModal',
               resolve: {
                 items: function () {
                   return items;
