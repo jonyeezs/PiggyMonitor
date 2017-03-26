@@ -147,7 +147,7 @@
         //TODO this isn't working yet to set the loading state
         var items = EdiTrMultiSelection.hasMultiSelected(ediTableId) ? EdiTrMultiSelection.getSelectedItems(ediTableId, true) : [value];
 
-        return scope.saveCallback({ items: items })
+        scope.saveCallback({ items: items })
           .then(function () {
             api.form.$setPristine();
             scope._editState.saving = false;
