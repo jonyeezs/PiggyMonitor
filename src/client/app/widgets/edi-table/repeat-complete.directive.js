@@ -16,7 +16,7 @@
 
     var directive = {
       compile: compile, //Compile the DOM node before it is linked by the ng-repeat directive
-      priority: 1001, //Higher priority than ngRepeat. Compile this before the ngRepeat directive does its thing
+      priority: 1110, //Higher priority than ngRepeat. Compile this before the ngRepeat directive does its thing
       restrict: "A"
     };
     return directive;
