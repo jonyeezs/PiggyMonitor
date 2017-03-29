@@ -42,7 +42,7 @@
 
       //ngModel
       api.model.$render =  function viewToTdData() {
-        var value = api.model.$modelValue || api.model.$viewValue;
+        var value = api.model.$viewValue || api.model.$modelValue;
 
         scope.model = Object.assign({}, value);
 
@@ -51,17 +51,17 @@
         if(attr.ediTrMultiSelector && disposeMultiSelectListener == null && ediTableId) {
           disposeMultiSelectListener = EdiTrMultiSelection.register({
             set model(changeObj) {
-              scope.model = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
-              api.model.$setViewValue(scope.model);
+              var newModel = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
+              api.model.$setViewValue(newModel);
             },
             get model() {
-              return api.model.$modelValue;
+              return Object.assign({}, api.model.$modelValue);
             },
             set previousModel(model) {
               _previousModelValue = Object.assign({}, model);
             },
             get previousModel() {
-              return _previousModelValue;
+              return Object.assign({}, _previousModelValue);
             }
           },
           rollBackNgModelAndResetEditState,
@@ -85,6 +85,10 @@
 
           return scope.colSetup.every(function(col) { return api.form[col.prop].$error.required == null; });
         }
+
+        api.model.$viewChangeListeners.push(function updateModel() {
+          scope.model = api.model.$modelValue;
+        });
       }
 
       //callback to obtain changes in the tds
@@ -159,7 +163,7 @@
       };
 
       function rollBackNgModelAndResetEditState() {
-        scope.model = Object.assign({}, _previousModelValue);
+        api.model.$setViewValue(_previousModelValue);
         api.form.$setPristine();
         resetEditState(scope);
       }
