@@ -149,7 +149,6 @@
 
     function completeForEdit(tableId) {
       registeredEdiTr[tableId].forEach(function (ediTr) {
-        ediTr.selected = false;
         ediTr.updateEditState(false, false, false);
       });
 
