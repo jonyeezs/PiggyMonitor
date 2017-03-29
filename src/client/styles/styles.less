@@ -720,18 +720,21 @@ form label {
 }
 
 .table-fixed {
-  thead {
-    width: 100%;
+  tbody, thead, tr {
+      width: 100%;
   }
 
   tbody {
     height: 480px;
     overflow-y: auto;
-    width: 100%;
   }
 
-  thead, tbody, tr, td, th {
-    display:block;
+  tbody, tr, td, th {
+    display: inline-block;
+  }
+
+  thead {
+    display: block !important;
   }
 
   tbody td, thead > tr > th {
@@ -1315,11 +1318,11 @@ table th {
     cursor: pointer;
 }
 
-.article-table td > span.item-padding {
+td > span.item-padding {
   padding: 4px
 }
 
-.article-table tbody > tr.selected-row {
+tbody > tr.selected-row {
   background-color: #ffc;
 }
 

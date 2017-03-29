@@ -1,16 +1,10 @@
-<ng-form name="revisionForm">
+  <ng-form>
   <div class="modal-header">
     <h3 class="modal-title" id="modal-title">Complete The Import Process</h3>
   </div>
 
-  <div ng-show="$ctrl.loadingTable" class="progress">
-    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{$ctrl.progressPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-      <span>{{$ctrl.progressMessage}}</span>
-    </div>
-  </div>
-
   <div ng-show="!$ctrl.loadingTable" class="modal-body container">
-    <table class="table table-fixed">
+    <table class="table table-fixed" id="ledger-upload">
       <thead>
         <tr>
           <th ng-repeat="colDetail in $ctrl.colSetup track by $index" edi-theader col-detail="::colDetail" ng-class="colDetail.class" on-sort="$ctrl.setSort(column, desc)"></th>
@@ -18,13 +12,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form edi-tr-editable="true" ng-cloak>
+        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
         </tr>
       </tbody>
     </table>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok(revisionForm.$valid)">OK</button>
     <button class="btn btn-warning" type="button" ng-click="$ctrl.ignore()">Cancel</button>
   </div>
 </ng-form>

@@ -1,7 +1,7 @@
 <td ng-repeat="colDetail in colSetup track by colDetail.prop" ng-class="colDetail.class" repeat-complete="showActions()">
   <edi-td td-data="model" edi-td-setup="::colDetail" edi-td-edit-mode="_editState.inProgress" edi-td-on-edit-changes="modelValueChange(changeObj)" edi-td-disable="_editState.saving"></edi-td>
 </td>
-<td ng-if="editable">
+<td ng-if="!!editable">
   <div ng-show="displayActions">
     <button ng-if="!_editState.forceEdit" class="btn btn-default btn-sm pull-right" ng-click="edit($event, model)" ng-hide="_editState.inProgress || _editState.multiSelected">
       <span class="glyphicon glyphicon-pencil" aria-label="edit item"></span>

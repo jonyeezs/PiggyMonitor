@@ -18,7 +18,7 @@
       updateProperty: updateProperty,
       getSelectedItems: getSelectedItems,
       rollbackAll: rollbackAll,
-      completeForEdit: completeForEdit,
+      updateEditState: updateEditState,
       onSelectionPress: onSelectionPress,
       onTouchEnd: onTouchEnd
     };
@@ -147,12 +147,12 @@
       });
     }
 
-    function completeForEdit(tableId) {
+    function updateEditState(tableId, updatedState) {
       registeredEdiTr[tableId].forEach(function (ediTr) {
-        ediTr.updateEditState(false, false, false);
+        ediTr.updateEditState(updatedState);
       });
 
-      registeredEdiTr[tableId].inEdit = false;
+      registeredEdiTr[tableId].inEdit = updatedState.inProgress;
     }
 
     /**

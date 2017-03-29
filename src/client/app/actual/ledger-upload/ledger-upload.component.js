@@ -46,8 +46,7 @@
         });
         return promises.result;
       })
-      .then(LedgerUpload.createEntries)
-      .then(function (results) {
+      .then(function (isSuccessful) {
         updateProgressBar(100);
         $ctrl.onUploadComplete({uploadedYear: $ctrl.selectedYear});
       })

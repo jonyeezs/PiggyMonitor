@@ -5,9 +5,9 @@
     .module('app.edi-table')
     .directive('ediTr', editr);
 
-  editr.$inject = ['$q', '$timeout', 'EdiTrMultiSelection'];
+  editr.$inject = ['$q', '_', '$timeout', 'EdiTrMultiSelection'];
 
-  function editr($q, $timeout, EdiTrMultiSelection) {
+  function editr($q, _, $timeout, EdiTrMultiSelection) {
     var directive = {
       templateUrl: 'app/widgets/edi-table/edi-tr/edi-tr.html',
       restrict: 'A',
@@ -65,10 +65,8 @@
             }
           },
           rollBackNgModelAndResetEditState,
-          function updateEdiTrState(isInProgress, isSaving, isMultiSelect) {
-            if (isInProgress != null) scope._editState.inProgress = isInProgress;
-            if (isSaving != null) scope._editState.saving = isSaving;
-            if (isMultiSelect != null) scope._editState.multiSelected = isMultiSelect;
+          function updateEdiTrState(newState) {
+            Object.assign(scope._editState, newState);
           },
           scope.model.id, ediTableId);
         }
@@ -76,9 +74,11 @@
 
       if (scope.editable)
       {
-        resetEditState(scope);
-        scope._editState.forceEdit = attr.editOnly != null;
-
+        if (_.isPlainObject(scope.editable)) {
+          scope._editState = Object.assign(setResetEditState(), { inProgress: scope.editable.inProgress, forceEdit: scope.editable.forceEdit});
+        }
+        else {
+          scope._editState = setResetEditState();
         }
 
         api.model.$viewChangeListeners.push(function updateModel() {
@@ -150,8 +150,7 @@
           .then(function () {
             api.form.$setPristine();
             scope._editState.saving = false;
-            scope._editState.inProgress = false;
-            EdiTrMultiSelection.completeForEdit(ediTableId);
+            EdiTrMultiSelection.updateEditState(ediTableId, {saving: false, inProgress: scope._editState.forceEdit});
           }, function () {
             scope._editState.saving = false;
           });
@@ -160,11 +159,11 @@
       function rollBackNgModelAndResetEditState() {
         api.model.$setViewValue(_previousModelValue);
         api.form.$setPristine();
-        resetEditState(scope);
+        scope._editState = setResetEditState();
       }
 
-      function resetEditState(scope) {
-        scope._editState = {
+      function setResetEditState() {
+        return {
           inProgress: false,
           saving: false,
           forceEdit: false,

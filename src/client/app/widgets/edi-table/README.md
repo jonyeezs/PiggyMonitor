@@ -113,15 +113,29 @@ Include these additional attributes
 
 `ng-form` is required to allow `ngModel` to interact with the edit buttons. You may use the controller as you wish.
 
+`edi-tr-editable` accepts an object that initialize the edit state of the tr.
+
+Properties of the edit states are:
+```javascript
+{
+  inProgress: Boolean, //Set the state for edit in progress. ie: shows input fields and buttons
+  forceEdit: Boolean //Forces it to always be in edit mode. ie: no cancel button
+}
+``` 
+
 `edi-tr-on-save` requires an promise callback that will be the method to post your changes.
 
 #### 3. Multi-Select Capabilities
 
 ```html
-<tr edi-tr ...
-  edi-tr-multi-selector="true">
-</tr>
+<table id="uuid">
+  <tr edi-tr ...
+    edi-tr-multi-selector="true">
+  </tr>
+</table>
 ```
+
+Table must have a unique identifier on the id attribute to segregate the selection to its own table.
 
 #### 4. Enforce edit mode
 

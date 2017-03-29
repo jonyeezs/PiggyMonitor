@@ -62,9 +62,7 @@
 
             // Long press is done when nothing has been selected, then do selection only
             if (!EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
-              scope.$apply(function () {
-                updateSelection(scope, evt);
-              });
+              updateSelection(scope, evt);
             }
           }, TIMER_DURATION);
         }
@@ -77,14 +75,10 @@
           if (!scope.longPressSent && !$(evt.target)
             .is('select,input,button,button > span,checkbox') &&
             EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
-            scope.$apply(function () {
-                updateSelection(scope, evt);
-            });
+              updateSelection(scope, evt);
           }
 
-          scope.$apply(function () {
             EdiTrMultiSelection.onTouchEnd(scope.item.id, evt);
-          });
         }
 
         function onClick(evt) {
@@ -98,7 +92,8 @@
 
         function updateSelection(scope, evt)
         {
-            var isToBeSelected = EdiTrMultiSelection.onSelectionPress(scope.item.id, evt.target.closest('edi-table').id);
+            var ediTable = evt.target.closest('edi-table') || evt.target.closest('table');
+            var isToBeSelected = EdiTrMultiSelection.onSelectionPress(scope.item.id, ediTable.id);
             if(isToBeSelected) {
               ele.addClass('selected-row');
             }
