@@ -38,7 +38,7 @@ gulp.task('default', ['help']);
  * Injects any changes on the fly and re runs the tests.
  * @return {Stream}
  */
-gulp.task('specs', ['wire-specs'], function(done) {
+gulp.task('specs', function(done) {
   log('run the spec runner');
   serve(true /* isDev */, true /* specRunner */);
   done();
@@ -178,28 +178,7 @@ gulp.task('optimize-build', ['inject-to-index', 'test'], optimize);
 /**
  * Injects dependencies, stylings, and angular's $templateCache.
  */
-gulp.task('inject-to-index', ['wire-dep', 'create-templatecache', 'wire-css']);
-
-/**
- * Wire-up the bower dependencies
- * Looks up all bower components' main files and JavaScript source code,
- * then adds them to the `index.html`.
- * The `.bowerrc` file also runs this as a postinstall task whenever `bower install` is run.
- * @return {Stream}
- */
-gulp.task('wire-dep', wireBowerToHtml);
-
-/**
- * Wire-up the css
- * @return {Stream}
- */
-gulp.task('wire-css', ['compile-styles'], wireCssToHtml);
-
-/**
- * Inject all the spec files into the specs.html
- * @return {Stream}
- */
-gulp.task('wire-specs', ['create-templatecache'], buildSpecHtml);
+gulp.task('inject-to-index', ['create-templatecache']);
 
 /**
  * Compile less to css
@@ -316,54 +295,6 @@ function createTemplateCache() {
       config.templateCache.options
     ))
     .pipe(gulp.dest(config.temp));
-}
-
-function wireBowerToHtml() {
-  log('Wiring the bower dependencies into the html');
-
-  var wiredep = require('wiredep').stream;
-  var options = config.getWiredepDefaultOptions();
-
-  // Only include stubs if flag is enabled
-  var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;
-
-  return gulp
-    .src(config.index)
-    .pipe(wiredep(options))
-    .pipe(inject(js, '', config.jsOrder))
-    .pipe(gulp.dest(config.client));
-}
-
-function wireCssToHtml() {
-  log('Wire up css into the html, after files are ready');
-
-  return gulp
-    .src(config.index)
-    .pipe(inject(config.css))
-    .pipe(gulp.dest(config.client));
-}
-
-function buildSpecHtml(done) {
-  log('building the spec runner');
-
-  var wiredep = require('wiredep').stream;
-  var templateCache = config.temp + config.templateCache.file;
-  var options = config.getWiredepDefaultOptions();
-  var specs = config.specs;
-
-  if (args.startServers) {
-    specs = [].concat(specs, config.serverIntegrationSpecs);
-  }
-  options.devDependencies = true;
-
-  return gulp
-    .src(config.specRunner)
-    .pipe(wiredep(options))
-    .pipe(inject(config.js, '', config.jsOrder))
-    .pipe(inject(config.testlibraries, 'testlibraries'))
-    .pipe(inject(specs, 'specs', ['**/*']))
-    .pipe(inject(templateCache, 'templates'))
-    .pipe(gulp.dest(config.client));
 }
 
 function optimize() {
