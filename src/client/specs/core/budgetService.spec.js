@@ -5,14 +5,14 @@ describe('budget service', function () {
   beforeEach(function () {
     module('app.core');
 
-    bard.inject(this, '$q', '$rootScope', 'budget', 'dataService');
+    bard.inject(this, '$q', '$rootScope', 'Budget', 'dataService');
 
     bard.mockService(dataService, {
       get: $q.when(fakeResult),
       patch: $q.resolve()
     });
 
-    subject = budget;
+    subject = Budget;
   });
 
   describe('getYears', function () {
@@ -26,16 +26,23 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with year', function () {
-      expect(dataService.get).to.be.calledWith('years');
+      expect(dataService.get).to.be.calledWith('budgets/years');
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       subjectPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
+
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
@@ -51,16 +58,22 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('years/' + testYear);
+      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear);
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       subjectPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
@@ -77,18 +90,24 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('years/' + testYear, {
+      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear, {
         occurance: someOccuranceType
       });
     });
 
-    it('should return a promise that resolves with a years property', function () {
+    it('should return a promise that resolves with a years property', function (done) {
       var subjectResult;
       resultPromise.then(function (result) {
-        subjectResult = result;
-      });
+          subjectResult = result;
+        })
+        .catch(function () {
+          subjectResult = 'error';
+        })
+        .finally(function () {
+          expect(subjectResult).to.exist;
+          done();
+        });
       $rootScope.$apply();
-      expect(subjectResult).to.exist;
     });
   });
 
@@ -101,7 +120,7 @@ describe('budget service', function () {
         amount: '23.00'
       });
 
-      expect(dataService.patch).to.be.calledWith('years/2016');
+      expect(dataService.patch).to.be.calledWith('budgets/years/2016');
       expect(dataService.patch.args[0][1]).to.be.an('array');
     });
   });

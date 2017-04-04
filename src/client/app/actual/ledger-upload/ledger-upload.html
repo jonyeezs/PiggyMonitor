@@ -1,0 +1,3 @@
+<button type="button" ng-hide="$ctrl.uploadInProgress" class="btn btn-primary" ngf-select="$ctrl.upload($file)" ngf-accept="'.csv'"><span class="glyphicon glyphicon-cloud-upload"></span> Upload csv</button>
+
+<uib-progressbar class="ledger-progress" ng-show="$ctrl.uploadInProgress" animate="true" value="$ctrl.uploadPercentage" max="100" type="info">Uploading CSV...</uib-progressbar>

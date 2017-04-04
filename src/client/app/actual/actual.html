@@ -1,0 +1,30 @@
+<section class="mainbar actual">
+  <section class="matter">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="option-row">
+          <drop-options options="vm.availableYears" info="vm.yearSelectionMsg" on-select="vm.selectYear(value)">
+          </drop-options>
+        </div>
+        <div class="option-row">
+          <ledger-upload on-upload-complete="vm.completedUpload(uploadedYear)"></ledger-upload>
+        </div>
+      </div>
+      <div class="row" ng-if="vm.items.length > 0">
+        <div class="col-md-8">
+          <widget title="Budget Comparison" subtitle="YTD" heading-colour="wviolet">
+            <bar-summary-compare year="vm.selectedYear" actual="vm.items"></bar-summary-compare>
+          </widget>
+        </div>
+        <div class="col-md-4">
+          <widget title="Cash-flow" subtitle="YTD" heading-colour="wblue">
+            <bar-cash-flow items="vm.items"></bar-cash-flow>
+          </widget>
+        </div>
+      </div>
+      <div class="row">
+        <edi-table items="vm.items" col-setup="vm.colSetup" settings="vm.tableSettings" on-item-created="vm.itemCreated(item)" on-item-updated="vm.itemUpdated(event, item)"></edi-table>
+      </div>
+    </div>
+  </section>
+</section>

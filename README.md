@@ -6,6 +6,12 @@
 
 >More details about the styles and patterns used in this app can be found in my [Angular Style Guide](https://github.com/johnpapa/angularjs-styleguide) and my [Angular Patterns: Clean Code](http://jpapa.me/ngclean) course at [Pluralsight](http://pluralsight.com/training/Authors/Details/john-papa) and working in teams.
 
+## Lessons
+
+As this project is moreso for my learning experience.
+
+I've noted down the lessons I've learnt in another md file: LESSONS.md
+
 ## Prerequisites
 
 1. Install [Node.js](http://nodejs.org)
@@ -82,20 +88,6 @@ Available [yargs](yargs) variables
  * **--startServers**: Will start servers for midway tests on the test task.    
 
 [yargs]:https://github.com/yargs/yargs)
-
-### Build app and specs base file
-
-The index.html and specs.html, are generated via gulp using a boilerplate.
-
-The boilerplates can be found in the boilerplate folder.
-
-- `gulp inject`
-
-    Builds the index.html
-
-- `gulp build-specs`
-
-    Builds the specs.html
 
 ### Development
 

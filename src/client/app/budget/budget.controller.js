@@ -1,46 +1,63 @@
-(function() {
-  'use strict';
+(function () {
 
   angular
-      .module('app.budget')
-      .controller('BudgetController', BudgetController);
+    .module('app.budget')
+    .controller('BudgetController', BudgetController);
 
-  BudgetController.$inject = ['_', 'budget', 'logger'];
+  BudgetController.$inject = ['_', 'Budget', 'budgetHelper', 'logger'];
   /* @ngInject */
-  function BudgetController(_, budget, logger) {
-    var itemsUpdated;
+  function BudgetController(_, Budget, budgetHelper, logger) {
     var vm = this;
     vm.title = 'Budget';
+
     vm.yearSelectionMsg = 'Select Budget Year';
+    vm.availableYears = [];
     vm.selectedYear = '';
     vm.selectYear = selectYear;
-    vm.isBudgetUpdated = isBudgetUpdated;
+
+    vm.occuranceSelectionMsg = 'Select Occurance';
+    vm.selectedOccurance = '';
+    vm.availableOccurances = [];
+    vm.selectOccurance = selectOccurance;
+
     /* table Status */
     vm.incomeTable = {
       items: [],
       status: {
         open: false
-      }
+      },
+      colSetup: budgetHelper.getEdiTableColSetup(),
+      tableSettings: {}
     };
     vm.expenseTable = {
       items: [],
       status: {
         open: false
-      }
+      },
+      colSetup: budgetHelper.getEdiTableColSetup(),
+      tableSettings: {}
     };
-    vm.allItems = [];
+
+    vm.expenseCreated = itemCreated(vm.expenseTable);
+    vm.incomeCreated = itemCreated(vm.incomeTable);
+    vm.expenseUpdated = itemUpdated(vm.expenseTable);
+    vm.incomeUpdated = itemUpdated(vm.incomeTable);
 
     activate();
 
     function activate() {
       logger.info('Activated Budget View');
-      itemsUpdated = false;
       updateYears();
     }
 
     function updateYears() {
-      budget.getYears().then(function(result) {
-        vm.availableYears = result;
+      Budget.getYears().then(function (results) {
+        vm.availableYears = _.map(results, function (result) {
+          return {
+            key: result,
+            value: result
+          };
+        });
       });
     }
 
@@ -49,28 +66,70 @@
       updateItems(year);
     }
 
-    function updateItems(year) {
-      itemsUpdated = false;
-      budget.getByYear(year).then(function(result) {
-        vm.allItems = result;
-        buildIncomeAndExpenseTables(result);
-        itemsUpdated = true;
+    function selectOccurance(occurance) {
+      vm.selectedOccurance = occurance;
+      updateItems(vm.selectedYear, occurance);
+    }
+
+    function updateItems(year, occurance) {
+      var getItems;
+      if (occurance) {
+        getItems = Budget.getByYearWithOccurance(year, occurance);
+      }
+      else {
+        getItems = Budget.getByYear(year);
+      }
+
+      vm.itemsLoading = true;
+      vm.incomeTable.status.open = vm.expenseTable.status.open = false;
+
+      getItems.then(function (result) {
+        if (!vm.availableOccurances.length) {
+          vm.availableOccurances = budgetHelper.getOccurances(result);
+        }
+        var tables = budgetHelper.splitToIncomeAndExpense(result);
+
+        vm.incomeTable.colSetup = vm.expenseTable.colSetup = budgetHelper.getEdiTableColSetup(result);
+
+        vm.incomeTable.tableSettings = vm.expenseTable.tableSettings =
+        {
+          editable: true,
+          creatable: true,
+          deletable: true,
+          multable: true
+        };
+
+        vm.incomeTable.items = tables.incomes;
+        vm.expenseTable.items = tables.expenses;
+
+        vm.incomeTable.status.open = vm.incomeTable.items.length > 0;
+        vm.expenseTable.status.open = vm.expenseTable.items.length > 0;
+      })
+      .finally(function () {
+        vm.itemsLoading = false;
       });
     }
 
-    function isBudgetUpdated() {
-      return itemsUpdated;
+    function itemCreated(table) {
+      return function (item) {
+        return Budget.add(vm.selectedYear, item)
+          .then(function (id) {
+            item.id = id;
+            table.items.unshift(item);
+          });
+      };
     }
 
-    function buildIncomeAndExpenseTables(items) {
-      vm.incomeTable.items = _.filter(items, function(item) {
-        return item.amount > 0;
-      });
-      vm.incomeTable.status.open = true;
-      vm.expenseTable.items = _.filter(items, function(item) {
-        return item.amount < 0;
-      });
-      vm.expenseTable.status.open = true;
+    function itemUpdated(table) {
+      return function (_evnt, item) {
+        return Budget.update(vm.selectedYear, item)
+        .then(function(updatedItem) {
+          var index = table.items.findIndex(function (item) { return item.id === updatedItem.id; });
+          if (index != -1) {
+            table.items[index] = updatedItem;
+          }
+        });
+      };
     }
   }
 })();

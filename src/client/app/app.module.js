@@ -6,8 +6,8 @@
       'app.core',
       'app.widgets',
       'app.budget',
+      'app.actual',
       'app.dashboard',
-      'app.summary',
       'app.layout',
       'chart.js'
   ]);

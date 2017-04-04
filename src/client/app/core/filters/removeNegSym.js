@@ -8,8 +8,8 @@
   removeNegativeSymFilter.$inject = [];
 
   function removeNegativeSymFilter() {
-    return function (input) {
-      return input < 0 ? (input * -1) : input;
+    return function (input, disable) {
+      return (input < 0 && !disable) ? (input * -1) : input;
     };
   }
 })();

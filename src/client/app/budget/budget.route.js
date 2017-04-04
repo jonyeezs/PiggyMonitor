@@ -23,7 +23,7 @@
                 title: 'Budget',
                 settings: {
                   nav: 2,
-                  content: '<i class="fa fa-lock"></i> Budget'
+                  content: 'Budget'
                 }
               }
             }

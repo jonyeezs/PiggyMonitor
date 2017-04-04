@@ -1,0 +1,29 @@
+<span ng-show="$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.inputType">
+  <select
+    ng-switch-when="select"
+    name="{{$ctrl.tdSetup.prop}}"
+    edi-td-data
+    ng-options="option for option in $ctrl.tdSetup.options track by option"
+    ng-model="$ctrl.tdData[$ctrl.tdSetup.prop]"
+    ng-disabled="$ctrl.editting"
+    required></select>
+  <div ng-switch-when="datalist">
+    <input list="{{$ctrl.tdSetup.prop}}" name="{{$ctrl.tdSetup.prop}}" type="text" ng-model="$ctrl.tdData[$ctrl.tdSetup.prop]" ng-disabled="$ctrl.editting"/>
+    <datalist id="{{$ctrl.tdSetup.prop}}">
+      <option ng-repeat="option for option in $ctrl.tdSetup.options track by option" value="{{option}}">
+      </datalist>
+  </div>
+  <input
+    ng-switch-default
+    name="{{$ctrl.tdSetup.prop}}"
+    type="{{$ctrl.tdSetup.inputType}}"
+    edi-td-data
+    ng-model="$ctrl.tdData[$ctrl.tdSetup.prop]"
+    ng-disabled="$ctrl.editting"
+    required></input>
+</span>
+<span ng-show="!$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.prop">
+  <span ng-switch-when="amount" class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop] | removeNegativeSym:disableRemoveNeg | currency"></span>
+  <span ng-switch-when="date" class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop] | date : 'd MMM'"></span>
+  <span ng-switch-default class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop]"></span>
+</span>

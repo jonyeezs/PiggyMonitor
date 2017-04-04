@@ -1,0 +1,34 @@
+<table class="article-table table table-hover">
+  <thead>
+    <tr>
+      <th
+        ng-repeat="colDetail in $ctrl.colSetup track by $index"
+        edi-theader
+        col-detail="::colDetail"
+        ng-class="colDetail.class"
+        on-sort="$ctrl.setSort(column, desc)"></th>
+      <th class="col-md-2">
+        <edi-temizer-button ng-if="$ctrl.settings.creatable && $ctrl.itemAdded != null"></edi-temizer-button>
+      </th>
+    </tr>
+  </thead>
+  <tbody ng-if="$ctrl.settings.creatable && $ctrl.itemAdded != null">
+    <tr edi-temizer
+      col-setup="$ctrl.colSetup"
+      itemizer-on-complete="$ctrl.itemAdded(item)">
+    </tr>
+  </tbody>
+  <tbody>
+    <tr
+      ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc track by item.id"
+      edi-tr
+      ng-model="item"
+      edi-tr-setup="::$ctrl.colSetup"
+      ng-form
+      edi-tr-editable="$ctrl.settings.editable"
+      edi-tr-on-save="$ctrl.itemUpdated(items)"
+      edi-tr-multi-selector="$ctrl.settings.multable"
+      ng-cloak>
+    </tr>
+  </tbody>
+</table>
