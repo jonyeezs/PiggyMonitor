@@ -37,3 +37,15 @@ As well figuring out how ngModelController actually works.
 Sometimes things don't follow a nice pattern and seems hacky. But if the hack is only for a specific problem and will never affect anyone else. Maybe its ok to do it that way.
 
 Man creating dynamic tables with components is hard. Something that should be simple to use now looks so complicated to jump through hoops!
+
+## cleanup
+
+It's time to move to webpack. Although bower seems to be maintain they seem to highly recommend to use webpack. As it stands webpack is progressing towards using modules rather than including javascript to html.
+
+It's time to stop using bower and start using a more modern approach.
+
+There's alot of work that needs to be done here. Here's the order of work that needs to be done:
+
+1. Remove dependency on bower. Move all bower files into npm package.json.
+2. Remove steps that adds bower files to index.html and as well any static js or css files.
+  1. Remove bower boilerplates
