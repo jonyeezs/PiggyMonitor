@@ -5,14 +5,11 @@
       .module('blocks.logger')
       .factory('logger', logger);
 
-  logger.$inject = ['$log', 'toastr'];
-
-  /* @ngInject */
-  function logger($log, toastr) {
+  logger.$inject = ['$log', '$q', 'toastr'];
+  function logger($log, $q, toastr) {
     var service = {
-      showToasts: true,
-
       error   : error,
+      errorAndReject: errorAndReject, // logs as error then continue to reject. use this for promises
       info    : info,
       success : success,
       warning : warning,
@@ -43,5 +40,9 @@
       toastr.warning(message, title);
       $log.warn('Warning: ' + message, data);
     }
+
+    function errorAndReject(message, data, title) {
+      error(message, data);
+      return $q.reject(e);
+    }
   }
-}());
