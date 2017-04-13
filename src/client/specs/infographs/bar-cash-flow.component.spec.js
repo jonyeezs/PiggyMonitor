@@ -4,8 +4,7 @@ describe('bar-cash-flow controller', function () {
   var subject;
 
   beforeEach(function () {
-    bard.appModule('app.core');
-    bard.appModule('app.infographs');
+    bard.appModule('infograph.bar-cash-flow');
     bard.inject(this, '$componentController');
 
     subject = $componentController('barCashFlow');

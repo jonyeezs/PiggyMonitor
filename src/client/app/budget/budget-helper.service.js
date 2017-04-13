@@ -1,10 +1,7 @@
-  angular
-    .module('app.budget')
-    .factory('budgetHelper', BudgetHelper);
+module.exports = budgetHelper;
 
-BudgetHelper.$inject = ['_', 'ArticleFactory'];
-/* @ngInject */
-function BudgetHelper(_, ArticleFactory) {
+budgetHelper.$inject = ['_', 'articleFactory'];
+function budgetHelper(_, articleFactory) {
 
   var service = {
     getOccurances: getOccurances,
@@ -25,7 +22,7 @@ function BudgetHelper(_, ArticleFactory) {
   }
 
   function getEdiTableColSetup(items) {
-    return ArticleFactory.getColumnConfig('budget', items);
+    return articleFactory.getColumnConfig('budget', items);
   }
 
   function splitToIncomeAndExpense(items) {

@@ -1,5 +1,5 @@
 module.exports = angular
-  .module('app.core')
+  .module('app')
   .config(config);
 
 config.$inject = ['$provide'];

@@ -49,3 +49,6 @@ There's alot of work that needs to be done here. Here's the order of work that n
 1. Remove dependency on bower. Move all bower files into npm package.json.
 2. Remove steps that adds bower files to index.html and as well any static js or css files.
   1. Remove bower boilerplates
+3. Migrate all files to use commonJS.
+  1. [Remove IIFE](https://codepen.io/martinmcwhorter/post/angularjs-1-x-with-typescript-or-es6-best-practices#dont-use-iife-immediatly-invoked-function-expression-2)
+  2. Rename .module.js to index.js

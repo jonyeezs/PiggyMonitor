@@ -1,37 +1,24 @@
-(function () {
-  'use strict';
+module.exports =
+  angular.module('app')
+  .config(toastrConfig)
+  .config(configure)
+  .value('config', config);
 
-  var core = angular.module('app.core');
+toastrConfig.$inject = ['toastr'];
+function toastrConfig(toastr) {
+  toastr.options.timeOut = 4000;
+  toastr.options.positionClass = 'toast-bottom-right';
+}
 
-  core.config(toastrConfig);
+var config = {
+  appTitle: 'piggyMonitor',
+  dataUrl: 'http://localhost:9292/budgets'
+};
 
-  toastrConfig.$inject = ['toastr'];
-  /* @ngInject */
-  function toastrConfig(toastr) {
-    toastr.options.timeOut = 4000;
-    toastr.options.positionClass = 'toast-bottom-right';
+configure.$inject = ['$logProvider', 'routerHelperProvider'];
+function configure($logProvider, routerHelperProvider) {
+  if ($logProvider.debugEnabled) {
+    $logProvider.debugEnabled(true);
   }
-
-  var config = {
-    appErrorPrefix: '[piggyMonitor Error] ',
-    appTitle: 'piggyMonitor',
-    dataUrl: 'http://localhost:9292'
-  };
-
-  core.value('config', config);
-
-  core.config(configure);
-
-  configure.$inject = ['$logProvider', '$qProvider', 'routerHelperProvider', 'exceptionHandlerProvider'];
-  /* @ngInject */
-  function configure($logProvider, $qProvider, routerHelperProvider, exceptionHandlerProvider) {
-    if ($logProvider.debugEnabled) {
-      $logProvider.debugEnabled(true);
-    }
-    $qProvider.errorOnUnhandledRejections(false); //TODO: remove this and put catches into all promises
-
-    exceptionHandlerProvider.configure(config.appErrorPrefix);
-    routerHelperProvider.configure({docTitle: config.appTitle + ': '});
-  }
-
-})();
+  routerHelperProvider.configure({ docTitle: config.appTitle + ': ' });
+}
