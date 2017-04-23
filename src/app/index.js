@@ -1,5 +1,8 @@
 const angular = require('angular');
 
+require('../styles/styles.less');
+require('bootstrap/dist/css/bootstrap.css');
+
 module.exports = angular.module('app', [
   require('angular-animate'),
   require('angular-sanitize'),
