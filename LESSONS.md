@@ -52,3 +52,5 @@ There's alot of work that needs to be done here. Here's the order of work that n
 3. Migrate all files to use commonJS.
   1. [Remove IIFE](https://codepen.io/martinmcwhorter/post/angularjs-1-x-with-typescript-or-es6-best-practices#dont-use-iife-immediatly-invoked-function-expression-2)
   2. Rename .module.js to index.js
+4. Prepare for [Webpack](https://webpack.js.org/guides/get-started/)
+  1. `npm install -g webpack` and create `webpack.config.js`

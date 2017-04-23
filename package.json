@@ -1,15 +1,13 @@
 {
   "name": "piggyMonitor",
-  "description": "piggyMonitor Project Generated from HotTowel Angular",
-  "version": "1.1.0",
-  "repository" :
-  { "type" : "git",
-    "url" : "https://github.com/jonyeezs/PiggyMonitor.git"
+  "description": "piggyMonitor Project",
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonyeezs/PiggyMonitor.git"
   },
   "scripts": {
-    "prepublish": "npm install",
-    "install": "bower install",
-    "start": "node src/server/app.js",
+    "start": "webpack",
     "test": "gulp test"
   },
   "dependencies": {
@@ -91,6 +89,7 @@
     "phantomjs-prebuilt": "^2.1.4",
     "plato": "^1.2.0",
     "q": "^1.0.1",
+    "webpack": "^2.4.1",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0"
   }
