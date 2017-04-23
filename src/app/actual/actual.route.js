@@ -11,7 +11,7 @@ function getStates() {
             state: 'actual',
             config: {
               url: '/actual',
-              templateUrl: 'app/actual/actual.html',
+              template: require('./actual.html'),
               controller: 'ActualController',
               controllerAs: 'vm',
               title: 'Actual',

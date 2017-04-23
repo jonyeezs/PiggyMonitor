@@ -3,7 +3,7 @@ module.exports = ediTr;
 ediTr.$inject = ['$q', '_', '$timeout', 'ediTrMultiSelection'];
 function ediTr($q, _, $timeout, ediTrMultiSelection) {
   var directive = {
-    templateUrl: 'app/components/edi-table/edi-tr/edi-tr.html',
+    template: require('./edi-tr.html'),
     restrict: 'A',
     scope: {
       colSetup: '<ediTrSetup',

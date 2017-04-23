@@ -1,7 +1,7 @@
 module.exports = angular
     .module('actual.ledger-upload')
     .component('itemCreationModal', {
-      templateUrl: 'app/actual/ledger-upload/item-modal.html',
+      template: require('./item-modal.html'),
       controller: itemCreationModalCtrl,
       bindings: {
         resolve: '<',

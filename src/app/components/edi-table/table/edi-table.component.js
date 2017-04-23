@@ -1,7 +1,7 @@
 module.exports = angular
   .module('edi-table.edi-table')
   .component('ediTable', {
-    templateUrl: 'app/components/edi-table/table/edi-table.html',
+    template: require('./edi-table.html'),
     controller: ediTableCtrl,
     bindings: {
       colSetup: '<',

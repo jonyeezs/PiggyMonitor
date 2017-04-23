@@ -1,7 +1,7 @@
 module.exports = angular.module('edi-tr.edi-td')
   .directive('ediTdData', editTdData)
   .component('ediTd', {
-    templateUrl: 'app/components/edi-table/edi-tr/edi-td/edi-td.html',
+    template: require('./edi-td.html'),
     controller: ediTdCtrl,
     bindings: {
       trData: '<tdData',

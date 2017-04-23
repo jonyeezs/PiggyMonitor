@@ -3,7 +3,7 @@ function ediTheader() {
   var sortToggleWatchers = {};
 
   return {
-    templateUrl: 'app/components/edi-table/edi-theader/edi-theader.html',
+    template: require('./edi-theader.html'),
     restrict: 'A',
     scope: {
       colDetail: '<',

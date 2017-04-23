@@ -12,7 +12,7 @@ function getStates() {
       state: 'budget',
       config: {
         url: '/budget',
-        templateUrl: 'app/budget/budget.html',
+        template: require('./budget.html'),
         controller: 'BudgetController',
         controllerAs: 'vm',
         title: 'Budget',

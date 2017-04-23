@@ -8,7 +8,7 @@ function widget() {
       'subtitle': '@',
       'rightText': '@'
     },
-    templateUrl: 'app/components/widget.html',
+    template: require('./widget.html'),
     restrict: 'E',
     transclude: true
   };

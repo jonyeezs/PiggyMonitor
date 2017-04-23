@@ -1,7 +1,7 @@
 module.exports = angular
   .module('component.drop-options')
   .component('dropOptions', {
-    templateUrl: 'app/components/drop-options/drop-options.html',
+    template: require('./drop-options.html'),
     controller: dropOptionsCtrl,
     bindings: {
       availableOptions: '<options',

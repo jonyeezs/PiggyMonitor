@@ -3,7 +3,7 @@ module.exports = ediTemizer;
 ediTemizer.$inject = [];
 function ediTemizer () {
   return {
-    templateUrl: require('./edi-temizer.html'),
+    template: require('./edi-temizer.html'),
     restrict: 'A',
     controller: editTimizerCtrl,
     controllerAs: '$ctrl',

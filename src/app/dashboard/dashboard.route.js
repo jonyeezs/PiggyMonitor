@@ -11,7 +11,7 @@ function getStates() {
       state: 'dashboard',
       config: {
         url: '/',
-        templateUrl: 'app/dashboard/dashboard.html',
+        template: require('./dashboard.html'),
         controller: 'DashboardController',
         controllerAs: 'vm',
         title: 'dashboard',

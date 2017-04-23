@@ -1,7 +1,7 @@
 module.exports = angular
     .module('actual.ledger-upload')
     .component('ledgerUpload', {
-      templateUrl: 'app/actual/ledger-upload/ledger-upload.html',
+      template: require('./ledger-upload.html'),
       controller: ledgerUploadCtrl,
       bindings: {
         onUploadComplete: '&'

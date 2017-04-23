@@ -9,7 +9,7 @@ function topNav () {
     scope: {
       'navline': '='
     },
-    templateUrl: 'app/layout/top-nav/top-nav.html'
+    template: require('./top-nav.html')
   };
 
   return directive;
