@@ -1,14 +1,22 @@
 {
   "ecmaVersion": 6,
   "libs": [
-    "browser"
+    "browser",
+    "chai"
   ],
   "loadEagerly": [
     "src/app/**/*.js"
   ],
   "plugins": {
     "node": {},
-    "requirejs": {},
-    "angular": "src/"
-  }
+    "angular": "src/",
+    "node_resolve": {},
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "commonjs": {}
+  },
+  "dontLoad": []
 }
