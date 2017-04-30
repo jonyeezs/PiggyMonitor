@@ -12,7 +12,7 @@ function getStates() {
       state: '404',
       config: {
         url: '/404',
-        templateUrl: require('./404.html'),
+        template: require('./404.html'),
         title: '404'
       }
           }

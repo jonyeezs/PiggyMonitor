@@ -8,6 +8,7 @@ module.exports = angular.module('app', [
   require('angular-sanitize'),
   require('./common/logger'),
   require('./common/router'),
+  require('./404'),
   require('./dashboard'),
   require('./actual'),
   require('./budget')
