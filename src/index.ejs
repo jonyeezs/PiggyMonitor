@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
 
 <head>
   <style>
@@ -9,31 +9,23 @@
       display: none!important;
     }
   </style>
-  <title ng-bind="title">piggyMonitor</title>
+  <title ng-bind="title"><%= htmlWebpackPlugin.options.title %></title>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
   <base href="/">
-
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
-  <link rel="stylesheet" href="/.tmp/styles.css">
 </head>
 
-<body>
+<body ng-app="app">
   <div>
-    <div ng-include="'app/core/shell/shell.html'"></div>
+    <app-shell></app-shell>
     <div id="splash-page" ng-show="showSplash">
       <div class="page-splash">
         <div class="page-splash-message">
-          piggyMonitor
-        </div>
-        <div class="progress progress-striped active page-progress-bar">
-          <div class="bar"></div>
+          <%= htmlWebpackPlugin.options.title %>
         </div>
       </div>
     </div>
   </div>
-  <script src="/dist/app.bundle.js"></script>
 </body>
 </html>

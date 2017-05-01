@@ -56,3 +56,4 @@ There's alot of work that needs to be done here. Here's the order of work that n
   1. `npm install -g webpack` and create `webpack.config.js`
   2. import templates by code using html loader
   3. use css loaders to bundle styling
+5. Generate landing page

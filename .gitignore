@@ -6,7 +6,7 @@ build/
 
 # generated files
 report/coverage/*
-dist/
+dist/*
 
 # other
 .tmp

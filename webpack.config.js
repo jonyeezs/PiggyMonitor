@@ -8,7 +8,6 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
-  devtool: '#source-map',
   plugins: [
     // generate html landing page
     new HtmlWebpackPlugin({
