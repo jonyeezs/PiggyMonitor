@@ -4,8 +4,7 @@ describe('drop-options component', function () {
   var element, scope;
   var handlerResult;
   beforeEach(function () {
-    bard.appModule('app.core');
-    bard.appModule('app.widgets');
+    bard.appModule('component.drop-options');
     bard.inject(this, '$rootScope', '$compile');
 
     scope = $rootScope.$new();

@@ -1,9 +1,9 @@
 /* jshint -W117, -W030 */
-describe('Data Service', function () {
+describe('backend-connector service', function () {
   var subject;
 
   beforeEach(function () {
-    module('app.core');
+    module('backend-connector');
 
     bard.inject(this, '$httpBackend', 'config', 'exception');
 

@@ -20,7 +20,7 @@ describe('Category Factory Service', function () {
   }];
 
   beforeEach(function () {
-    module('app.core');
+    module('svc.category');
 
     bard.inject(this, '_', 'categoryFactory');
 

@@ -3,8 +3,7 @@ describe('Article-factory', function () {
   var subject;
 
   beforeEach(function () {
-    module('app.core');
-    module('app.widgets');
+    module('svc.article');
 
     bard.inject(this, '_', 'occurances', 'categoryFactory');
 
