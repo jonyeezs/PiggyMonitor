@@ -35,7 +35,7 @@ function dataService($http, config, logger, $q) {
     }
 
     function fail(e) {
-      return exception.catcher('XHR Failed for ' + resource)(e);
+      return logger.catcher('XHR Failed for ' + resource)(e);
     }
   }
 

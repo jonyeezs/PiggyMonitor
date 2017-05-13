@@ -3,16 +3,16 @@ describe('Article-factory', function () {
   var subject;
 
   beforeEach(function () {
-    module('svc.article');
+    bard.appModule('svc.article');
 
-    bard.inject(this, '_', 'occurances', 'categoryFactory');
+    bard.inject(this, 'occurances', 'categoryFactory');
 
     bard.mockService(categoryFactory, {
       createLabels: undefined
     });
 
-    bard.inject(this, 'ArticleFactory');
-    subject = ArticleFactory;
+    bard.inject(this, 'articleFactory');
+    subject = articleFactory;
   });
 
   describe('getColumnConfig', function () {

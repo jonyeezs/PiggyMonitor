@@ -3,7 +3,7 @@ describe('budgetHelper service', function () {
   var subject;
   var fakeResult;
   beforeEach(function () {
-    module('app.budget');
+    bard.appModule('app.budget');
 
     bard.inject(this, 'budgetHelper');
 

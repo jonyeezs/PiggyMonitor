@@ -3,16 +3,16 @@ describe('budget service', function () {
   var subject;
   var fakeResult;
   beforeEach(function () {
-    module('app.core');
+    bard.appModule('repo.budget');
 
-    bard.inject(this, '$q', '$rootScope', 'Budget', 'dataService');
+    bard.inject(this, '$q', '$rootScope', 'budget', 'data');
 
-    bard.mockService(dataService, {
+    bard.mockService(data, {
       get: $q.when(fakeResult),
       patch: $q.resolve()
     });
 
-    subject = Budget;
+    subject = budget;
   });
 
   describe('getYears', function () {
@@ -26,7 +26,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with year', function () {
-      expect(dataService.get).to.be.calledWith('budgets/years');
+      expect(data.get).to.be.calledWith('budgets/years');
     });
 
     it('should return a promise that resolves with a years property', function (done) {
@@ -58,7 +58,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear);
+      expect(data.get).to.be.calledWith('budgets/years/' + testYear);
     });
 
     it('should return a promise that resolves with a years property', function (done) {
@@ -78,7 +78,7 @@ describe('budget service', function () {
   });
 
   describe('getByYearWithOccurance', function () {
-    var subjectPromise;
+    var subjectPromise, resultPromise;
     var testYear = '2016';
     var someOccuranceType = 'monthly daily somethinglikethat';
     beforeEach(function () {
@@ -90,7 +90,7 @@ describe('budget service', function () {
     });
 
     it('should send a GET call to dataservice with specified year', function () {
-      expect(dataService.get).to.be.calledWith('budgets/years/' + testYear, {
+      expect(data.get).to.be.calledWith('budgets/years/' + testYear, {
         occurance: someOccuranceType
       });
     });
@@ -120,8 +120,8 @@ describe('budget service', function () {
         amount: '23.00'
       });
 
-      expect(dataService.patch).to.be.calledWith('budgets/years/2016');
-      expect(dataService.patch.args[0][1]).to.be.an('array');
+      expect(data.patch).to.be.calledWith('budgets/years/2016');
+      expect(data.patch.args[0][1]).to.be.an('array');
     });
   });
 });

@@ -19,13 +19,13 @@ describe('bar-cash-flow controller', function () {
         {id: 4, amount: 5.00},
         {id: 5, amount: -2.50},
         {id: 7, amount: -1.05}
-      ]
+      ];
       beforeEach(function() {
         subject.$onChanges({
           items: {
             currentValue: items
           }
-        })
+        });
       });
 
       it('should populate data with total for income and expenses', function() {

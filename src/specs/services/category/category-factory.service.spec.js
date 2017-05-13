@@ -20,9 +20,9 @@ describe('Category Factory Service', function () {
   }];
 
   beforeEach(function () {
-    module('svc.category');
+    bard.appModule('svc.category');
 
-    bard.inject(this, '_', 'categoryFactory');
+    bard.inject(this, 'categoryFactory');
 
     subject = categoryFactory;
   });

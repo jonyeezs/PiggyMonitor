@@ -1,9 +1,9 @@
 /* jshint -W117, -W030 */
 describe('removeNegSym filter', function() {
-    var filter;
-    beforeEach(function () {
-        module('app.core');
+    var filter, result;
+    beforeEach(bard.appModule('filter.removeNegativeSym'));
 
+    beforeEach(function () {
         bard.inject(this, '$filter');
         filter = $filter('removeNegativeSym');
       });

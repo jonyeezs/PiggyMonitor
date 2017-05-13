@@ -18,7 +18,7 @@ function barCashFlowCtrl(_) {
       responsive: true,
       maintainAspectRatio: false
     };
-  }
+  };
 
   ctrl.$onChanges = function (changes) {
     if (changes.items && changes.items.currentValue) {
