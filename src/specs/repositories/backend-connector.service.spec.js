@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../app/repositories/backend-connector.service');
+
 describe('backend-connector service', function () {
   var subject;
 

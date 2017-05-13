@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../app/repositories/budget.service');
+
 describe('budget service', function () {
   var subject;
   var fakeResult;

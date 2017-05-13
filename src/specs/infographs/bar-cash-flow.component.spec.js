@@ -1,5 +1,6 @@
 /* jshint -W117, -W030, -W101  */
-// jscs:disable
+require('../../app/infographs/bar-cash-flow');
+
 describe('bar-cash-flow controller', function () {
   var subject;
 

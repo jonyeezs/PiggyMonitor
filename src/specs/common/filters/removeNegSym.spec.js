@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../../app/common/filters/removeNegSym');
+
 describe('removeNegSym filter', function() {
     var filter, result;
     beforeEach(bard.appModule('filter.removeNegativeSym'));

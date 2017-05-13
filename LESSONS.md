@@ -58,3 +58,7 @@ There's alot of work that needs to be done here. Here's the order of work that n
   3. use css loaders to bundle styling
 5. Generate landing page
 6. Create dev build environment
+7. Configure karma to use Webpack. This is to complete single run mode.
+  1. install the required loaders and delete unused
+  2. for each test require the file for testing
+  3. create a bard extension to inject in the core providers. (_TODO could make the modules more modular so we don't have to do this_)

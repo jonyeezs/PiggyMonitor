@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../../app/services/category');
+
 describe('Category Factory Service', function () {
   var subject;
   var testItems = [{

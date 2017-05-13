@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../../app/services/article');
+
 describe('Article-factory', function () {
   var subject;
 

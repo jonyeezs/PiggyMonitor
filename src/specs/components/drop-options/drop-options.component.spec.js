@@ -1,5 +1,6 @@
 /* jshint -W117, -W030, -W101  */
-// jscs:disable
+require('../../../app/components/drop-options');
+
 describe('drop-options component', function () {
   var _element, element, scope;
   var handlerResult;

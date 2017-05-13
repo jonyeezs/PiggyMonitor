@@ -1,4 +1,6 @@
 /* jshint -W117, -W030 */
+require('../../app/budget');
+
 describe('budget.controller', function () {
   var subject;
   var availableYears = ['2016', '2017'];
