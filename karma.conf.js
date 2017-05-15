@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.config')();
 
 module.exports = function(config) {
+  if (!config.debug) { config.debug = false; }
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: './src',
@@ -12,6 +13,7 @@ module.exports = function(config) {
     //a strip down config as karma watches the test entry points
     webpack:{
       bail: true,
+      devtool: 'eval',
       module: {
         rules: webpackConfig.module.rules.concat(
           // Because PhantomJS < v2.5 doesn't support ES6, we'll have to babelify
@@ -53,15 +55,20 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress', 'coverage'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
+    reporters: config.debug ? [] : ['progress'],
+    client: {
+      mocha: {
+        // change Karma's debug.html to the mocha web reporter
+        reporter: 'html'
+      }
+    },
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //        browsers: ['Chrome', 'ChromeCanary', 'FirefoxAurora', 'Safari', 'PhantomJS'],
-    browsers: ['PhantomJS'],
+    browsers: config.debug ? ['Chrome'] : ['PhantomJS'],
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: config.debug ? false : true,
     // web server port
     port: 7357,
 
@@ -70,9 +77,9 @@ module.exports = function(config) {
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
     // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DISABLE,
+    logLevel: config.debug ? config.LOG_ERROR : config.LOG_DISABLE,
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: config.debug ? true : false,
 
     webpackMiddleware: {
 			// and use stats to turn off verbose output

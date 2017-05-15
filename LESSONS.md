@@ -62,3 +62,4 @@ There's alot of work that needs to be done here. Here's the order of work that n
   1. install the required loaders and delete unused
   2. for each test require the file for testing
   3. create a bard extension to inject in the core providers. (_TODO could make the modules more modular so we don't have to do this_)
+  4. add command to run in debug mode
