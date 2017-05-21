@@ -7,7 +7,7 @@
     "url": "https://github.com/jonyeezs/PiggyMonitor.git"
   },
   "scripts": {
-    "prestart": "rm -rf ./dist",
+    "prestart": "rm ./dist -Recurse -Force -ErrorAction SilentlyContinue",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:dev": "webpack-dev-server --config ./webpack.config.js --progress --open",
     "start:prod": "webpack --env.production",
