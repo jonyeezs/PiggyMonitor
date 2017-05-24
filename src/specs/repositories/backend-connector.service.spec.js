@@ -7,7 +7,7 @@ describe('backend-connector service', function () {
   beforeEach(function () {
     bard.appModule('backend-connector');
 
-    bard.inject(this, '$httpBackend', 'config');
+    bard.inject(this, '$httpBackend', 'logger', 'config');
 
     config.dataUrl = 'http://fake';
     bard.inject(this, 'data'); //FIXME why can't have this with the rest of the other inject dep
@@ -47,26 +47,29 @@ describe('backend-connector service', function () {
       });
     });
 
-    // describe('failed response', function () {
-    //   var exceptionCatcher;
-    //   beforeEach(function () {
-    //     exceptionCatcher = sinon.spy(exception, 'catcher');
-    //     $httpBackend
-    //     .whenGET(/.+/i)
-    //     .respond(400, {message: 'error'});
-    //   });
-    //
-    //   it('should send an exception', function (done) {
-    //     var error;
-    //     subject.get('resource')
-    //     .catch(function (error) {
-    //       error = error;
-    //     })
-    //     .finally(done);
-    //     $httpBackend.flush();
-    //     expect(exceptionCatcher).to.have.been.called;
-    //     expect(error).to.be.defined;
-    //   });
-    // });
+    describe('failed response', function () {
+      var exceptionLogger;
+      beforeEach(function () {
+        exceptionLogger = sinon.spy(logger, 'promise');
+        $httpBackend
+        .whenGET(/.+/i)
+        .respond(400, {message: 'error'});
+      });
+
+      it('should log the exception', function (done) {
+        var error;
+        subject.get('resource')
+        .catch(function (error) {
+          error = error;
+        })
+        .finally(function() {
+          expect(exceptionLogger).to.have.been.called;
+          expect(error).to.be.defined;
+          done();
+        });
+
+        $httpBackend.flush();
+      });
+    });
   });
 });

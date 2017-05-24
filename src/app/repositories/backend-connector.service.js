@@ -27,16 +27,8 @@ function dataService($http, config, logger, $q) {
     var getCommand = !query ? $http.get(url + '/' + resource) :
             $http.get(url + '/' + resource, {params: query});
     return getCommand
-        .then(success)
-        .catch(fail);
-
-    function success(response) {
-      return response.data.content;
-    }
-
-    function fail(e) {
-      return logger.catcher('XHR Failed for ' + resource)(e);
-    }
+      .then(success)
+      .catch(fail);
   }
 
   /**
@@ -46,10 +38,23 @@ function dataService($http, config, logger, $q) {
    * @return {object} promise
    */
   function patch(resource, items) {
-    return $http.patch(url + '/' + resource, items);
+    return $http.patch(url + '/' + resource, items)
+      .then(success)
+      .catch(fail);
   }
 
   function post(resource, item) {
-    return $http.post(url + '/' + resource, item);
+    return $http.post(url + '/' + resource, item)
+      .then(success)
+      .catch(fail);
+  }
+
+  function success(response) {
+    return response.data.content;
+  }
+
+  function fail(e) {
+    logger.promise(e);
+    return $q.reject(e);
   }
 }

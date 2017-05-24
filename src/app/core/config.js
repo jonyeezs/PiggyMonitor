@@ -2,7 +2,7 @@ module.exports =
   angular.module('app')
   .constant('config', {
     appTitle: 'piggyMonitor',
-    dataUrl: 'http://localhost:9292/budgets'
+    dataUrl: 'http://localhost:9292'
   })
   .config(configure);
 
