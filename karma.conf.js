@@ -36,6 +36,7 @@ module.exports = function(config) {
     // The order of patterns determines the order in which files are included in the browser.
     files: [
       // third-party files
+      {pattern: '../node_modules/jquery/dist/jquery.min.js',  watched: false}, // require to extend angular.element for easier directive testing
       {pattern: '../node_modules/lodash/lodash.min.js', watched: false},
       {pattern: '../node_modules/moment/min/moment.min.js', watched: false},
       {pattern: '../node_modules/angular/angular.js', watched: false},
