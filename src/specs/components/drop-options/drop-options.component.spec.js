@@ -4,7 +4,7 @@ require('../../../app/components/drop-options');
 describe('drop-options component', function () {
   var _element, element, scope;
   var handlerResult;
-  beforeEach(function () {
+  beforeEach(function (done) {
     bard.appModule('component.drop-options');
     bard.inject(this, '$rootScope', '$compile');
 
@@ -15,18 +15,21 @@ describe('drop-options component', function () {
     scope.selectHandler = function(value) { handlerResult = value;};
     element = $compile(_element)(scope);
     scope.$apply();
+    done();
   });
 
   describe('on initialize', function() {
     it('should show the selection info message', function() {
       var buttonDisplay = element.find('button');
-      expect(buttonDisplay.text()).to.equal(scope.selectionMsg);
+      expect(buttonDisplay.text()).to.contain(scope.selectionMsg);
     });
+
     context('on button click', function() {
-      beforeEach(function() {
+      beforeEach(function(done) {
         element = $compile(_element)(scope);
         element.find('button').click();
         scope.$digest();
+        done();
       });
 
       it('should have display list of all options without selection info', function() {
@@ -37,16 +40,17 @@ describe('drop-options component', function () {
   });
 
   describe('on selecting an option', function() {
-    beforeEach(function() {
+    beforeEach(function(done) {
       element = $compile(_element)(scope);
       element.find('button').click();
       element.find('li').not('.ng-hide').find('a')[0].click();
       scope.$digest();
+      done();
     });
 
     it('should display the selection on the button', function() {
       var buttonDisplay = element.find('button');
-      expect(buttonDisplay.text()).to.equal(scope.availableOptions[0].key);
+      expect(buttonDisplay.text()).to.contain(scope.availableOptions[0].key);
     });
 
     it('should show the selection info with the list of options', function() {

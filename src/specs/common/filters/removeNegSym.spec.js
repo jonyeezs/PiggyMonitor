@@ -23,14 +23,4 @@ describe('removeNegSym filter', function() {
         result = filter(testCase);
         expect(result).to.be.equal(9.88);
       });
-
-    describe('disable', function() {
-      it('should not remove negative for negative value', function() {
-        var testCase = -12.2;
-
-        result = filter(testCase, true);
-
-        expect(result).to.be.equal(-12.2);
-      });
-    });
   });

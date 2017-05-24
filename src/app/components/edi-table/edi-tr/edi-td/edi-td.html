@@ -23,7 +23,7 @@
     required></input>
 </span>
 <span ng-show="!$ctrl.inEditMode" ng-switch="$ctrl.tdSetup.prop">
-  <span ng-switch-when="amount" class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop] | removeNegativeSym:disableRemoveNeg | currency"></span>
+  <span ng-switch-when="amount" class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop] | removeNegativeSym | currency"></span>
   <span ng-switch-when="date" class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop] | date : 'd MMM'"></span>
   <span ng-switch-default class='item-padding' ng-bind="$ctrl.tdData[$ctrl.tdSetup.prop]"></span>
 </span>
