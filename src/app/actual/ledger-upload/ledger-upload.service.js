@@ -1,7 +1,7 @@
 module.exports = ledgerUpload;
 
-ledgerUpload.$inject = ['_', '$q', '$uibModal', 'actual', 'budget', 'moment', 'Csv'];
-function ledgerUpload(_, $q, $uibModal, actual, budget, moment, Csv) {
+ledgerUpload.$inject = ['_', '$q', '$uibModal', 'actual', 'budget', 'moment', 'csv'];
+function ledgerUpload(_, $q, $uibModal, actual, budget, moment, csv) {
 
   var service = {
     getItemsFromCsv: getItemsFromCsv,
