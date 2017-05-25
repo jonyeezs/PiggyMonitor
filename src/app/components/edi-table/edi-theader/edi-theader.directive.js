@@ -1,7 +1,6 @@
 module.exports = ediTheader;
 function ediTheader() {
   var sortToggleWatchers = {};
-
   return {
     template: require('./edi-theader.html'),
     restrict: 'A',
@@ -11,13 +10,19 @@ function ediTheader() {
     },
     link: {
       pre: function (scope, _ele, attr) {
-          // The collection in the ngRepeat is given a hashKey to identify it for the $watch listener
-          // We'll be leveraging this as the unique identifier for a set of related th directives.
-          var key = attr.$$element.context.parentNode.$$hashKey;
-
+          // Every individual component will run this same compile code.
+          // But each collection of ngRepeat needs to work uniquely and not affect
+          // another set of theaders.
+          // Set a key to the colDetail that should not be accessible
+          // NOTE: if this don't work out. need to use the id of table or edi-table
+          var scopeOfIndividualNgRepeatObject = scope.$parent;
+          var theFirstSameParent = scopeOfIndividualNgRepeatObject.$parent;
+          var key = theFirstSameParent.$id;
           //automatically register
           if (sortToggleWatchers[key] === undefined) {
-            //Using array to store the registered headers. Better performance: http://jsben.ch/#/MBF21
+            // Using array to store the registered headers.
+            // Better performance when dealing with dynamic collections that can be removed anytime.
+            // http://jsben.ch/#/MBF21
             sortToggleWatchers[key] = [];
           }
           scope._registerKey = sortToggleWatchers[key].length;
@@ -54,7 +59,7 @@ function ediTheader() {
         }
 
         scope.$on('$destroy', function () {
-          scope._unregisterSortToggleWatcher();
+          scope._unregisterSortToggleWatcher || scope._unregisterSortToggleWatcher();
         });
       }
     }
