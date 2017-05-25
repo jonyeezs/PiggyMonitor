@@ -28,7 +28,7 @@ function dataService($http, config, logger, $q) {
             $http.get(url + '/' + resource, {params: query});
     return getCommand
       .then(success)
-      .catch(fail);
+      .catch(fail(url + '/' + resource));
   }
 
   /**
@@ -40,21 +40,23 @@ function dataService($http, config, logger, $q) {
   function patch(resource, items) {
     return $http.patch(url + '/' + resource, items)
       .then(success)
-      .catch(fail);
+      .catch(fail(url + '/' + resource));
   }
 
   function post(resource, item) {
     return $http.post(url + '/' + resource, item)
       .then(success)
-      .catch(fail);
+      .catch(fail(url + '/' + resource));
   }
 
   function success(response) {
     return response.data.content;
   }
 
-  function fail(e) {
-    logger.promise(e);
-    return $q.reject(e);
+  function fail(message) {
+    return function(error) {
+      logger.promise('fail for: ' + message, error);
+      return $q.reject(error);
+    };
   }
 }

@@ -7,7 +7,7 @@ module.exports = angular.module('repo.budget', [
 budgetService.$inject = ['data'];
 function budgetService(data) {
 
-  const basePath = 'budgets/';
+  const basePath = 'budgets';
   var service = {
     getYears: getYears,
     getByYear: getByYear,
@@ -19,21 +19,21 @@ function budgetService(data) {
   return service;
 
   function getYears() {
-    return data.get(basePath + 'years')
+    return data.get(basePath + '/years')
       .then(function (result) {
         return result.years;
       });
   }
 
   function getByYear(year) {
-    return data.get(basePath + 'years/' + year)
+    return data.get(basePath + '/years/' + year)
       .then(function (result) {
         return result.items;
       });
   }
 
   function getByYearWithOccurance(year, occuranceType) {
-    return data.get(basePath + 'years/' + year, {
+    return data.get(basePath + '/years/' + year, {
         occurance: occuranceType
       })
       .then(function (result) {
@@ -42,10 +42,10 @@ function budgetService(data) {
   }
 
   function update(year, item) {
-    return data.patch(basePath + 'years/' + year, [item]);
+    return data.patch(basePath + '/years/' + year, [item]);
   }
 
   function add(year, item) {
-    return data.post(basePath + 'years/' + year, item);
+    return data.post(basePath + '/years/' + year, item);
   }
 }

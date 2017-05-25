@@ -7,7 +7,7 @@ module.exports = angular.module('repo.actual', [
 actualService.$inject = ['data', 'moment'];
 function actualService(data, moment) {
 
-  const basePath = 'actuals/';
+  const basePath = 'actuals';
   var service = {
     getYears: getYears,
     getByYear: getByYear,
