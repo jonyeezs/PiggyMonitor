@@ -27,7 +27,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
     scope.showActions = function() {
       if (scope.editable) {
-        $timeout(/*A trick to wait for DOM to render: http://javascript.info/settimeout-setinterval#allowing-the-browser-to-render */)
+        // A trick to wait for DOM to render, then do our action
+        $timeout(/*see LESSONS.md for more info*/)
         .then(function () {
           scope.displayActions = true;
         });
