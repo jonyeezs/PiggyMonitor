@@ -3,6 +3,8 @@
  * I Did not need all the features he provided.
  * His work is awesome. Please do use his if you find this not as touchy as you like it to be.
  */
+var findClosetTableId = require('../../utils/element-helper').findClosetTableId;
+var elementIs = require('../../utils/element-helper').elementIs;
 module.exports = ediTrMultiSelector;
 
 ediTrMultiSelector.$inject = ['$parse', '$timeout', 'ediTrMultiSelection'];
@@ -21,7 +23,7 @@ function ediTrMultiSelector($parse, $timeout, ediTrMultiSelection) {
       var timer;
       var eventsBound = false;
       var selected = false;
-      var ediTableId = ele.closest('edi-table').attr('id') || ele.closest('table').attr('id');
+      var ediTableId = findClosetTableId(ele);
 
       var disposeEdiTouchyWatcher = scope.$watch(attrs.ediTrMultiSelector, function (enabled) {
         if (enabled) {
@@ -66,9 +68,9 @@ function ediTrMultiSelector($parse, $timeout, ediTrMultiSelection) {
         $timeout.cancel(timer);
 
         // A normal press with selections made prior, then fire off the selection
-        if (!scope.longPressSent && !$(evt.target)
-          .is('select,input,button,button > span,checkbox') &&
-          ediTrMultiSelection.hasMultiSelected(ediTableId)) {
+        if (!scope.longPressSent
+          && !elementIs(angular.element(evt.target), ['select', 'input', 'button', 'button > span', 'checkbox'])
+          && ediTrMultiSelection.hasMultiSelected(ediTableId)) {
             updateSelection(scope, evt);
         }
 
@@ -86,8 +88,8 @@ function ediTrMultiSelector($parse, $timeout, ediTrMultiSelection) {
 
       function updateSelection(scope, evt)
       {
-          var ediTable = evt.target.closest('edi-table') || evt.target.closest('table');
-          var isToBeSelected = ediTrMultiSelection.onSelectionPress(scope.item.id, ediTable.id);
+          var ediTableId = findClosetTableId(angular.element(evt.target));
+          var isToBeSelected = ediTrMultiSelection.onSelectionPress(scope.item.id, ediTableId);
           if(isToBeSelected) {
             ele.addClass('selected-row');
           }

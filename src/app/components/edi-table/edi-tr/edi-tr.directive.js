@@ -1,3 +1,4 @@
+var findClosetTableId = require('../utils/element-helper').findClosetTableId;
 module.exports = ediTr;
 
 ediTr.$inject = ['$q', '_', '$timeout', 'ediTrMultiSelection'];
@@ -22,7 +23,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
     var disposeMultiSelectListener = null;
     var _previousModelValue = undefined;
-    var ediTableId = ele.closest('edi-table').attr('id') || ele.closest('table').attr('id');
+    var ediTableId = findClosetTableId(ele);
+
     var displayActions = false;
 
     scope.showActions = function() {
