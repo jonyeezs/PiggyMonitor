@@ -85,8 +85,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
     scope.modelValueChange = function (changeObj) {
       //clones into a new object to overcome the strict equality on $render, with persisting any properties needed by angular
       var data = Object.assign({}, api.model.$modelValue || api.model.$viewValue, changeObj);
-      if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
-        EdiTrMultiSelection.updateProperty(ediTableId, data.id, changeObj);
+      if(ediTrMultiSelection.hasMultiSelected(ediTableId)) {
+        ediTrMultiSelection.updateProperty(ediTableId, data.id, changeObj);
       }
       api.model.$setViewValue(data);
     }
@@ -100,8 +100,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
         _previousModelValue = api.model.$modelValue;
 
-        if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
-          EdiTrMultiSelection.prepareForEdit(ediTableId, scope.model.id);
+        if(ediTrMultiSelection.hasMultiSelected(ediTableId)) {
+          ediTrMultiSelection.prepareForEdit(ediTableId, scope.model.id);
         }
 
         scope._editState.inProgress = true;
@@ -123,8 +123,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
         if (!scope.editable) return;
 
-        if(EdiTrMultiSelection.hasMultiSelected(ediTableId)) {
-          EdiTrMultiSelection.rollbackAll(scope.model.id, ediTableId);
+        if(ediTrMultiSelection.hasMultiSelected(ediTableId)) {
+          ediTrMultiSelection.rollbackAll(scope.model.id, ediTableId);
         }
 
         rollBackNgModelAndResetEditState();
@@ -139,13 +139,13 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
       scope._editState.saving = true;
 
       //TODO this isn't working yet to set the loading state
-      var items = EdiTrMultiSelection.hasMultiSelected(ediTableId) ? EdiTrMultiSelection.getSelectedItems(ediTableId, true) : [value];
+      var items = ediTrMultiSelection.hasMultiSelected(ediTableId) ? ediTrMultiSelection.getSelectedItems(ediTableId, true) : [value];
 
       scope.saveCallback({ items: items })
         .then(function () {
           api.form.$setPristine();
           scope._editState.saving = false;
-          EdiTrMultiSelection.updateEditState(ediTableId, {saving: false, inProgress: scope._editState.forceEdit});
+          ediTrMultiSelection.updateEditState(ediTableId, {saving: false, inProgress: scope._editState.forceEdit});
         }, function () {
           scope._editState.saving = false;
         });
