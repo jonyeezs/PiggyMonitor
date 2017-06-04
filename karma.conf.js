@@ -11,8 +11,7 @@ module.exports = function(config) {
     // some available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai', 'sinon', 'chai-sinon'],
     //a strip down config as karma watches the test entry points
-    webpack:{
-      bail: true,
+    webpack: {
       devtool: 'eval',
       module: {
         rules: webpackConfig.module.rules.concat(
