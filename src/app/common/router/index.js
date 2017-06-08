@@ -1,8 +1,6 @@
 var routerHelperProvider = require('./router-helper.provider');
-require('angular-ui-router');
-
 module.exports = angular.module('common.router', [
-  'ui.router',
+  require('@uirouter/angularjs').default,
   require('../logger')
 ])
 .provider(routerHelperProvider.name, routerHelperProvider)
