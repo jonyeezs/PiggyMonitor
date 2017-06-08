@@ -14,7 +14,8 @@ function ActualController(_, actual, articleFactory, logger) {
   vm.items = [];
   vm.tableSettings = {
     editable: true,
-    creatable: true
+    creatable: true,
+    multable: true
   };
 
   activate();
