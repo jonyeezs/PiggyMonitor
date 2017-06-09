@@ -4,6 +4,7 @@ var csv = require('./csv.service');
 module.exports = angular.module('actual.ledger-upload', [
   require('angular-ui-bootstrap/src/progressbar'),
   require('angular-ui-bootstrap/src/modal'),
+  require('ng-file-upload'),
   require('../../repositories/actual.service'),
   require('../../repositories/budget.service')
 ])

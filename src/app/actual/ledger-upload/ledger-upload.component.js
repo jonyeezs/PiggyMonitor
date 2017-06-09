@@ -35,10 +35,10 @@ function ledgerUploadCtrl(LedgerUpload, moment) {
     .then(LedgerUpload.displayModalWithItemsAndCategories)
     .then(function handleModalPromises(promises) {
       promises.opened.then(function() {
-        updateProgress(93);
+        updateProgressBar(93);
       })
       promises.rendered.then(function() {
-        updateProgress(97);
+        updateProgressBar(97);
       });
       return promises.result;
     })

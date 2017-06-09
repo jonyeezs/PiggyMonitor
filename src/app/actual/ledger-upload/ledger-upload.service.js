@@ -16,18 +16,22 @@ function ledgerUpload(_, $q, $uibModal, actual, budget, moment, csv) {
     reader.readAsText(file);
 
     function loadCompletedFile(event) {
-      var csv = event.target.result;
-      var rows = Csv.parse(csv)
-        .map(function (row) {
+      var csvFile = event.target.result;
+      csv.parse(csvFile, function (err, output) {
+        if (err != null) {
+          completionCallback($q.reject(err));
+        }
+        var rows = output.map(function (row) {
           return {
             date: moment(row[0], 'DD-MM-YYYY')
               .toDate(),
-            amount: parseInt(row[1]),
-            description: row[2],
-            category: ''
-          }
+              amount: parseInt(row[1]),
+              description: row[2],
+              category: ''
+            }
         });
-      completionCallback($q.resolve(rows));
+        completionCallback($q.resolve(rows));
+      });
     };
   }
 

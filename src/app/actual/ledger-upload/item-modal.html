@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
+        <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc | limitTo:5 track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
         </tr>
       </tbody>
     </table>

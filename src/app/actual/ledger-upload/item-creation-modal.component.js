@@ -39,7 +39,7 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, _) {
   }
 
   $ctrl.saveEntries = function(items) {
-    return LedgerUpload.createEntries(items)
+    return ledgerUpload.createEntries(items)
     .then(function (results) {
       if(removeItems(items) === 0) {
         $ctrl.close(true);

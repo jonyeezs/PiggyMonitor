@@ -10,6 +10,7 @@ function budgetService(data) {
   const basePath = 'budgets';
   var service = {
     getYears: getYears,
+    getCategoriesForYear: getCategories,
     getByYear: getByYear,
     getByYearWithOccurance: getByYearWithOccurance,
     update: update,
@@ -41,6 +42,12 @@ function budgetService(data) {
         return result.items;
       });
   }
+
+  function getCategories(year) {
+      return data.get(basePath + '/categories/' + year).then(function (result) {
+        return result.categories;
+      })
+    }
 
   function update(year, item) {
     return data.patch(basePath + '/years/' + year, [item]);
