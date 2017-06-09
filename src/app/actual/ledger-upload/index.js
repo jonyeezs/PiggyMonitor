@@ -1,4 +1,5 @@
 var ledgerUpload = require('./ledger-upload.service');
+var csv = require('./csv.service');
 
 module.exports = angular.module('actual.ledger-upload', [
   require('angular-ui-bootstrap/src/progressbar'),
@@ -6,8 +7,8 @@ module.exports = angular.module('actual.ledger-upload', [
   require('../../repositories/actual.service'),
   require('../../repositories/budget.service')
 ])
-.constant('csv', require('csv'))
 .factory(ledgerUpload.name, ledgerUpload)
+.factory(csv.name, csv)
 .name;
 
 require('./item-creation-modal.component');
