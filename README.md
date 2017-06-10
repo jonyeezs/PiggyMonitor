@@ -1,11 +1,5 @@
 # piggyMonitor
 
-**Generated from HotTowel Angular**
-
->*Opinionated Angular style guide for teams by [@john_papa](//twitter.com/john_papa)*
-
->More details about the styles and patterns used in this app can be found in my [Angular Style Guide](https://github.com/johnpapa/angularjs-styleguide) and my [Angular Patterns: Clean Code](http://jpapa.me/ngclean) course at [Pluralsight](http://pluralsight.com/training/Authors/Details/john-papa) and working in teams.
-
 ## Lessons
 
 As this project is moreso for my learning experience.
@@ -18,20 +12,7 @@ I've noted down the lessons I've learnt in another md file: LESSONS.md
  - on OSX use [homebrew](http://brew.sh) `brew install node`
  - on Windows use [chocolatey](https://chocolatey.org/) `choco install nodejs`
 
-2. Install Yeoman `npm install -g yo`
-
-3. Install these NPM packages globally
-
-    ```bash
-    npm install -g bower gulp nodemon
-    ```
-
-    >Refer to these [instructions on how to not require sudo](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
-
-***
-
 ## Exploring piggyMonitor
-piggyMonitor Angular starter project
 
 ### Structure
 The structure also contains a gulpfile.js and a server folder.
@@ -69,85 +50,20 @@ To install packages for the app via . Packages from bower.json
 
 ***
 
-## Running piggyMonitor with Gulp
+## Running piggyMonitor
 
 ### Task Listing
 
-- `gulp help`
+#### Build
 
-    Displays all of the available gulp tasks.
+- `npm start`
 
-### Parameters for tasks
+NODE_ENV - 'production' or 'dev'
 
-Available [yargs](yargs) variables
+#### Test
 
- * **--verbose**     : Various tasks will produce more output to the console.
- * **--nosync**      : Don't automatically launch the browser with browser-sync.
- * **--debug**       : Launch debugger with node-inspector.
- * **--debug-brk**   : Launch debugger and break on 1st line with node-inspector.
- * **--startServers**: Will start servers for midway tests on the test task.    
-
-[yargs]:https://github.com/yargs/yargs)
-
-### Development
-
-- `gulp dev`
-
-    Serves the development code and launches it in a browser. The goal of building for development is to do it as fast as possible, to keep development moving efficiently. This task serves all code from the source folders and compiles less to css in a temp folder.
-
-### Production
-
-- `gulp build-app`
-
-    Copies all fonts, copies images and runs `gulp optimize-build` to build the production code to the build folder.
-
-- `gulp build`
-
-    Serve the optimized code from the build folder and launch it in a browser.
-
-### Testing
-
-- `gulp specs`
-
-    Serves and browses to the spec runner html page and runs the unit tests in it. Injects any changes on the fly and re runs the tests. Quick and easy view of tests as an alternative to terminal via `gulp test`.
-
-- `gulp test`
-
-    Runs all unit tests using karma runner, mocha, chai and sinon with phantomjs. Depends on vet task, for code analysis.
-
-- `gulp autotest`
-
-    Runs a watch to run all unit tests.
-
-### Code Analysis
-
-- `gulp vet`
-
-    Performs static code analysis on all javascript files. Runs jshint and jscs.
-    _(TODO use eslint)_
-
-    --verbose to display all files affected and extended info.
-
-- `gulp plato`
-
-    Performs code analysis using [plato][plato] on all javascript files. Plato generates a report in the reports folder.
-
-[plato]: https://github.com/es-analysis/plato
-
-### Cleaning Up Build and Temp folder
-
-- `gulp clean`
-
-### Bumping Versions
-
-- `gulp bump`
-
-    Bump the minor version using semver.
-    --type=patch // default
-    --type=minor
-    --type=major
-    --type=pre
-    --ver=1.2.3 // specific version
+- `npm test` runs test on console
+- `npm test -- --debug` runs it on debug mode with auto-watch enabled
 
 ## License
 
