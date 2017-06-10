@@ -584,28 +584,18 @@ form label {
     animation: glyphicon-spin-r 2s infinite linear;
 }
 
-.table-fixed {
-  tbody, thead, tr {
-      width: 100%;
-  }
+.table-scrollable {
+ display: block;
+}
 
-  tbody {
-    height: 480px;
+table.table-scrollable>tbody {
     overflow-y: auto;
-  }
+    height: 50px; /*placeholder:  override as needed*/
+}
 
-  tbody, tr, td, th {
-    display: inline-block;
-  }
-
-  thead {
-    display: block !important;
-  }
-
-  tbody td, thead > tr > th {
-    float:left;
-    border-bottom-width: 0;
-  }
+table.table-scrollable>thead>tr>th, table.table-scrollable>tbody>tr>td {
+    float: left;
+    width: 100px; /*placeholder:  override as needed*/
 }
 
 .modal-body input {

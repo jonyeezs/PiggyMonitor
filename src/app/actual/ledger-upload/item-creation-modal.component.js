@@ -33,7 +33,7 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, _) {
     });
   }
 
-  function setSort(column, sortDesc) {
+  $ctrl.setSort =function(column, sortDesc) {
     $ctrl.sortType = column;
     $ctrl.sortDesc = sortDesc;
   }
