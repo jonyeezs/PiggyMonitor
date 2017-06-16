@@ -10,8 +10,8 @@ module.exports = angular
       }
     });
 
-itemCreationModalCtrl.$inject = ['articleFactory', 'ledgerUpload', '_'];
-function itemCreationModalCtrl(articleFactory, ledgerUpload, _) {
+itemCreationModalCtrl.$inject = ['articleFactory', 'ledgerUpload', 'ediTrMultiSelection', '_'];
+function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection, _) {
   /* jshint validthis: true */
   var $ctrl = this;
 
@@ -33,7 +33,21 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, _) {
     });
   }
 
-  $ctrl.setSort =function(column, sortDesc) {
+  $ctrl.onAllSelectionChange = function() {
+    ediTrMultiSelection.setAllItemSelection('ledger-upload', $ctrl.isToSelectAll);
+    //Because the selection class is hidden in a directive, we'll have to do our own hack
+    var trs = document.getElementById('ledger-upload').getElementsByTagName('TBODY')[0].getElementsByTagName('TR');
+    Array.prototype.forEach.call(trs, (item) => {
+      if ($ctrl.isToSelectAll) {
+        item.classList.add('selected-row');
+      }
+      else {
+        item.classList.remove('selected-row');
+      }
+    });
+  }
+
+  $ctrl.setSort = function(column, sortDesc) {
     $ctrl.sortType = column;
     $ctrl.sortDesc = sortDesc;
   }

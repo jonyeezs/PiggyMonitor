@@ -4,11 +4,20 @@
   </div>
 
   <div ng-show="!$ctrl.loadingTable" class="modal-body container">
-    <div class="row">
-      <div class="col-md-4">
-        <a>Remaining <span class="badge">{{$ctrl.items.length}}</span></a>
-      </div>
-    </div>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-form navbar-left">
+            <div class="form-group">
+              <switch id="allselection" name="allselection" ng-model="$ctrl.isToSelectAll" on="Select All" off="Select None" class="green" ng-change="$ctrl.onAllSelectionChange()"></switch>
+            </div>
+          </div>
+          <ul class="nav navbar-nav">
+            <li>
+              <a>Remaining <span class="badge">{{$ctrl.items.length}}</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     <div class="row">
       <!-- TODO make header fix. Needs dom manipulation. See https://gist.github.com/flaviaza/3763015 -->
       <table class="table table-fixed" id="ledger-upload">
@@ -19,7 +28,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc | limitTo:10 track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
+          <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc | limitTo:12 track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
           </tr>
         </tbody>
       </table>

@@ -15,6 +15,7 @@ function ediTrMultiSelection() {
     rollbackAll: rollbackAll,
     updateEditState: updateEditState,
     onSelectionPress: onSelectionPress,
+    setAllItemSelection: setAllItemSelection,
     onTouchEnd: onTouchEnd
   };
 
@@ -166,6 +167,13 @@ function ediTrMultiSelection() {
     registeredEdiTr[tableId][itemId].selected = !registeredEdiTr[tableId][itemId].selected;
 
     return registeredEdiTr[tableId][itemId].selected && hasMultiSelected(tableId);
+  }
+
+  function setAllItemSelection(tableId, isSelect) {
+    tableId = tableId || _GENERIC_TABLE_NAME;
+    registeredEdiTr[tableId].forEach((item) => {
+      item.selected = isSelect;
+    });
   }
 
   function onTouchEnd(itemId, $event) {
