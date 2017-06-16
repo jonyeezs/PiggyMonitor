@@ -32,6 +32,7 @@ function repeatComplete() {
           // querySelectorAll should be supported by all modern browsers: http://caniuse.com/#search=querySelectorAll
           let ngRepeatChildren = document.querySelectorAll('[repeat-complete-id="' + id + '"]');
           let lastItem = angular.element(ngRepeatChildren[ngRepeatChildren.length - 1]);
+          if (!lastItem.length) { return undefined; }
           return lastItem.scope().$last;
         },
         function lastChildLoadedAction(isLast) {
