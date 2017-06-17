@@ -130,6 +130,9 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
         }
 
         rollBackNgModelAndResetEditState();
+
+        // the main object (ie with the edit buttons) should not be part of the selections that were done as multi
+        scope._editState.multiSelected = false;
       };
     }
 
@@ -164,7 +167,7 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
         inProgress: false,
         saving: false,
         forceEdit: false,
-        multiSelected: false
+        multiSelected: ediTrMultiSelection.hasMultiSelected(ediTableId) || false
       };
     }
   }

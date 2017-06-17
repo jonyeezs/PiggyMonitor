@@ -173,6 +173,13 @@ function ediTrMultiSelection() {
 
     registeredEdiTr[tableId][itemId].selected = !registeredEdiTr[tableId][itemId].selected;
 
+    if (hasMultiSelected(tableId)) {
+      var numberOfSelected = registeredEdiTr[tableId].filter(function (ediTr) { return ediTr.selected === true; }).length;
+      registeredEdiTr[tableId][itemId].updateEditState({
+        multiSelected: (numberOfSelected > 1) && registeredEdiTr[tableId][itemId].selected
+      });
+    }
+
     return registeredEdiTr[tableId][itemId].selected && hasMultiSelected(tableId);
   }
 
