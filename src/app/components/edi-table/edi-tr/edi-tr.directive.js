@@ -103,7 +103,7 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
         _previousModelValue = api.model.$modelValue;
 
         if(ediTrMultiSelection.hasMultiSelected(ediTableId)) {
-          ediTrMultiSelection.prepareForEdit(ediTableId, scope.model.id);
+          ediTrMultiSelection.updateAllOtherSelectedForEdit(ediTableId, scope.model.id);
         }
 
         scope._editState.inProgress = true;

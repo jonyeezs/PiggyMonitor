@@ -9,7 +9,7 @@ function ediTrMultiSelection() {
   var service = {
     register: register,
     hasMultiSelected: hasMultiSelected,
-    prepareForEdit: prepareForEdit,
+    updateAllOtherSelectedForEdit: updateAllOtherSelectedForEdit,
     updateProperty: updateProperty,
     getSelectedItems: getSelectedItems,
     rollbackAll: rollbackAll,
@@ -99,18 +99,22 @@ function ediTrMultiSelection() {
         return ediTr.selected;
       }).
       map(function(ediTr) {
-        if (isSaving) { ediTr.updateEditState(null, true, true) }
+        if (isSaving) {
+          ediTr.updateEditState({
+            saving: true,
+          });
+        }
         return ediTr.accessor.model;
       });
   }
 
   /**
    * updates all selected edi-tr's previousModel, disables press events, and update the edit states
-   * @method prepareForEdit
+   * @method updateAllOtherSelectedForEdit
    * @param  {Number}       tableId - id attribute of its edi-table
-   * @param  {Number}       itemId  - unique identifier of the object
+   * @param  {Number}       itemId  - unique identifier of the main object
    */
-  function prepareForEdit(tableId, itemId) {
+  function updateAllOtherSelectedForEdit(tableId, itemId) {
     tableId = tableId || _GENERIC_TABLE_NAME;
 
     if (registeredEdiTr[tableId][itemId] == null) return;
@@ -122,7 +126,10 @@ function ediTrMultiSelection() {
       {
         var preCallValue = ediTr.accessor.model;
         ediTr.accessor.previousModel = preCallValue;
-        ediTr.updateEditState(null, null, true);
+        ediTr.updateEditState({
+          inProgress: true,
+          multiSelected: true
+        });
       }
     });
   }
