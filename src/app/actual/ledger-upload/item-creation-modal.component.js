@@ -19,7 +19,7 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection
 
   $ctrl.$onInit = function () {
     $ctrl.loadingTable = true;
-
+    $ctrl.fileName = $ctrl.resolve.fileName;
     $ctrl.initEditState = {
       inProgress: true,
       forceEdit: true

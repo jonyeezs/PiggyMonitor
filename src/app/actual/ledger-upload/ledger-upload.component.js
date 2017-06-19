@@ -8,8 +8,8 @@ module.exports = angular
       }
     });
 
-ledgerUploadCtrl.$inject = ['ledgerUpload', 'moment'];
-function ledgerUploadCtrl(LedgerUpload, moment) {
+ledgerUploadCtrl.$inject = ['ledgerUpload'];
+function ledgerUploadCtrl(LedgerUpload) {
   /* jshint validthis: true */
   var $ctrl = this;
 
@@ -28,7 +28,7 @@ function ledgerUploadCtrl(LedgerUpload, moment) {
 
   function processItems(promisedResults) {
     promisedResults.then(function (results) {
-      $ctrl.selectedYear = moment(results[0].date, "dd/mm/yyyy").year();
+      $ctrl.selectedYear = results.year;
       updateProgressBar(90);
       return results;
     })

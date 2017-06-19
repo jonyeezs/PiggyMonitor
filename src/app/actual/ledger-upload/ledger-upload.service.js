@@ -30,7 +30,11 @@ function ledgerUpload(_, $q, $uibModal, actual, budget, moment, csv) {
               category: ''
             }
         });
-        completionCallback($q.resolve(rows));
+        completionCallback($q.resolve({
+          items: rows,
+          fileName: file.name,
+          year: moment(rows[0].date, "dd/mm/yyyy").year()
+        }));
       });
     };
   }
@@ -42,7 +46,8 @@ function ledgerUpload(_, $q, $uibModal, actual, budget, moment, csv) {
     };
   }
 
-  function displayModalWithItemsAndCategories(items) {
+  function displayModalWithItemsAndCategories(results) {
+    var items = results.items;
     return budget.getCategoriesForYear(items[0].date.getFullYear())
       .then(function (categories) {
         var modalPromises = $uibModal.open({
@@ -58,6 +63,9 @@ function ledgerUpload(_, $q, $uibModal, actual, budget, moment, csv) {
               },
               categories: function () {
                 return categories;
+              },
+              fileName: function () {
+                return results.fileName;
               }
             }
           });
