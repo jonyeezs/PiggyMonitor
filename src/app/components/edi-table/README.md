@@ -120,10 +120,11 @@ Properties of the edit states are:
 {
   inProgress: Boolean, //Set the state for edit in progress. ie: shows input fields and buttons
   forceEdit: Boolean //Forces it to always be in edit mode. ie: no cancel button
+  deletable: Boolean //Allow for deletion by showing the delete button and a callback attribute: edi-tr-on-delete
 }
 ``` 
 
-`edi-tr-on-save` requires an promise callback that will be the method to post your changes.
+`edi-tr-on-save` and `edi-tr-on-delete` requires a promise callback that will be the method to post your changes.
 
 #### 3. Multi-Select Capabilities
 

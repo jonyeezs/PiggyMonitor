@@ -9,7 +9,8 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
     scope: {
       colSetup: '<ediTrSetup',
       editable: '<?ediTrEditable',
-      saveCallback: '&?ediTrOnSave'
+      saveCallback: '&?ediTrOnSave',
+      deleteCallback: '&?ediTrOnDelete'
     },
     require: {
       form: '?form',
@@ -72,9 +73,12 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
     if (scope.editable)
     {
       if (_.isPlainObject(scope.editable)) {
+        scope.deletable = scope.editable.deletable || false;
+
         scope._editState = Object.assign(setResetEditState(), { inProgress: scope.editable.inProgress, forceEdit: scope.editable.forceEdit});
       }
       else {
+        scope.deletable = false;
         scope._editState = setResetEditState();
       }
 
@@ -95,7 +99,7 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
     // Buttons
     if (api.form) {
-      scope.edit = function (evt, selectedItem) {
+      scope.edit = function (evt) {
         evt.stopPropagation();
 
         if (!scope.editable) return;
@@ -110,7 +114,7 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
         scope._editState.saving = false;
       };
 
-      scope.save = function (evt, selectedItem) {
+      scope.save = function (evt) {
         evt.stopPropagation();
 
         if (!scope.editable) return;
@@ -119,6 +123,13 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
 
         updateToServer(api.model.$modelValue);
       };
+
+      scope.delete = function (evt) {
+        evt.stopPropagation();
+        if (!scope.editable) return;
+
+        deleteFromServer(api.model.$modelValue);
+      }
 
       scope.cancel = function (evt) {
         evt.stopPropagation();
@@ -149,12 +160,24 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
       scope.saveCallback({ items: items })
         .then(function () {
           api.form.$setPristine();
-          scope._editState.saving = false;
           ediTrMultiSelection.updateEditState(ediTableId, {saving: false, inProgress: scope._editState.forceEdit});
+          scope._editState.saving = false;
         }, function () {
           scope._editState.saving = false;
         });
     };
+
+    function deleteFromServer(value) {
+      scope._editState.deleting = true;
+      var items = ediTrMultiSelection.hasMultiSelected(ediTableId) ? ediTrMultiSelection.getSelectedItems(ediTableId, true) : [value];
+      scope.deleteCallback({items: items})
+        .then(function () {
+          api.form.$setPristine();
+          scope._editState.deleting = false;
+        }, function () {
+          scope._editState.deleting = false;
+        });
+    }
 
     function rollBackNgModelAndResetEditState() {
       api.model.$setViewValue(_previousModelValue);
@@ -167,6 +190,7 @@ function ediTr($q, _, $timeout, ediTrMultiSelection) {
         inProgress: false,
         saving: false,
         forceEdit: false,
+        deleting: false,
         multiSelected: ediTrMultiSelection.hasMultiSelected(ediTableId) || false
       };
     }

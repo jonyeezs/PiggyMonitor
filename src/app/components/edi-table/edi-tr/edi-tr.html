@@ -3,14 +3,19 @@
 </td>
 <td ng-if="!!editable">
   <div ng-show="displayActions">
-    <button ng-if="!_editState.forceEdit" class="btn btn-default btn-sm pull-right" ng-click="edit($event, model)" ng-hide="_editState.inProgress || _editState.multiSelected">
+    <button ng-if="!_editState.forceEdit" class="btn btn-default btn-sm pull-right" ng-click="edit($event)" ng-hide="_editState.inProgress || _editState.multiSelected">
       <span class="glyphicon glyphicon-pencil" aria-label="edit item"></span>
     </button>
     <div class="pull-right" ng-if="(_editState.inProgress || _editState.forceEdit) && !_editState.multiSelected">
-      <button class="btn btn-primary btn-sm" ng-click="save($event, model)" ng-disabled="_editState.saving">
+      <button class="btn btn-primary btn-sm" ng-click="save($event)"
+        ng-disabled="_editState.saving" ng-hide="_editState.deleting">
         <span ng-class="!_editState.saving ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-refresh spinning'" aria-label="save changes"></span>
       </button>
-      <button ng-if="!_editState.forceEdit" class="btn btn-default btn-sm" ng-click="cancel($event)" ng-hide='_editState.saving'>
+      <button ng-if="deletable" class="btn btn-warning btn-sm" ng-click="delete($event)"
+        ng-disabled="_editState.deleting" ng-hide="_editState.saving">
+        <span ng-class="!_editState.deleting ? 'glyphicon glyphicon-trash' : 'glyphicon glyphicon-refresh spinning'" aria-label="delete item"></span>
+      </button>
+      <button ng-if="!_editState.forceEdit" class="btn btn-default btn-sm" ng-click="cancel($event)" ng-hide="_editState.saving">
         <span class="glyphicon glyphicon-remove" aria-label="cancel item"></span>
       </button>
     </div>
