@@ -28,7 +28,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc | limitTo:12 track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true" edi-tr-on-save="$ctrl.saveEntries(items)" ng-cloak repeat-complete="$ctrl.loadingTable = false">
+          <tr ng-repeat="item in $ctrl.items | orderBy : $ctrl.sortType : $ctrl.sortDesc | limitTo:12 track by item.id" edi-tr ng-model="item" edit-only edi-tr-setup="::$ctrl.colSetup" ng-form="tr{{item.id}}" edi-tr-editable="$ctrl.initEditState" edi-tr-multi-selector="true"
+          ng-cloak repeat-complete="$ctrl.loadingTable = false"
+          edi-tr-on-save="$ctrl.saveEntries(items)" edi-tr-on-delete="$ctrl.removeEntries(items)">
           </tr>
         </tbody>
       </table>

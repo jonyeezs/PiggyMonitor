@@ -10,8 +10,8 @@ module.exports = angular
       }
     });
 
-itemCreationModalCtrl.$inject = ['articleFactory', 'ledgerUpload', 'ediTrMultiSelection', '_'];
-function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection, _) {
+itemCreationModalCtrl.$inject = ['articleFactory', 'ledgerUpload', 'ediTrMultiSelection', '_', '$q'];
+function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection, _, $q) {
   /* jshint validthis: true */
   var $ctrl = this;
 
@@ -22,7 +22,8 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection
     $ctrl.fileName = $ctrl.resolve.fileName;
     $ctrl.initEditState = {
       inProgress: true,
-      forceEdit: true
+      forceEdit: true,
+      deletable: true
     };
 
     $ctrl.colSetup = buildColumns();
@@ -56,9 +57,18 @@ function itemCreationModalCtrl(articleFactory, ledgerUpload, ediTrMultiSelection
     return ledgerUpload.createEntries(items)
     .then(function (results) {
       if(removeItems(items) === 0) {
-        $ctrl.close(true);
+        $ctrl.close({success: true});
       }
     });
+  }
+
+  $ctrl.removeEntries = function(items) {
+    return $q.resolve(removeItems(items))
+      .then(function(itemsLeft) {
+        if(itemsLeft === 0) {
+          $ctrl.close({success: true});
+        }
+      });
   }
 
   $ctrl.ignore = function () {
